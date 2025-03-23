@@ -11,4 +11,7 @@ def get_all()->list[Module]:
 
 @router.get("/{id}", response_model=Module)
 def get_by_id(id:int)->Module:
-    return service.get_by_id(id)
+    for module in fake_modules:
+        if module.id == id:
+            return module
+    return None
