@@ -1,26 +1,19 @@
 import uvicorn
-from fastapi import FastAPI
+from fastapi import FastAPI, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List
-from web import module
+from .web import module
+from .ai_workspace.agents.simple_chat.simple_chat import graph
 
-class Fruit(BaseModel):
-    name: str
-
-class Fruits(BaseModel):
-    fruits: List[Fruit]
-    
 app = FastAPI(debug=True)
 
-## Adding all the routers
+# Include additional routers
 app.include_router(module.router)
 
-# Allow CORS for all origins
+# Allow CORS for your React frontend
 origins = [
-    # "http://localhost:8000",
-    "http://localhost:5173",
-    # Add more origins here
+    "http://localhost:5173",  # Update with your frontend's origin as needed
 ]
 
 app.add_middleware(
@@ -31,17 +24,27 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-memory_db = {"fruits": []}
+# Define the input for chat
+class ChatInput(BaseModel):
+    messages: List[str]
+    thread_id: str
 
-@app.get("/fruits", response_model=Fruits)
-def get_fruits():
-    return Fruits(fruits=memory_db["fruits"])
+# REST endpoint for chat requests
+@app.post("/chat")
+async def chat(input: ChatInput):
+    config = {"configurable": {"thread_id": input.thread_id}}
+    response = await graph.ainvoke({"messages": input.messages}, config=config)
+    return response["messages"][-1].content
 
-@app.post("/fruits")
-def add_fruit(fruit: Fruit):
-    memory_db["fruits"].append(fruit)
-    return fruit
-    
+# WebSocket endpoint for streaming chat messages
+@app.websocket("/ws/{thread_id}")
+async def websocket_endpoint(websocket: WebSocket, thread_id: str):
+    config = {"configurable": {"thread_id": thread_id}}
+    await websocket.accept()
+    while True:
+        data = await websocket.receive_text()
+        async for event in graph.astream({"messages": [data]}, config=config, stream_mode="messages"):
+            await websocket.send_text(event[0].content)
 
 if __name__ == "__main__":
     uvicorn.run(app, port=8000)

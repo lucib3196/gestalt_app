@@ -1,4 +1,4 @@
-from model.module import Module, Difficulty,SpecificClass
+from ..model.module import Module, Difficulty, SpecificClass
 from pydantic import BaseModel, Field
 from typing import Optional,List
 
