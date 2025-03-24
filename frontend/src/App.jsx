@@ -10,17 +10,23 @@ import {
 import ModuleTable from './components/Modules';
 import Navbar from './components/NavBar';
 import Home from './components/Home';
+import ChatBot from './components/ChatBot';
+// const App = () => {
+//   return (
+//     <Router>
+//       <Navbar />
+//       <Routes>
+//         <Route path="/" element={<Home />} />
+//         <Route path="/modules" element={<ModuleTable />} />
+//       </Routes>
+//     </Router>
+//   );
+// };
 
-const App = () => {
+const App = ()=>{
   return (
-    <Router>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/modules" element={<ModuleTable />} />
-      </Routes>
-    </Router>
-  );
-};
+    <ChatBot/>
+  )
+}
 
 export default App;
