@@ -7,26 +7,20 @@ import {
   Route
 } from "react-router-dom";
 
-import ModuleTable from './components/Modules';
-import Navbar from './components/NavBar';
-import Home from './components/Home';
-import ChatBot from './components/ChatBot';
-// const App = () => {
-//   return (
-//     <Router>
-//       <Navbar />
-//       <Routes>
-//         <Route path="/" element={<Home />} />
-//         <Route path="/modules" element={<ModuleTable />} />
-//       </Routes>
-//     </Router>
-//   );
-// };
+import NavBar from './components/NavBar';
 
-const App = ()=>{
+
+
+const App = () => {
   return (
-    <ChatBot/>
-  )
-}
+    <NavBar/>
+  );
+};
+
+// const App = ()=>{
+//   return (
+//     <ChatBot/>
+//   )
+// }
 
 export default App;

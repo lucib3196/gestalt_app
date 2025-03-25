@@ -1,17 +1,21 @@
-from fastapi import APIRouter
-from ..model.module import Module
-from ..fake import module as service
+from fastapi import APIRouter, Depends
 from typing import List
+from sqlmodel import Session
 
-router = APIRouter(prefix = '/modules')
+from ..model.module_db import Module
+from ..data import module as service
+from ..data.module import get_session
+
+router = APIRouter(prefix="/modules")
+
+@router.post("/", response_model=Module)
+def create_module(module: Module, session: Session = Depends(get_session)):
+    return service.create_module(module, session)
 
 @router.get("/", response_model=List[Module])
-def get_all()->list[Module]:
-    return service.get_all()
+def get_modules(session: Session = Depends(get_session)):
+    return service.get_modules(session=session)
 
-# @router.get("/{id}", response_model=Module)
-# def get_by_id(id:int)->Module:
-#     for module in fake_modules:
-#         if module.id == id:
-#             return module
-#     return None
+@router.get("/{module_id}", response_model=Module)
+def get_module_by_id(module_id: int, session: Session = Depends(get_session)):
+    return service.get_module_id(module_id, session)
