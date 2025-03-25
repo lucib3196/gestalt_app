@@ -7,9 +7,13 @@ to extract examples from a CSV file and format them into a prompt. The class lev
 SemanticExamples class (imported from semantic_search) to retrieve example pairs. The 
 column_names parameter should be a list of two strings: the first is the input column and the 
 second is the output column.
+
+An optional filter parameter can be provided to constrain the semantic search results based 
+on metadata.
 """
 
 from .semantic_search import SemanticExamples
+from typing import Optional
 
 class ExampleBasedTemplate:
     """
@@ -21,18 +25,20 @@ class ExampleBasedTemplate:
         base_template (str): The base text template to which the examples will be appended.
     """
     
-    def __init__(self, column_names: list[str], base_template: str) -> None:
+    def __init__(self, column_names: list[str], base_template: str, filter: Optional[dict] = None) -> None:
         """
-        Initializes the ExampleBasedTemplate with the specified column names and base template.
-        
+        Initializes the ExampleBasedTemplate with the specified column names, base template,
+        and an optional filter to constrain search results.
+
         Args:
             column_names (list[str]): A list of two column names [input_column, output_column].
             base_template (str): The base prompt text.
+            filter (Optional[dict]): Optional filter to constrain semantic search results based on metadata.
         """
-        self.semantic_search = SemanticExamples(column_names)
+        self.semantic_search = SemanticExamples(column_names, filter=filter)
         self.base_template = base_template
-    
-    def extract_examples(self, query: str, k: int = 2) -> str:
+        
+    def generate_prompt(self, query: str, k: int = 2) -> str:
         """
         Extracts examples based on the provided query, formats them, and appends them to the base template.
         
@@ -46,17 +52,17 @@ class ExampleBasedTemplate:
         examples = self.semantic_search.extract_examples(query, k)
         formatted_examples = ""
         for ex in examples:
-            formatted_examples += f"Input: {ex[0]}\nOutput: {ex[1]}\n"
+            formatted_examples += f"Input {query}\n Example Input: {ex[0]}\n Example Output: {ex[1]}\n"
         prompt = f"{self.base_template}\n{formatted_examples}"
         return prompt
 
 if __name__ == "__main__":
-    # Define the base template and column names
+    # Define the base template and column names.
     base_template = "Write code for the following"
     # "question" is assumed to be the input column and "question.html" the output column.
     gen_prompt = ExampleBasedTemplate(["question", "question.html"], base_template)
     
-    # Generate a prompt based on a sample query
+    # Generate a prompt based on a sample query.
     prompt = gen_prompt.extract_examples(
         "A car is traveling at a constant speed of 50mph. What is the total distance after 2 hours"
     )
