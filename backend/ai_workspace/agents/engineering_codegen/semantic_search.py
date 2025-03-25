@@ -6,12 +6,17 @@ This module defines the SemanticExamples class, which creates examples from a CS
 by using a vector store (via Chroma and OpenAI embeddings) to perform similarity search.
 The column_names parameter should be a list of two strings:
     [input_column, output_column]
+
+A new optional parameter, filter, can be provided to filter the search results based on
+metadata. For example, filter={"isAdaptive": "False"} will only consider documents whose
+metadata matches this filter.
 """
 
 import os
 import pandas as pd
 from langchain_chroma import Chroma
 from langchain_openai import OpenAIEmbeddings
+from typing import Optional
 
 # Define the file path to the question CSV
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -40,15 +45,32 @@ class SemanticExamples:
         df (pd.DataFrame): DataFrame loaded from the CSV.
         vector_store (Chroma): Vector store used for similarity searches.
         column_names (list[str]): List of two column names: [input_column, output_column].
+        filter (Optional[dict]): An optional dictionary to filter search results based on metadata.
     """
     
-    def __init__(self, column_names: list[str], csv_path: str = FILE_PATH, vector_store: Chroma = vector_store) -> None:
+    def __init__(
+        self, 
+        column_names: list[str], 
+        csv_path: str = FILE_PATH, 
+        vector_store: Chroma = vector_store, 
+        filter: Optional[dict] = None
+    ) -> None:
+        """
+        Initializes the SemanticExamples class.
+        
+        Args:
+            column_names (list[str]): A list of two column names: [input_column, output_column].
+            csv_path (str): Path to the CSV file (default is FILE_PATH).
+            vector_store (Chroma): The vector store to use for similarity searches.
+            filter (Optional[dict]): Optional filter to constrain search results based on metadata.
+        """
         if len(column_names) != 2:
             raise ValueError("column_names must be a list of two column names: [input_column, output_column].")
         self.df = pd.read_csv(csv_path)
         self.vector_store = vector_store
         self.column_names = column_names
-
+        self.filter = filter
+        
     def extract_examples(self, query: str, k: int = 2) -> list[tuple]:
         """
         Extracts examples from the CSV based on a similarity search using the vector store.
@@ -81,8 +103,11 @@ class SemanticExamples:
             
         Returns:
             List of indices extracted from the metadata of the results.
+            
+        Note:
+            The optional filter is applied to the similarity search if provided.
         """
-        results = self.vector_store.similarity_search(query, k=k)
+        results = self.vector_store.similarity_search(query, k=k, filter=self.filter)
         indexes = [r.metadata["index"] for r in results]
         return indexes
 
@@ -133,9 +158,10 @@ class SemanticExamples:
         return column_to_check in df.columns
 
     
-if __name__ =="__main__":
+if __name__ == "__main__":
     columns_names = ["question", "question.html"]
-    example_formatter = SemanticExamples(column_names=columns_names)
+    filter = {"isAdaptive": "False"}
+    example_formatter = SemanticExamples(column_names=columns_names, filter=filter)
     
     query = "A car travels a total distance of 100 miles in 5 hours. Calculate its speed"
-    print(example_formatter.extract_examples_prettyprint(query, 2))
+    example_formatter.extract_examples_prettyprint(query, 2)

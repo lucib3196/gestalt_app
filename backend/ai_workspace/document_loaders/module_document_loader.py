@@ -45,7 +45,7 @@ class ModuleDocumentLoaderCSV(BaseLoader):
         Lazily loads each row from the DataFrame and yields it
         as a LangChain Document, skipping rows with missing content.
         """
-        self.load_csv()
+        self.prepare_data()
         for index in self.df.index:
             content = self.df.loc[index, "question"]
             if pd.isna(content):
@@ -53,12 +53,33 @@ class ModuleDocumentLoaderCSV(BaseLoader):
 
             yield Document(
                 page_content=content,
-                metadata={"source": self.file_path, "index": index}
+                metadata={"source": self.file_path, "index": index, "isAdaptive":self.df.loc[index, "is_adaptive"]}
             )
+    def prepare_data(self):
+        """
+        Loads the CSV data and sets the 'is_adaptive' column on a row-by-row basis.
+        
+        For each row, if both the 'server.js' and 'server.py' columns are either NaN or empty,
+        then 'is_adaptive' is set to False; otherwise, it is set to True.
+        
+        This method assumes that the 'load_csv' method has been defined to load data into self.df.
+        """
+        self.load_csv()
+        
+        # Create a boolean mask where both 'server.js' and 'server.py' are either NaN or empty.
+        mask = (
+            (self.df["server.js"].isna() | (self.df["server.js"] == "")) &
+            (self.df["server.py"].isna() | (self.df["server.py"] == ""))
+        )
+        
+        # If the mask is True (both columns are empty/NaN), set 'is_adaptive' to False, else True.
+        self.df["is_adaptive"] = (~mask).astype(str)
+
 
 
 if __name__ == "__main__":
     loader = ModuleDocumentLoaderCSV(file_path)
+    loader.prepare_data()
     docs = list(loader.lazy_load())
     print(f"Loaded {len(docs)} documents.\n")
 
