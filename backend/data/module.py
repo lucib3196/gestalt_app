@@ -16,8 +16,6 @@ def get_session():
     with Session(engine) as session:
         yield session
 
-
-
 # Service functions 
 def create_module(module: Module, session: Session):
     session.add(module)
