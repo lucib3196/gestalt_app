@@ -3,7 +3,7 @@ from fastapi import FastAPI, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List
-from .web import module, chains
+from .routes import module, chains
 from .ai_workspace.agents.simple_chat.simple_chat import graph
 app = FastAPI(debug=True)
 
