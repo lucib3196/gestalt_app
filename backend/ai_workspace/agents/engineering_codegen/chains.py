@@ -1,6 +1,6 @@
 from langchain_openai import ChatOpenAI
 from langgraph.graph import StateGraph, START, END
-from pydantic import BaseModel
+from pydantic import BaseModel,Field
 from IPython.display import Image, display
 import os
 from typing import Literal
@@ -13,6 +13,12 @@ from langchain import hub
 
 llm = ChatOpenAI(model="gpt-4o")
 
+# --- Define Structure Output Schemas
+class CodeResponse(BaseModel):
+    code: str = Field(..., description="The generate code. Only return the code")
+    
+# For now assume that we are only returning the code
+llm_code_struct = llm.with_structured_output(CodeResponse)
 
 # ---------- Define States ---------- #
 
@@ -58,12 +64,14 @@ def generate_html(state: QuestionInfo) -> OverallState:
         base_template=base_prompt,
         filter=filter_
     ).generate_prompt(query=state.question)
-    response = llm.invoke([prompt])
+    
+    response = llm_code_struct.invoke([prompt])
+    response = response.dict()
     
     return {
         'question': state.question,
         'isAdaptive': state.isAdaptive,
-        'question_html': response.content,
+        'question_html': response.get("code",""),
         'server_js': '',
         'server_py': '',
         'solution_html': ''
@@ -77,19 +85,22 @@ def generate_js(state: OverallState) -> dict:
         base_template=base_prompt
     ).generate_prompt(query=state.question_html)
     
-    response = llm.invoke([prompt])
-    return {'server_js': response.content}
+    response = llm_code_struct.invoke([prompt])
+    response = response.dict()
+    return {'server_js':  response.get("code","")}
 
 
 def generate_py(state: OverallState) -> dict:
+    
     base_prompt=hub.pull("server_py_template_base1"),
     prompt = ExampleBasedTemplate(
         column_names=["question.html", "server.py"],
         base_template=base_prompt
     ).generate_prompt(query=state.question_html)
     
-    response = llm.invoke([prompt])
-    return {'server_py': response.content}
+    response = llm_code_struct.invoke([prompt])
+    response = response.dict()
+    return {'server_py': response.get("code","")}
 
 
 def generate_solution_html(state: OverallState) -> dict:
@@ -101,8 +112,10 @@ def generate_solution_html(state: OverallState) -> dict:
         filter=filter
     ).generate_prompt(query=state.question_html)
     
-    response = llm.invoke([prompt])
-    return {'solution_html': response.content}
+    response = llm_code_struct.invoke([prompt])
+    response = response.dict()
+    
+    return {'solution_html':response.get("code","")}
 
 
 def is_adaptive_router(state: OverallState):

@@ -1,13 +1,14 @@
 import api from "../api";
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 
 // Correct typing for your module
 type Module = {
-  id: number;              // changed from Int16Array to number
+  id: number;
   title: string;
   topic: string;
   reviewed: boolean;
   difficulty: string;
+  classes: string[];
 };
 
 function ModuleList() {
@@ -15,8 +16,8 @@ function ModuleList() {
 
   const fetchModules = async () => {
     try {
-      const response = await api.get<{ modules: Module[] }>("/modules");
-      setModules(response.data); // fix here
+      const response = await api.get("/modules");
+      setModules(response.data);
     } catch (error) {
       console.error("Error fetching Modules", error);
     }
@@ -26,16 +27,41 @@ function ModuleList() {
     fetchModules();
   }, []);
 
+  const table_cols = [
+    "#",
+    "Title",
+    "Topics",
+    "Difficulty",
+    "Classes",
+    "Reviewed",
+  ];
+
   return (
     <div>
-      <h2>Module List</h2>
-      <ul>
-        {modules.map((module) => (
-          <li key={module.id}>
-            {module.title} – {module.topic} – Difficulty: {module.difficulty}
-          </li>
-        ))}
-      </ul>
+      <h2 className="list-group">Module List</h2>
+      <table className="table">
+        <thead>
+          <tr>
+            {table_cols.map((col, index) => (
+              <th scope="col" key={index}>
+                {col}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {modules.map((module) => (
+            <tr key={module.id}>
+              <th scope="row">{module.id}</th>
+              <td>{module.title}</td>
+              <td>{module.topic}</td>
+              <td>{module.difficulty}</td>
+              <td>{module.classes}</td>
+              <td>{module.reviewed ? "True" : "False"}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
