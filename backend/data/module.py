@@ -1,11 +1,11 @@
 import os
-from typing import Generator, Dict, Any
+from typing import Generator, Dict, Any,List, Tuple
 
 from sqlmodel import Field, Session, SQLModel, create_engine, select
 from fastapi import HTTPException
-
-from ..model.module_db import Module, Folder, File
-
+from pydantic import BaseModel
+from ..model.module_db import Module, Folder, File, ModuleSimple
+import json
 # ────────────────────────────────────────────────
 # 📦 Database Setup
 # ────────────────────────────────────────────────
@@ -59,8 +59,29 @@ def create_folder(folder: Folder, data: Dict[str, Any], session: Session) -> Fol
     session.commit()
     session.refresh(folder)
 
+    if not isinstance(data,dict):
+        data = data.dict()
+            
     for filename, contents in data.items():
         file = File(name=filename, content=contents, folder_id=folder.id)
         create_file(file, session)
 
     return folder
+
+def create_module(module: ModuleSimple, folders: List[Tuple[str, Dict[str, Any]]], session: Session) -> Module:
+    session.add(module)
+    session.commit()
+    session.refresh(module)
+
+    for title, files_content in folders:
+        folder = Folder(name=title, module_id=module.id)
+        create_folder(folder, files_content, session)
+
+    return module
+
+    
+
+        
+        
+        
+
