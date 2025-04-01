@@ -17,18 +17,24 @@ class Module(SQLModel, table=True):
     title: str
     topic: str
     difficulty: Difficulty
-    classes: List[str] = Field(default_factory=list, sa_column=Column(JSON))
+    classes: Optional[List[str]] = Field(default_factory=list, sa_column=Column(JSON))
     reviewed: bool = False
+
+class ModuleSimple(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    name: str
+    folders: List["Folder"] = Relationship(back_populates="module")
+
+class Folder(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    name: str
+    module_id: Optional[int] = Field(default=None, foreign_key="modulesimple.id")
+    module: Optional[ModuleSimple] = Relationship(back_populates="folders")
+    files: List["File"] = Relationship(back_populates="folder")
 
 class File(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     name: str
     content: str
     folder_id: Optional[int] = Field(default=None, foreign_key="folder.id")
-    folder: Optional["Folder"] = Relationship(back_populates="files")  # added back-reference
-
-
-class Folder(SQLModel, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
-    name: str
-    files: List[File] = Relationship(back_populates="folder")
+    folder: Optional[Folder] = Relationship(back_populates="files")
