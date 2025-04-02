@@ -40,11 +40,15 @@ def create_module(module: Module, session: Session) -> Module:
 def get_modules(skip: int = 0, limit: int = 10, session: Session = None):
     return session.exec(select(Module).offset(skip).limit(limit)).all()
 
-def get_module_id(module_id: int, session: Session = None) -> Module:
-    module = session.get(Module, module_id)
+def get_module_id(module_id: int, session: Session = None) -> ModuleSimple:
+    module = session.get(ModuleSimple, module_id)
     if not module:
         raise HTTPException(status_code=404, detail="Module not found")
     return module
+
+def get_modules_simple(skip: int = 0, limit: int = 10, session: Session = None):
+    return session.exec(select(ModuleSimple).offset(skip).limit(limit)).all()
+
 
 # ── Folder & Files ─────────────
 

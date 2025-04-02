@@ -11,8 +11,8 @@ import { Home } from "./components/Home";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ModulePage from "./components/ModulePage";
 import GeneratorPage from "./components/GeneratorPage";
-import "./App.css"
-
+import "./App.css";
+import SingleModule from "./components/SingleModule";
 
 // function App() {
 //   const [alertVisible, setAlertVisibility] = useState(false);
@@ -52,7 +52,7 @@ const app_name = "Gestalt App";
 const links = [
   { name: "Home", ref_link: "/" },
   { name: "About", ref_link: "#about" },
-  { name: "Modules", ref_link: "/modules" },
+  { name: "Modules", ref_link: "/modules", additional_elements: ["/:id"] },
   { name: "Generators", ref_link: "/generators" },
 ];
 
@@ -66,16 +66,38 @@ type RouteName = keyof typeof routeComponents;
 
 function handleLinks() {
   return links
-    .filter((link): link is { name: RouteName; ref_link: string } =>
-      Object.keys(routeComponents).includes(link.name)
+    .filter(
+      (
+        link
+      ): link is {
+        name: RouteName;
+        ref_link: string;
+        additional_elements?: string[];
+      } => Object.keys(routeComponents).includes(link.name)
     )
-    .map((link, idx) => (
-      <Route
-        path={link.ref_link}
-        key={idx}
-        element={routeComponents[link.name]}
-      />
-    ));
+    .flatMap((link, idx) => {
+      const routes = [
+        <Route
+          key={`${idx}-main`}
+          path={link.ref_link}
+          element={routeComponents[link.name]}
+        />,
+      ];
+
+      if (link.additional_elements) {
+        routes.push(
+          ...link.additional_elements.map((addPath, subIdx) => (
+            <Route
+              key={`${idx}-add-${subIdx}`}
+              path={link.ref_link + addPath}
+              element={routeComponents[link.name]}
+            />
+          ))
+        );
+      }
+
+      return routes;
+    });
 }
 
 function App() {

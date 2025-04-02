@@ -124,10 +124,11 @@ function ImageGenerator() {
 function GeneratorFormText() {
   const [modName, setModName] = useState("");
   const [bodyText, setBodyText] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(bodyText);
+    setLoading(true);
 
     try {
       const response = await api.post("/chains", {
@@ -137,6 +138,8 @@ function GeneratorFormText() {
       console.log(response);
     } catch (error: any) {
       console.error("Error Posting Data", error.response?.data);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -170,9 +173,17 @@ function GeneratorFormText() {
         ></textarea>
       </div>
 
-      <button type="submit" className="btn btn-primary">
-        Submit
+      <button type="submit" className="btn btn-primary" disabled={loading}>
+        {loading ? "Processing..." : "Submit"}
       </button>
+      {/* Loading spiner */}
+      {loading && (
+        <div className="text-center mt-3">
+          <div className="spinner-border" role="status">
+            <span className="visually-hidden"></span>
+          </div>
+        </div>
+      )}
     </form>
   );
 }
