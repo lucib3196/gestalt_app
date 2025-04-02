@@ -160,7 +160,7 @@ class SemanticExamples:
     
 if __name__ == "__main__":
     columns_names = ["question", "question.html"]
-    filter = {"isAdaptive": "False"}
+    filter = {"isAdaptive": "True"}
     example_formatter = SemanticExamples(column_names=columns_names, filter=filter)
     
     query = "A car travels a total distance of 100 miles in 5 hours. Calculate its speed"
