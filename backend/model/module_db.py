@@ -20,6 +20,9 @@ class Module(SQLModel, table=True):
     classes: Optional[List[str]] = Field(default_factory=list, sa_column=Column(JSON))
     reviewed: bool = False
 
+
+
+
 class ModuleSimple(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     name: str
@@ -36,5 +39,6 @@ class File(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     name: str
     content: str
+    save_name:str
     folder_id: Optional[int] = Field(default=None, foreign_key="folder.id")
     folder: Optional[Folder] = Relationship(back_populates="files")
