@@ -46,6 +46,21 @@ def get_module_id(module_id: int, session: Session = None) -> ModuleSimple:
         raise HTTPException(status_code=404, detail="Module not found")
     return module
 
+def get_module_folder(module_id:int, session: Session=None)->Folder:
+    folder = session.query(Folder).filter_by(module_id=module_id).first()
+    if not folder:
+        raise HTTPException(status_code=404, detail="Folder not found")
+    return folder
+
+def get_module_files(module_id: int, session: Session):
+    folder = session.query(Folder).filter_by(module_id=module_id).first()
+
+    if not folder:
+        raise HTTPException(status_code=404, detail="Folder not found")
+
+    return folder.files  # returns list of related File records
+
+
 def get_modules_simple(skip: int = 0, limit: int = 10, session: Session = None):
     return session.exec(select(ModuleSimple).offset(skip).limit(limit)).all()
 
