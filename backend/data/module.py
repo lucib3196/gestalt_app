@@ -1,155 +1,17 @@
-import os
-from typing import Generator, Dict, Any,List, Tuple
+# module.py (main entry point for local testing)
+from contextlib import contextmanager
+from data.database import get_session
+from data.generate_quiz import generate_quiz
 
-from sqlmodel import Field, Session, SQLModel, create_engine, select
-from fastapi import HTTPException
-from pydantic import BaseModel
-from ..model.module_db import Module, Folder, File, ModuleSimple
-import json
-from ..processing.pl_utils.process_prairielearn import process
-# ────────────────────────────────────────────────
-# 📦 Database Setup
-# ────────────────────────────────────────────────
-
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DB_PATH = os.path.join(BASE_DIR, "database.db")
-engine = create_engine(f"sqlite:///{DB_PATH}", echo=True)
-
-# Create all tables at startup
-SQLModel.metadata.create_all(engine)
-
-# ────────────────────────────────────────────────
-# 🔌 Dependency Injection
-# ────────────────────────────────────────────────
-
-def get_session() -> Generator[Session, None, None]:
-    with Session(engine) as session:
+@contextmanager
+def sync_session():
+    gen = get_session()
+    session = next(gen)
+    try:
         yield session
-
-# ────────────────────────────────────────────────
-# 🛠️ CRUD Service Functions
-# ────────────────────────────────────────────────
-
-# ── Module ──────────────────────
-
-def create_module(module: Module, session: Session) -> Module:
-    session.add(module)
-    session.commit()
-    session.refresh(module)
-    return module
-
-def get_modules(skip: int = 0, limit: int = 10, session: Session = None):
-    return session.exec(select(Module).offset(skip).limit(limit)).all()
-
-def get_module_id(module_id: int, session: Session = None) -> ModuleSimple:
-    module = session.get(ModuleSimple, module_id)
-    if not module:
-        raise HTTPException(status_code=404, detail="Module not found")
-    return module
-
-def get_module_folder(module_id:int, session: Session=None)->Folder:
-    folder = session.query(Folder).filter_by(module_id=module_id).first()
-    if not folder:
-        raise HTTPException(status_code=404, detail="Folder not found")
-    return folder
-
-def get_module_files(module_id: int, session: Session):
-    folder = session.query(Folder).filter_by(module_id=module_id).first()
-
-    if not folder:
-        raise HTTPException(status_code=404, detail="Folder not found")
-
-    return folder.files  # returns list of related File records
-
-
-
-
-
-def get_modules_simple(skip: int = 0, limit: int = 10, session: Session = None):
-    return session.exec(select(ModuleSimple).offset(skip).limit(limit)).all()
-
-
-def get_single_file(module_id: int, file_id: int, session: Session):
-    file = (
-        session.query(File)
-        .join(Folder, File.folder_id == Folder.id)
-        .filter(File.id == file_id, Folder.module_id == module_id)
-        .first()
-    )
-
-    if not file:
-        raise HTTPException(status_code=404, detail="File not found in this module")
-
-    return file.content
-
-    
-    
-
-# ── Folder & Files ─────────────
-
-def create_file(file: File, session: Session) -> File:
-    session.add(file)
-    session.commit()
-    session.refresh(file)
-    return file
-
-def create_folder(folder: Folder, data: Dict[str, Any], session: Session) -> Folder:
-    session.add(folder)
-    session.commit()
-    session.refresh(folder)
-
-    if not isinstance(data,dict):
-        data = data.dict()
-            
-    for filename, contents in data.items():
-        file = File(name=filename, content=contents, folder_id=folder.id)
-        create_file(file, session)
-
-    return folder
-
-def create_module(module: ModuleSimple, folders: List[Tuple[str, Dict[str, Any]]], session: Session) -> Module:
-    session.add(module)
-    session.commit()
-    session.refresh(module)
-
-    for title, files_content in folders:
-        folder = Folder(name=title, module_id=module.id)
-        create_folder(folder, files_content, session)
-
-    return module
-
-    
+    finally:
+        gen.close()
 
 if __name__ == "__main__":
-    from contextlib import contextmanager
-
-    @contextmanager
-    def sync_session():
-        gen = get_session()
-        session = next(gen)
-        try:
-            yield session
-        finally:
-            gen.close()
-            
-    question_name_map = {
-        "question_txt": "question.txt",
-        "question_html": "question.html",
-        "server_js": "server.js",
-        "server_py": "server.py",
-        "solution_html": "solution.html",
-        "metadata": "info.json"
-    }
-
     with sync_session() as session:
-        files = get_module_files(1, session=session)
-        for f in files:
-            f.save_name = question_name_map[f.name]
-            print(f.save_name)
-            if f.save_name == "server.js":
-                # print(f.content)
-                # print(process(f.content))
-                print(f.content)
-        
-        
-
+        generate_quiz(1, session)
