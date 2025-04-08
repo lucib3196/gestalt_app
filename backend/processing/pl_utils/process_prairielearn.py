@@ -49,6 +49,11 @@ def apply_tag_replacers(html_string: str, replacers: List[TagReplacer]) -> str:
 
     return soup.prettify()
 
+def process(html:str):
+    replacers = create_tag_replacer(html, tag_replacer_configs)
+    modified_html = apply_tag_replacers(html, replacers)
+    return modified_html
+
 
 def main():
     """
