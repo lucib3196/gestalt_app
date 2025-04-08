@@ -6,6 +6,7 @@ from fastapi import HTTPException
 from pydantic import BaseModel
 from ..model.module_db import Module, Folder, File, ModuleSimple
 import json
+from ..processing.pl_utils.process_prairielearn import process
 # ────────────────────────────────────────────────
 # 📦 Database Setup
 # ────────────────────────────────────────────────
@@ -59,6 +60,9 @@ def get_module_files(module_id: int, session: Session):
         raise HTTPException(status_code=404, detail="Folder not found")
 
     return folder.files  # returns list of related File records
+
+
+
 
 
 def get_modules_simple(skip: int = 0, limit: int = 10, session: Session = None):
@@ -116,7 +120,36 @@ def create_module(module: ModuleSimple, folders: List[Tuple[str, Dict[str, Any]]
 
     
 
-        
+if __name__ == "__main__":
+    from contextlib import contextmanager
+
+    @contextmanager
+    def sync_session():
+        gen = get_session()
+        session = next(gen)
+        try:
+            yield session
+        finally:
+            gen.close()
+            
+    question_name_map = {
+        "question_txt": "question.txt",
+        "question_html": "question.html",
+        "server_js": "server.js",
+        "server_py": "server.py",
+        "solution_html": "solution.html",
+        "metadata": "info.json"
+    }
+
+    with sync_session() as session:
+        files = get_module_files(1, session=session)
+        for f in files:
+            f.save_name = question_name_map[f.name]
+            print(f.save_name)
+            if f.save_name == "server.js":
+                # print(f.content)
+                # print(process(f.content))
+                print(f.content)
         
         
 
