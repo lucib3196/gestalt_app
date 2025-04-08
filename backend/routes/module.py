@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends
 from pydantic import BaseModel
 from sqlmodel import Session
 
-from ..data import module as service
+from ..data import database as service
 from ..data.module import get_session
 from ..model.module_db import Module, Folder, File, ModuleSimple
 
