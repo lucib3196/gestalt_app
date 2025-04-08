@@ -64,6 +64,13 @@ def get_module_by_id(module_id: int, session: Session = Depends(get_session)):
 def get_module_folder(module_id:int, session:Session=Depends(get_session)):
     return service.get_module_folder(module_id, session)
 
+
+
 @router.get("/simple/{module_id}/folder/file_contents", response_model=List[File])
 def get_modules_files(module_id:int, session:Session=Depends(get_session)):
     return service.get_module_files(module_id, session)
+
+
+@router.get("/simple/{module_id}/folder/file_contents/{file_id}")
+def get_single_file(module_id:int, file_id:int, session:Session=Depends(get_session)):
+    return service.get_single_file(module_id, file_id,session)

@@ -14,6 +14,7 @@ app.include_router(chains.router)
 # Allow CORS for your React frontend
 origins = [
     "http://localhost:5173",  # Update with your frontend's origin as needed
+    "http://localhost:3000",
 ]
 
 app.add_middleware(

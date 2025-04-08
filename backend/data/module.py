@@ -65,6 +65,22 @@ def get_modules_simple(skip: int = 0, limit: int = 10, session: Session = None):
     return session.exec(select(ModuleSimple).offset(skip).limit(limit)).all()
 
 
+def get_single_file(module_id: int, file_id: int, session: Session):
+    file = (
+        session.query(File)
+        .join(Folder, File.folder_id == Folder.id)
+        .filter(File.id == file_id, Folder.module_id == module_id)
+        .first()
+    )
+
+    if not file:
+        raise HTTPException(status_code=404, detail="File not found in this module")
+
+    return file
+
+    
+    
+
 # ── Folder & Files ─────────────
 
 def create_file(file: File, session: Session) -> File:
