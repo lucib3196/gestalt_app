@@ -76,7 +76,7 @@ def get_single_file(module_id: int, file_id: int, session: Session):
     if not file:
         raise HTTPException(status_code=404, detail="File not found in this module")
 
-    return file
+    return file.content
 
     
     
