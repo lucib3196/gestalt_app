@@ -28,6 +28,8 @@ export default function RootLayout({
 }>) {
   const links = [
     { name: 'Home', path: '/' },
+    {name: "Generator", path: "/generators/text_generator"},
+    {name: "Modules", path: "/modules"}
   ];
 
   return (
