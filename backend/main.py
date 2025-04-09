@@ -3,13 +3,14 @@ from fastapi import FastAPI, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List
-from .routes import module, chains
+from .routes import module, chains, quiz
 from .ai_workspace.agents.simple_chat.simple_chat import graph
 app = FastAPI(debug=True)
 
 # Include additional routers
 app.include_router(module.router)
 app.include_router(chains.router)
+app.include_router(quiz.router)
 
 # Allow CORS for your React frontend
 origins = [

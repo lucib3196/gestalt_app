@@ -3,7 +3,8 @@ from typing import List, Tuple, Dict, Any, Optional
 from sqlmodel import Session, select
 from fastapi import HTTPException
 from .database import engine
-from model.module_db import Module, Folder, File, ModuleSimple
+from ..model.module_db import Module, Folder, File, ModuleSimple
+
 
 def create_module(module: Module, session: Session) -> Module:
     session.add(module)
