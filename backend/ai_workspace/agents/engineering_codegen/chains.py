@@ -250,4 +250,14 @@ if __name__ == "__main__":
     C. An object in motion stays in motion unless acted on by an external force
     """
     result = graph.invoke({'query': question_2, "initial_metadata": initial_metadata})
-    print(result)
+    print(result) 
+    import asyncio
+    async def main():
+        question_list = [question_1, question_2]
+        # Create a list of asynchronous tasks
+        tasks = [graph.abatch({'query': query, 'initial_metadata': initial_metadata})
+                for query in question_list]
+        # Await on asyncio.gather so that all tasks run concurrently.
+        results = await asyncio.gather(*tasks)
+        print(results)
+    asyncio.run(main())
