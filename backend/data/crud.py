@@ -4,7 +4,7 @@ from sqlmodel import Session, select
 from fastapi import HTTPException
 from .database import engine
 from ..model.module_db import Module, Folder, File, ModuleSimple
-
+import json
 
 def create_module(module: Module, session: Session) -> Module:
     session.add(module)
@@ -60,6 +60,9 @@ def create_folder(folder: Folder, data: Dict[str, Any], session: Session) -> Fol
     if not isinstance(data, dict):
         data = data.dict()
     for filename, contents in data.items():
+        if isinstance(contents, dict):
+            contents = json.dumps(contents)
+            
         file = File(name=filename, content=contents, folder_id=folder.id)
         create_file(file, session)
     return folder
