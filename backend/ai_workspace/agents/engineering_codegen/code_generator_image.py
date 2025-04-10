@@ -7,9 +7,10 @@ from langchain import hub
 from langgraph.graph import StateGraph, START, END
 from langgraph.pregel import RetryPolicy
 from IPython.display import Image, display
+from typing import Optional
 
 from ...image_processing.ImageLLMProcessor import ImageLLMProcessor
-from .code_generator import compiled_graph as question_formatter
+from .code_generator import compiled_graph as question_formatter, InitialMetadata
 from .code_generator import QuestionPayload, QuestionPackage
 
 
@@ -28,6 +29,7 @@ class ImageInputState(BaseModel):
     Initial state: user provides a list of image paths.
     """
     image_paths: List[str]
+    initial_metadata: Optional[InitialMetadata] = None
 
 
 class ImageExtractionOutputState(BaseModel):
@@ -57,7 +59,9 @@ async def extract_and_format_questions(state: ImageInputState) -> ImageExtractio
     raw_payloads = extraction_result.get("questions_payload", [])
 
     # Process each payload using the question_formatter graph
-    format_tasks = [question_formatter.ainvoke({"question_payload": payload}) for payload in raw_payloads]
+    initial_metadata = state.initial_metadata
+        
+    format_tasks = [question_formatter.ainvoke({"question_payload": payload,"initial_metadata": initial_metadata}) for payload in raw_payloads]
     formatted_questions = await asyncio.gather(*format_tasks)
 
     return ImageExtractionOutputState(

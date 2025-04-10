@@ -4,7 +4,7 @@ from langchain import hub
 from langchain_core.runnables import RunnableConfig
 from pydantic import BaseModel, Field
 from IPython.display import Image, display
-from typing import Literal, List, Any
+from typing import Literal, List, Any, Optional
 from ast import literal_eval
 import json
 import os
@@ -40,7 +40,7 @@ class InitialMetadata(BaseModel):
 
 class InputState(BaseModel):
     query: str
-    initial_metadata: InitialMetadata
+    initial_metadata: Optional[InitialMetadata] = None
 
 class OverallState(BaseModel):
     question: str
