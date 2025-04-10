@@ -51,6 +51,10 @@ def run_chain(data: QueryRequest, session: Session = Depends(get_session)):
     return result
 
 
+
+
+
+# Not Ready actively working on 
 class ChatInput(BaseModel):
     messages:list[str]
     thread_id: str
