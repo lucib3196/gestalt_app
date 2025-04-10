@@ -76,8 +76,16 @@ class FilesData(BaseModel):
     server_js: str = ""
     server_py: str = ""
     solution_html: str = ""
-    metadata: str = ""
+    metadata: dict[str,Any] = {}
 
+class InitialMetadata(BaseModel):
+    createdBy: str
+    qtype:str
+    nSteps: int
+    updatedBy:str
+    codelang:str
+    reviewed: Literal["True", "False"]
+    ai_generated: Literal["True","False"]
 
 class QuestionPackage(BaseModel):
     """
@@ -88,12 +96,11 @@ class QuestionPackage(BaseModel):
     question_payload: Annotated[QuestionPayload, keep_first]
     question_metadata: Annotated[Optional[QuestionMetadata], keep_first] = None
     files: Annotated[FilesData, merge_files_data] = Field(default_factory=FilesData)
-
+    initial_metadata: Annotated[Optional[InitialMetadata], keep_first] = None
 
 class CodeResponse(BaseModel):
     """Output schema from the LLM for code generation."""
     code: str = Field(..., description="The generated code. Only return the code.")
-
 
 # =============================================================================
 # Runnable Nodes (Chain Functions)
@@ -348,6 +355,8 @@ async def final_combine(state: QuestionPackage) -> QuestionPackage:
         The final state (possibly modified) for the question package.
     """
     print("Finalizing Package")
+    state.files.metadata = {**state.question_metadata.model_dump(),
+                            **state.initial_metadata.model_dump()}
     return state
 
 
@@ -391,11 +400,12 @@ graph_nodes = [
     ("generate_py", generate_py),
     ("generate_solution_html", generate_solution_html),
     ("adaptive_combine", adaptive_combine),
+    ("final_combine", final_combine)
 ]
 
 # Add nodes with retry policy.
 for node_name, node_func in graph_nodes:
-    question_graph.add_node(node_name, node_func, retry=RetryPolicy(max_attempts=3))
+    question_graph.add_node(node_name, node_func, retry=RetryPolicy(max_attempts=1))
 
 # Construct graph edges.
 question_graph.add_edge(START, graph_nodes[0][0])
@@ -406,11 +416,11 @@ question_graph.add_conditional_edges(
     "generate_question_html", conditional_js_py_router, ["generate_js", "generate_py"]
 )
 question_graph.add_conditional_edges(
-    "generate_solution_html", solution_improvement_router, ["adaptive_combine", END]
+    "generate_solution_html", solution_improvement_router, ["adaptive_combine", "final_combine"]
 )
 question_graph.add_edge("generate_js", "adaptive_combine")
 question_graph.add_edge("generate_py", "adaptive_combine")
-question_graph.add_edge("adaptive_combine", END)
+question_graph.add_edge("adaptive_combine", "final_combine")
 question_graph.add_edge(graph_nodes[-1][0], END)
 
 # Compile the graph.
@@ -449,23 +459,33 @@ async def main() -> None:
     An initial question is provided; the graph then processes it,
     generating metadata, HTML, JavaScript, Python, and final solution HTML.
     """
-    initial_state = {
-        "question_payload": {
-            "question": (
-                "What is the final velocity of a 2 kg projectile launched at 30 degrees "
-                "with an initial speed of 20 m/s after 3 seconds?"
-            ),
-            "solution_guide": None,
-            "additional_instructions": None,
-        }
+    question_payload = {
+        "question": (
+            "What is the final velocity of a 2 kg projectile launched at 30 degrees "
+            "with an initial speed of 20 m/s after 3 seconds?"
+        ),
+        "solution_guide": None,
+        "additional_instructions": None,
     }
-    result = await compiled_graph.ainvoke(initial_state)
+    initial_metadata =  {
+        "createdBy": "lberm007@ucr.edu",
+        "qtype": "num",
+        "nSteps": 1,
+        "updatedBy": "",
+        "difficulty": 1,
+        "codelang": "javascript",
+        "reviewed": "False",
+        "ai_generated": "True"
+    }
+    
+    graph_input = QuestionPackage(question_payload=question_payload, initial_metadata=initial_metadata)
+    result = await compiled_graph.ainvoke(graph_input)
     print(result)
 
 
 if __name__ == "__main__":
     # Optionally save the graph visualization.
     save_graph_visualization(compiled_graph)
-    # import asyncio
+    import asyncio
 
-    # asyncio.run(main())
+    asyncio.run(main())
