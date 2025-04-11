@@ -23,7 +23,7 @@ const FolderTable: React.FC<FolderTableProps> = ({ folders }) => {
           <button
             className="btn btn-link p-0 text-start"
             onClick={() =>
-              router.push(`/modules/${folder.module_id}}/file/${folder.id}`)
+              router.push(`/modules/${folder.module_id}/file/${folder.id}`)
             }
           >
             {folder.name}
