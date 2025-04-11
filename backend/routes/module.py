@@ -56,6 +56,14 @@ def get_all_folders(
     session:Session = Depends(get_session)):
     return service.get_module_folders(module_id=module_id,session=session)
 
+@router.get("/simple/{module_id}/{folder_id}/get_all_files", response_model = List[File])
+def get_folder_content(
+        module_id:int,
+        folder_id:int,
+        session:Session = Depends(get_session)
+    ):
+        return service.get_folder_files(module_id,folder_id,session=session)
+
 
 
 # These still work but will need to refactor 

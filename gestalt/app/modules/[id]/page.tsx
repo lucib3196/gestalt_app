@@ -1,102 +1,80 @@
 "use client";
-
+import React, { useEffect, useState } from "react";
+import api from "@/api";
 import { useParams } from "next/navigation";
-import { DataRenderer } from "@/components/DataRenderer";
-import { Container } from "react-bootstrap";
-import { Table } from "react-bootstrap";
-import { useRouter } from 'next/navigation';
 
-type FileResponse = {
-  id: number;
+import { useRouter } from "next/navigation";
+interface Folder {
+  id: number; // folder_id
   name: string;
-  content: string;
-  save_name: string | null;
-  folder_id: number;
-};
+  module_id: number; // mod_id
+}
 
-const FileNameMap: Record<string, string> = {
-  question_txt: "question.txt",
-  question_html: "question.html",
-  server_js: "server.js",
-  server_py: "server.py",
-  solution_html: "solution.html",
-  metadata: "info.json",
-};
+interface FolderTableProps {
+  folders: Folder[];
+}
 
-type ApiResponse = Array<FileResponse>
-
-export default function SingleModule() {
+const FolderTable: React.FC<FolderTableProps> = ({ folders }) => {
   const router = useRouter();
+  const renderRow = (folder: Folder) => {
+    return (
+      <tr key={folder.id}>
+        <td>
+          <button
+            className="btn btn-link p-0 text-start"
+            onClick={() =>
+              router.push(`/modules/${folder.module_id}}/file/${folder.id}`)
+            }
+          >
+            {folder.name}
+          </button>
+        </td>
+      </tr>
+    );
+  };
+  return (
+    <>
+      <table className="table table-striped">
+        <thead>
+          <tr>
+            <th>Folder Names</th>
+          </tr>
+        </thead>
+        <tbody>{folders.map(renderRow)}</tbody>
+      </table>
+    </>
+  );
+};
+
+const FolderPage: React.FC = () => {
+  const [folders, setFolders] = useState<Folder[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
   const params = useParams();
   const id = params.id as string;
 
-  const source = {
-    url: `/modules/simple/${id}/folder/file_contents`,
+  // Fetch all folders for the module
+  const fetchFolders = async () => {
+    setLoading(true);
+    try {
+      const response = await api.get(`/modules/simple/${id}/get_all_folders`);
+      console.log(response.data);
+      setFolders(response.data); //
+    } catch (error) {
+      console.error("There was an error getting the folders", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const loadingComponent = (
-    <div className="text-center p-4">
-      <div className="spinner-border text-primary" role="status">
-        <span className="visually-hidden">Loading...</span>
-      </div>
-    </div>
-  );
-
-  const errorComponent = (
-    <div className="alert alert-danger">Error loading files</div>
-  );
-
-  const renderFiles = (rawData: ApiResponse, isLoading: boolean) => {
-    console.log("API Response:", rawData);
-    if (isLoading) return loadingComponent;
-
-    // Safely handle the response data
-    const files = rawData
-    console.log("These are the files")
-    console.log(files)
-
-    return (
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>File Name</th>
-          </tr>
-        </thead>
-        <tbody>
-          {files.length > 0 ? (
-            files.map((file) => (
-              <tr key={file.id}>
-                <td>
-                  <button
-                    className="btn btn-link p-0 text-start"
-
-                    onClick={() => router.push(`/modules/${id}/file/${file.id}`)}
-                  >
-                    {FileNameMap[file.name] || file.name}
-                  </button>
-                </td>
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td>No files found</td>
-            </tr>
-          )}
-        </tbody>
-      </Table>
-    );
-  };
+  useEffect(() => {
+    fetchFolders();
+  }, [id]);
 
   return (
-    <Container className="mt-4">
-      <h2 className="mb-4">Module Files</h2>
-      <DataRenderer<ApiResponse>
-        source={source}
-        loadingComponent={loadingComponent}
-        errorComponent={errorComponent}
-      >
-        {renderFiles}
-      </DataRenderer>
-    </Container>
+    <div className="container-fluid m-4">
+      {loading ? <p>Loading folders...</p> : <FolderTable folders={folders} />}
+    </div>
   );
-}
+};
+
+export default FolderPage;
