@@ -25,51 +25,79 @@ const examples = [
 ];
 
 const FileUploadForm: React.FC = () => {
-  const [filesData, setFilesData] = useState<FileList | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [folderName, setFolderName] = useState<string>("");
+  const [fileList, setFileList] = useState<FileList | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFilesData(e.target.files);
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFileList(e.target.files);
+  };
+
+  const handleFolderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFolderName(e.target.value);
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!filesData) return;
+    if (!fileList) return;
 
     const formData = new FormData();
-    for (let i = 0; i < filesData.length; i++) {
-      formData.append("files", filesData[i]);
+    formData.append("folder_name", folderName);
+
+    for (let i = 0; i < fileList.length; i++) {
+      formData.append("files", fileList[i]);
     }
 
     setLoading(true);
 
-    // Do the API Request
     try {
-      const response = await api.post("/image_upload/uploadfiles/", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      console.log(response.data);
+      const response = await api.post(
+        "/code_generator_chains/v1/image_upload",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log("Upload successful:", response.data);
     } catch (error) {
-      console.log("Error submitting form");
+      console.error("Error submitting form", error);
     } finally {
       setLoading(false);
     }
   };
+
   return (
+    <div className="text-gen-form">
     <form onSubmit={handleSubmit} encType="multipart/form-data">
       <input
-        type="file"
-        name="filesData"
-        multiple
-        onChange={handleChange}
-        className="form-control"
+        type="text"
+        name="folder_name"
+        className="form-control mb-2"
+        value={folderName}
+        onChange={handleFolderChange}
+        placeholder="Folder Name"
+        required
       />
-      <button type="submit" className="btn btn-primary mt-2" disabled={loading}>
+
+      <input
+        type="file"
+        name="files"
+        multiple
+        onChange={handleFileChange}
+        className="form-control mb-3"
+      />
+
+      <button
+        type="submit"
+        className="btn btn-primary"
+        disabled={loading}
+      >
         {loading ? "Uploading..." : "Upload Files"}
       </button>
     </form>
+    </div>
   );
 };
 
