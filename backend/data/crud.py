@@ -19,8 +19,18 @@ def get_module_folders(module_id:int, session: Session=None)->List[Folder]:
     # Continuue and get the folder
     folders = session.query(Folder).filter_by(module_id=module_id).all()
     if not folders:
-        raise HTTPException(status_code=404, detail="Folder not found")
+        raise HTTPException(status_code=404, detail="Folders not found")
     return folders
+    
+    
+def get_folder_files(module_id:int,folder_id:int,session:Session=None)->List[File]:
+    folders = get_module_folders(module_id=module_id,session=session)
+    folder = session.query(Folder).filter_by(id=folder_id).first()
+    if not folder:
+        raise HTTPException(status_code=404, detail="Folder not found")
+    return folder.files
+    
+    
     
 
 # These are a bit older and still work however i need to eventually move them and improve them 
