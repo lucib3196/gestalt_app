@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 import "./globals.css";
 import NavBar from "@/components/NavBar";
-
-
+import "bootstrap/dist/css/bootstrap.min.css";
+import type { AppProps } from "next/app";
+import Footer from "@/components/Footer";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,9 +29,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const links = [
-    { name: 'Home', path: '/' },
-    {name: "Generator", path: "/generators/text_generator"},
-    {name: "Modules", path: "/modules"}
+    { name: "Home", path: "/" },
+    { name: "Generator", path: "/generators/text_generator" },
+    { name: "Modules", path: "/modules" },
   ];
 
   return (
@@ -38,7 +40,11 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <NavBar app_name="My App" links={links} />
-        {children}
+        <div className="my-container">
+          {children}
+          
+        </div>
+        <Footer />
       </body>
     </html>
   );

@@ -1,0 +1,120 @@
+/* ============================
+   Mod Page Styles
+============================ */
+
+/* ---------- Container ---------- */
+.mod-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 60%;
+  max-width: 90%;
+  padding: 1rem;
+  margin-top: 3rem;
+
+  background-color: #fff; /* Contrast background */
+  border: 1px solid #ddd; /* Subtle border */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); /* Light shadow */
+  height: auto;
+}
+
+/* ---------- Info Section ---------- */
+.gen-info-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40px;
+  justify-content: center;
+}
+
+.gen-title {
+  color: var(--dark-shades);
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+
+  overflow-wrap: break-word;
+  word-break: break-word;
+  white-space: normal;
+
+  max-width: 100%;
+}
+
+.gen-subheading {
+  font-size: 1.2rem;
+  font-style: italic;
+  color: var(--light-accent);
+}
+
+/* ---------- Example Section ---------- */
+.gen-example-text {
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--dark-accent);
+  margin-bottom: 10px;
+}
+
+.example-container {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.ind-ex-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.underline{
+    border-bottom: 1.5px solid var(--light-accent);
+    display: inline-block;
+}
+
+.ind-ex-container p {
+  margin: 1rem;
+  line-height: 1.6;
+  font-size: 1rem;
+  color: var(--dark-shades);
+}
+
+.fw-bold {
+  color: var(--main-brand-color);
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+
+.mod-example-list{
+    list-style: none;
+}
+
+
+/*  Generator Input  */
+.text-gen-form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.text-gen-form form{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.text-gen-form form input{
+  width: 50%;
+}
+
+.form-floating{
+  width: 100%;
+}
