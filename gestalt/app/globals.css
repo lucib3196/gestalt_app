@@ -1,15 +1,47 @@
-/* Color Scheme */
+/* ==========================
+   🎨 COLOR SCHEME
+   ========================== */
 :root {
-  --light-shades: #FAF8F7;
-  --light-accent: #EEAF48;
-  --main-brand-color: #75B0D9;
-  --dark-accent: #2AAFDA;
+  --light-shades: #faf8f7;
+  --light-accent: #eeaf48;
+  --main-brand-color: #75b0d9;
+  --dark-accent: #2aafda;
   --dark-shades: #363962;
 }
 
+/* ==========================
+     🌐 GENERAL STYLES
+     ========================== */
+body {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-size: 16px;
+}
 
-/* General */
-.my-container{
+.text-container {
+  text-align: center;
+  margin: 20px 0 40px;
+}
+
+.ital {
+  color: var(--dark-shades);
+  font-size: 1.1rem;
+}
+
+.divider {
+  border: 2px solid var(--light-accent);
+  max-width: 75%;
+  margin: 10px auto 0;
+}
+
+.divider.div-dark {
+  border-color: var(--dark-shades);
+}
+
+/* ==========================
+     📦 LAYOUT HELPERS
+     ========================== */
+.my-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -17,12 +49,81 @@
   padding: 1rem;
 }
 
-.my-container *{
+.my-container * {
   margin-top: 2rem;
 }
 
-
-.table-responsive{
+.table-responsive {
   width: 80%;
 }
 
+/* ==========================
+     🦸 HERO SECTION
+     ========================== */
+#hero-section {
+  background: linear-gradient(
+    135deg,
+    var(--main-brand-color) 0%,
+    var(--light-shades) 100%
+  );
+  background-size: cover !important;
+  color: var(--dark-shades);
+  padding: 100px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+}
+
+.main-heading {
+  font-size: 4rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: var(--dark-shades);
+}
+
+.subheading {
+  font-style: italic;
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: var(--dark-shades);
+  line-height: 1.5;
+  margin-bottom: 10%;
+}
+
+.cta-button {
+  background-color: var(--light-accent);
+  color: var(--dark-shades);
+  padding: 15px 30px;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+
+
+/* ==========================
+     🔘 BUTTON STYLES
+     ========================== */
+.my-button-primary {
+  background-color: var(--light-accent);
+  border-color: var(--dark-shades);
+  padding: 10px 30px;
+  font-size: 1rem;
+  border-radius: 25px;
+  margin-top: 10px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  text-align: center;
+  position: sticky;
+  top: 90%;
+}
+
+.my-button-primary-text {
+  text-decoration: none;
+  font-weight: bold;
+  color: var(--dark-shades);
+}
