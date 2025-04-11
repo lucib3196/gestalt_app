@@ -29,8 +29,6 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const links = [
-    { name: "Home", path: "/" },
-    { name: "Generator", path: "/generators/text_generator" },
     { name: "Modules", path: "/modules" },
   ];
 

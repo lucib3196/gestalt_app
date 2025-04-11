@@ -97,7 +97,6 @@ const GeneratorSection: React.FC = () => {
           <ModGeneratorsCard {...QuickQueryGeneratorInfo} />
           <ModGeneratorsCard {...VisualExtractGeneratorInfo} />
         </div>
-
       </section>
     </>
   );
