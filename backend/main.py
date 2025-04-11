@@ -3,7 +3,7 @@ from fastapi import FastAPI, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List
-from .routes import module, chains, quiz,upload_images, image_chain
+from .routes import module, chains, quiz,upload_images, image_chain,code_generator_chains
 from .ai_workspace.agents.simple_chat.simple_chat import graph
 app = FastAPI(debug=True)
 
@@ -13,7 +13,7 @@ app.include_router(chains.router)
 app.include_router(quiz.router)
 app.include_router(upload_images.router)
 app.include_router(image_chain.router)
-
+app.include_router(code_generator_chains.router)
 # Allow CORS for your React frontend
 origins = [
     "http://localhost:5173",  # Update with your frontend's origin as needed
@@ -32,6 +32,17 @@ app.add_middleware(
 class ChatInput(BaseModel):
     messages: List[str]
     thread_id: str
+    
+# Testing
+class FormData(BaseModel):
+    name: str
+    email: str
+@app.post("/submit")
+async def submit_form(data: FormData):
+    return {"message": f"Received data for {data.name} with email {data.email}"}
+
+
+
 
 # REST endpoint for chat requests
 @app.post("/chat")
