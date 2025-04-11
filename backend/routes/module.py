@@ -49,6 +49,16 @@ def create_folder(
 # 📥 GET Endpoints
 # ────────────────────────────────────────────────
 
+# Currently these are the main routes taht I should be working on 
+@router.get("/simple/{module_id}/get_all_folders", response_model=List[Folder])
+def get_all_folders(
+    module_id:int,
+    session:Session = Depends(get_session)):
+    return service.get_module_folders(module_id=module_id,session=session)
+
+
+
+# These still work but will need to refactor 
 @router.get("/simple", response_model=List[ModuleSimple])
 def get_modules(
     session: Session = Depends(get_session)

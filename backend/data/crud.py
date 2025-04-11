@@ -6,14 +6,24 @@ from .database import engine
 from ..model.module_db import Module, Folder, File, ModuleSimple
 import json
 
-def create_module(module: Module, session: Session) -> Module:
-    session.add(module)
-    session.commit()
-    session.refresh(module)
-    return module
 
-def get_modules(skip: int = 0, limit: int = 10, session: Session = None) -> List[Module]:
-    return session.exec(select(Module).offset(skip).limit(limit)).all()
+
+# Current Working Version With Simple Module
+
+def get_module_folders(module_id:int, session: Session=None)->List[Folder]:
+    # Basic check to ensure thet the module exist
+    module = session.get(ModuleSimple, module_id)
+    if not module: 
+        raise HTTPException(status_code=404, detail="Module not found")
+    
+    # Continuue and get the folder
+    folders = session.query(Folder).filter_by(module_id=module_id).all()
+    if not folders:
+        raise HTTPException(status_code=404, detail="Folder not found")
+    return folders
+    
+
+# These are a bit older and still work however i need to eventually move them and improve them 
 
 def get_module_id(module_id: int, session: Session = None) -> ModuleSimple:
     module = session.get(ModuleSimple, module_id)
@@ -79,3 +89,14 @@ def create_module_with_folders(
         folder = Folder(name=title, module_id=module.id)
         create_folder(folder, files_content, session)
     return module
+
+
+# Not Currently Active These are not yet implemented
+def create_module(module: Module, session: Session) -> Module:
+    session.add(module)
+    session.commit()
+    session.refresh(module)
+    return module
+
+def get_modules(skip: int = 0, limit: int = 10, session: Session = None) -> List[Module]:
+    return session.exec(select(Module).offset(skip).limit(limit)).all()

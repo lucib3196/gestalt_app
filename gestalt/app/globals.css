@@ -1,3 +1,11 @@
+/* Color Scheme */
+:root {
+  --light-shades: #FAF8F7;
+  --light-accent: #EEAF48;
+  --main-brand-color: #75B0D9;
+  --dark-accent: #2AAFDA;
+  --dark-shades: #363962;
+}
 
 
 /* General */
@@ -6,8 +14,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
+  padding: 1rem;
 }
 
 .my-container *{
