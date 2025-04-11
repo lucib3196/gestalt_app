@@ -1,0 +1,79 @@
+/* ================================
+   ✨ Key Features Section
+   ================================ */
+   #key-features {
+    background: var(--light-shades);
+    color: var(--light-accent); /* Accent text color */
+    padding: 50px 20px;
+    text-align: center;
+  }
+  
+  /* ================================
+     🧱 Key Feature Container
+     ================================ */
+  .key-feature-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    gap: 20px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  /* ================================
+     📦 Individual Feature Card
+     ================================ */
+  .key-feature-item {
+    flex: 1 1 calc(25% - 20px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    min-height: 350px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .key-feature-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* ================================
+     📄 Feature Card Body
+     ================================ */
+  .key-feature-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    flex-grow: 1;
+  }
+  
+  /* Optional Sticky Title Container (if needed for layout) */
+  .key-feature-body .text-container {
+    position: sticky;
+    top: 20px;
+    margin-bottom: 20px;
+  }
+  
+  /* ================================
+     🏷️ Feature Titles & Descriptions
+     ================================ */
+  .feature-title {
+    font-size: 1.5rem;
+    color: var(--dark-shades);
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+  
+  .feature-text {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--dark-shades);
+    margin-bottom: 0;
+  }
+  

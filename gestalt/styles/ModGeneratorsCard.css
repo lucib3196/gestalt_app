@@ -1,0 +1,62 @@
+/* ==========================
+     ⚙️ GENERATOR SECTION
+     ========================== */
+#generators-section {
+  background: var(--light-shades) !important;
+  background-size: cover;
+  padding: 50px 25px;
+  text-align: center;
+  justify-content: center;
+}
+
+.generators-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 20px;
+  flex-grow: 1;
+}
+
+.generator-card {
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 400px;
+  text-align: left;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  align-items: center;
+  margin-top: 5%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.generator-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.generator-card h3 {
+  font-size: 1.7rem;
+  color: var(--dark-accent);
+  font-weight: bold;
+}
+
+.generator-card p {
+  font-size: 1rem;
+  color: var(--dark-shades);
+  font-style: italic;
+}
+
+.generator-card ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 10%;
+}
+
+.generator-card ul li {
+  margin-bottom: 10px;
+}

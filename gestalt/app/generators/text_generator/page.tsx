@@ -4,6 +4,10 @@ import ModGenerators from "@/components/ModGenerators";
 import "@/styles/ModGeneratorStyles.css";
 import api from "@/api";
 import { useState } from "react";
+import AlertLink from "@/components/Alert";
+
+
+
 
 const examples = [
   {
@@ -48,6 +52,7 @@ const InputForm: React.FC = () => {
     try {
       const response = await api.post("/code_generator_chains/v1", FormData);
       console.log(response.data);
+      <AlertLink />
     } catch (error) {
       console.log("Error Submitting Form", error);
     } finally {
