@@ -69,7 +69,7 @@ const FolderPage: React.FC = () => {
   const DownLoadButton: React.FC = () => {
     const handleDownload = async () => {
       try {
-        const response = await api.get(`/modules/simple/${id}/download`, {
+        const response = await api.get(`/packages/simple/${id}/download`, {
           responseType: "blob",
         });
   

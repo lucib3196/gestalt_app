@@ -1,5 +1,5 @@
 from typing import List, Dict, Any
-from fastapi import APIRouter, Depends,Strea
+from fastapi import APIRouter, Depends
 from pydantic import BaseModel
 from sqlmodel import Session
 from fastapi.responses import FileResponse, StreamingResponse
@@ -64,13 +64,13 @@ def get_folder_content(
 ):
     return service.get_folder_files(package_id, folder_id, session=session)
 
-@router.get("/simple/{module_id}/{folder_id}/download", response_class=StreamingResponse)
+@router.get("/simple/{package_id}/{folder_id}/download", response_class=StreamingResponse)
 def download_single_folder(
-    module_id:int,
+    package_id:int,
     folder_id:int,
     session: Session = Depends(get_session)
 ):
-    return service.download_single_folder(module_id, folder_id, session)
+    return service.download_single_folder(package_id=package_id, folder_id=folder_id, session=session)
 
 
 @router.get("/simple/{module_id}/download", response_class=StreamingResponse)
