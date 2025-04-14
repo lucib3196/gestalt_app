@@ -12,8 +12,8 @@ from ..ai_workspace.agents.engineering_codegen.code_generator_image import (
     ImageExtractionOutputState,
     InitialMetadata
 )
-from ..data import crud as service
-from ..model.module_db import ModuleSimple
+from ..data import question_models as service
+from ..model.question_models import Package
 from ..data.module import get_session
 
 router = APIRouter(prefix="/chain_image")
@@ -96,5 +96,5 @@ async def save_generated_module(
     """
     Save AI-generated folders and files into the database as a new module.
     """
-    module = ModuleSimple(name=title)
+    module = Package(title=title)
     return service.create_module_with_folders(module, folders=folders, session=session)

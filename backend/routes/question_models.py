@@ -1,40 +1,39 @@
 from typing import List, Dict, Any
-
 from fastapi import APIRouter, Depends
 from pydantic import BaseModel
 from sqlmodel import Session
 
-from ..data import crud as service
+from ..data import question_models as service
 from ..data.database import get_session
-from ..model.module_db import Module, Folder, File, ModuleSimple
+from ..model.question_models import Package, QuestionFolder, QuestionFile
 
 # ────────────────────────────────────────────────
 # 🚦 Router Configuration
 # ────────────────────────────────────────────────
 
-router = APIRouter(prefix="/modules")
+router = APIRouter(prefix="/packages")
 
 # ────────────────────────────────────────────────
 # 📦 Request Models
 # ────────────────────────────────────────────────
 
 class FolderCreateRequest(BaseModel):
-    folder: Folder
+    folder: QuestionFolder
     files_content: Dict[str, str]
 
 # ────────────────────────────────────────────────
 # 📤 POST Endpoints
 # ────────────────────────────────────────────────
 
-@router.post("/", response_model=Module)
-def create_module(
-    module: Module,
+@router.post("/", response_model=Package)
+def create_package(
+    package: Package,
     session: Session = Depends(get_session)
 ):
-    return service.create_module(module, session)
+    return service.create_package(package, session)
 
 
-@router.post("/add_folder", response_model=Folder)
+@router.post("/add_folder", response_model=QuestionFolder)
 def create_folder(
     data: FolderCreateRequest,
     session: Session = Depends(get_session)
@@ -49,59 +48,58 @@ def create_folder(
 # 📥 GET Endpoints
 # ────────────────────────────────────────────────
 
-# Currently these are the main routes taht I should be working on 
-@router.get("/simple/{module_id}/get_all_folders", response_model=List[Folder])
+@router.get("/simple/{package_id}/get_all_folders", response_model=List[QuestionFolder])
 def get_all_folders(
-    module_id:int,
-    session:Session = Depends(get_session)):
-    return service.get_module_folders(module_id=module_id,session=session)
+    package_id: int,
+    session: Session = Depends(get_session)
+):
+    return service.get_package_folders(package_id=package_id, session=session)
 
-@router.get("/simple/{module_id}/{folder_id}/get_all_files", response_model = List[File])
+
+@router.get("/simple/{package_id}/{folder_id}/get_all_files", response_model=List[QuestionFile])
 def get_folder_content(
-        module_id:int,
-        folder_id:int,
-        session:Session = Depends(get_session)
-    ):
-        return service.get_folder_files(module_id,folder_id,session=session)
-
-
-
-# These still work but will need to refactor 
-@router.get("/simple", response_model=List[ModuleSimple])
-def get_modules(
+    package_id: int,
+    folder_id: int,
     session: Session = Depends(get_session)
 ):
-    return service.get_modules_simple(session=session)
+    return service.get_folder_files(package_id, folder_id, session=session)
 
 
-@router.get("/simple/{module_id}", response_model=ModuleSimple)
-def get_module_by_id(
-    module_id: int,
+@router.get("/simple", response_model=List[Package])
+def get_packages(
     session: Session = Depends(get_session)
 ):
-    return service.get_module_id(module_id, session)
+    return service.get_packages(session=session)
 
 
-@router.get("/simple/{module_id}/folder", response_model=Folder)
-def get_module_folder(
-    module_id: int,
+@router.get("/simple/{package_id}", response_model=Package)
+def get_package_by_id(
+    package_id: int,
     session: Session = Depends(get_session)
 ):
-    return service.get_module_folder(module_id, session)
+    return service.get_package_by_id(package_id, session)
 
 
-@router.get("/simple/{module_id}/folder/file_contents", response_model=List[File])
-def get_modules_files(
-    module_id: int,
+@router.get("/simple/{package_id}/folder", response_model=QuestionFolder)
+def get_package_folder(
+    package_id: int,
     session: Session = Depends(get_session)
 ):
-    return service.get_module_files(module_id, session)
+    return service.get_package_folder(package_id, session)
 
 
-@router.get("/simple/{module_id}/folder/file_contents/{file_id}")
+@router.get("/simple/{package_id}/folder/file_contents", response_model=List[QuestionFile])
+def get_package_files(
+    package_id: int,
+    session: Session = Depends(get_session)
+):
+    return service.get_package_files(package_id, session)
+
+
+@router.get("/simple/{package_id}/folder/file_contents/{file_id}")
 def get_single_file(
-    module_id: int,
+    package_id: int,
     file_id: int,
     session: Session = Depends(get_session)
 ):
-    return service.get_single_file(module_id, file_id, session)
+    return service.get_single_file(package_id, file_id, session)

@@ -4,10 +4,10 @@ import api from "@/api";
 import { useParams } from "next/navigation";
 
 import { useRouter } from "next/navigation";
-interface Folder {
+type Folder = {
   id: number; // folder_id
-  name: string;
-  module_id: number; // mod_id
+  title: string;
+  package_id: number; // mod_id
 }
 
 interface FolderTableProps {
@@ -23,10 +23,10 @@ const FolderTable: React.FC<FolderTableProps> = ({ folders }) => {
           <button
             className="btn btn-link p-0 text-start"
             onClick={() =>
-              router.push(`/modules/${folder.module_id}/file/${folder.id}`)
+              router.push(`/modules/${folder.package_id}/file/${folder.id}`)
             }
           >
-            {folder.name}
+            {folder.title}
           </button>
         </td>
       </tr>
@@ -56,7 +56,7 @@ const FolderPage: React.FC = () => {
   const fetchFolders = async () => {
     setLoading(true);
     try {
-      const response = await api.get(`/modules/simple/${id}/get_all_folders`);
+      const response = await api.get(`/packages/simple/${id}/get_all_folders`);
       console.log(response.data);
       setFolders(response.data); //
     } catch (error) {

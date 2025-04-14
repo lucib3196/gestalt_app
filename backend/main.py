@@ -3,12 +3,12 @@ from fastapi import FastAPI, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List
-from .routes import module, chains, quiz,upload_images, image_chain,code_generator_chains
+from .routes import chains, question_models, quiz,upload_images, image_chain,code_generator_chains
 from .ai_workspace.agents.simple_chat.simple_chat import graph
 app = FastAPI(debug=True)
 
 # Include additional routers
-app.include_router(module.router)
+app.include_router(question_models.router)
 app.include_router(chains.router)
 app.include_router(quiz.router)
 app.include_router(upload_images.router)
