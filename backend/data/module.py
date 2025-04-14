@@ -1,7 +1,7 @@
 # module.py (main entry point for local testing)
 from contextlib import contextmanager
 from .database import get_session
-from .crud import get_folder_files
+from .question_models import get_folder_files
 import asyncio
 
 @contextmanager

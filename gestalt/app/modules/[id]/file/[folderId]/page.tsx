@@ -66,7 +66,7 @@ const FilePage: React.FC = () => {
     try {
       console.log(module_id, folder_id);
       const response = await api.get(
-        `/modules/simple/${module_id}/${folder_id}/get_all_files`
+        `/packages/simple/${module_id}/${folder_id}/get_all_files`
       );
       console.log(response.data);
       setFiles(response.data)

@@ -4,7 +4,7 @@ import tempfile
 import asyncio
 import aiofiles
 from typing import Dict, Any
-from ..data.crud import get_module_files
+from .question_models import get_package_files
 from ..data.helpers import read_file, format_question
 from ..processing.code_runners.code_runner import run_generate
 
@@ -36,7 +36,7 @@ async def generate_quiz(module_id: int, session) -> str:
         "metadata": "info.json",
     }
     # Retrieve files associated with the module in a thread to avoid blocking.
-    files = await asyncio.to_thread(get_module_files, module_id=module_id, session=session)
+    files = await asyncio.to_thread(get_package_files, module_id=module_id, session=session)
     for f in files:
         # Set the save name based on the map.
         f.save_name = question_name_map.get(f.name, f.name)

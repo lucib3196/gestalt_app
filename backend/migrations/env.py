@@ -5,7 +5,7 @@ from sqlalchemy import pool
 from sqlmodel import SQLModel
 from alembic import context
 
-from backend.data.module import Module
+from backend.model import question_models
 from pathlib import Path
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

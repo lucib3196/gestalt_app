@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation'
 
 type Module = {
   id: number;
-  name: string;
+  title: string;
 };
 
 const RenderModuleTable = (router: ReturnType<typeof useRouter>) => {
@@ -33,7 +33,7 @@ const RenderModuleTable = (router: ReturnType<typeof useRouter>) => {
                 className="btn btn-link p-0"
                 onClick={() => router?.push(`/modules/${module.id}`)}
               >
-                {module.name}
+                {module.title}
               </button>
             </td>
           </tr>
@@ -47,7 +47,7 @@ const ModuleList: React.FC = () => {
   const router = useRouter();
 
   const source = {
-    url: "/modules/simple",
+    url: "/packages/simple",
   };
 
   const loadingComponent: React.ReactNode = (

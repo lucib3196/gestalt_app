@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, WebSocket, WebSocketDisconnect
 from pydantic import BaseModel
 from sqlmodel import Session
-from ..model.module_db import ModuleSimple
-from ..data import module as service
+from ..model.question_models import Package
+from ..data import question_models as service
 from ..ai_workspace.agents.engineering_codegen.chains import graph, InitialMetadata, OutputState
 from ..data.module import get_session
 
@@ -40,8 +40,8 @@ def run_chain(data: QueryRequest, session: Session = Depends(get_session)):
     title = result.get("title")
     folders = [(title, files_content)]
 
-    module = ModuleSimple(name=title)
-    created_module = service.create_module(module, folders=folders, session=session)
+    package = Package(title=title)
+    created_package = service.create_package_with_folders(package, folders=folders,session=session)
     return result
 
 

@@ -28,15 +28,15 @@ const TextGeneratorConst = {
 };
 
 
-interface QuestionData {
-  question: string;
-  folder_name: string;
-}
+type QuestionData = {
+  questions: string[];
+  package_name: string;
+};
 
 const InputForm: React.FC = () => {
   const [FormData, setFormData] = useState<QuestionData>({
-    question: "",
-    folder_name: "",
+    questions: [],
+    package_name: "",
   });
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -45,6 +45,15 @@ const InputForm: React.FC = () => {
   ) => {
     setFormData({ ...FormData, [e.target.name]: e.target.value });
   };
+
+  const handleQuestionChange = (
+    e:React.ChangeEvent<HTMLTextAreaElement>,index:number
+  )=>{
+    const updatedQuestions = [...FormData.questions]
+    updatedQuestions[index] = e.target.value;
+    setFormData({...FormData,questions:updatedQuestions})
+
+  }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -70,9 +79,9 @@ const InputForm: React.FC = () => {
         <form onSubmit={handleSubmit}>
           <input
             type="text"
-            name="folder_name"
+            name="package_name"
             className="form-control"
-            value={FormData.folder_name}
+            value={FormData.package_name}
             onChange={handleChange}
             placeholder="Folder Name"
             required
@@ -82,9 +91,9 @@ const InputForm: React.FC = () => {
             <textarea
               name="question"
               className="form-control"
-              value={FormData.question}
+              value={FormData.questions[0] || ""}
               id="questionTextArea"
-              onChange={handleChange}
+              onChange={(e)=>handleQuestionChange(e,0)}
               required
             />
             <label htmlFor="questionTextArea">Enter Question</label>

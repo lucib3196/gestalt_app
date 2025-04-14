@@ -3,8 +3,8 @@ from sqlmodel import Session
 from fastapi import Depends
 
 from ..data.module import get_session
-from ..data import crud as service
-from ..model.module_db import ModuleSimple
+from ..data import question_models as service
+from ..model.question_models import Package
 
 
 async def save_generated_module(
@@ -23,5 +23,5 @@ async def save_generated_module(
     Returns:
         The created module instance.
     """
-    module = ModuleSimple(name=title)
-    return service.create_module_with_folders(module, folders=folders, session=session)
+    module = Package(name=title)
+    return service.create_package_with_folders(module, folders=folders, session=session)
