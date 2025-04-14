@@ -66,6 +66,38 @@ const FolderPage: React.FC = () => {
     }
   };
 
+  const DownLoadButton: React.FC = () => {
+    const handleDownload = async () => {
+      try {
+        const response = await api.get(`/modules/simple/${id}/download`, {
+          responseType: "blob",
+        });
+  
+        const disposition = response.headers["content-disposition"];
+        const filenameMatch = disposition?.match(/filename="?(.+?)"?$/);
+        const filename = filenameMatch?.[1] || "module.zip";
+  
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", filename);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        window.URL.revokeObjectURL(url);
+      } catch (error) {
+        console.error("There was an error downloading the folder contents", error);
+      }
+    };
+  
+    return (
+      <button className="btn btn-primary mt-3" onClick={handleDownload}>
+        Download All Folders
+      </button>
+    );
+  };
+  
+
   useEffect(() => {
     fetchFolders();
   }, [id]);
@@ -73,6 +105,7 @@ const FolderPage: React.FC = () => {
   return (
     <div className="container-fluid m-4">
       {loading ? <p>Loading folders...</p> : <FolderTable folders={folders} />}
+      <DownLoadButton />
     </div>
   );
 };
