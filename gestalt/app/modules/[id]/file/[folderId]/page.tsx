@@ -83,7 +83,7 @@ const FilePage: React.FC = () => {
         console.log(module_id, folder_id);
 
         const response = await api.get(
-          `/modules/simple/${module_id}/${folder_id}/download`,
+          `/packages/simple/${module_id}/${folder_id}/download`,
           {
             responseType: "blob", // 👈 Important for binary files
           }

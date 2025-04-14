@@ -135,12 +135,14 @@ file_name_map: dict[str, str] = {
 def download_single_folder(package_id: int, folder_id: int, session: Session):
 
     folder: QuestionFolder = (
-        session.query(QuestionFolder).filter_by(id=folder_id, package_id=package_id).first()
+        session.query(QuestionFolder).filter(QuestionFolder.package_id == package_id, QuestionFolder.id == folder_id).first()
+
     )
     if not folder:
         raise HTTPException(status_code=404, detail="Folder not found for this module")
-    folder_name = folder.name
-    folder_files: List[QuestionFile] = folder.files
+    
+    folder_name = folder.title
+    folder_files: List[QuestionFile] = folder.question_files
     temp_filepaths = []
     with tempfile.TemporaryDirectory() as tmpdir:
         for file in folder_files:
@@ -189,9 +191,9 @@ def download_all_folders_in_module(package_id: int, session: Session):
 
     with zipfile.ZipFile(master_zip_buffer, "w", zipfile.ZIP_DEFLATED) as master_zip:
         for folder in folders:
-            folder_name = folder.name
+            folder_name = folder.title
             folder_id = folder.id
-            folder_files: List[QuestionFile] = folder.files
+            folder_files: List[QuestionFile] = folder.question_files
 
             folder_zip_buffer = BytesIO()
 
