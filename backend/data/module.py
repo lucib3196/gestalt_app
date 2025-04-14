@@ -1,7 +1,7 @@
 # module.py (main entry point for local testing)
 from contextlib import contextmanager
 from .database import get_session
-from .crud import get_folder_files
+from .crud import get_all_folders
 import asyncio
 
 @contextmanager
@@ -15,4 +15,4 @@ def sync_session():
 
 if __name__ == "__main__":
     with sync_session() as session:
-        print(get_folder_files(1,1,session=session))
+        print(get_all_folders(session=session))
