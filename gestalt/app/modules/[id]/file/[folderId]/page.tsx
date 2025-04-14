@@ -42,7 +42,7 @@ const FilesTable: React.FC<FileTableProps> = ({ files }) => {
   };
   return (
     <>
-    <table className="table table-striped">
+      <table className="table table-striped">
         <thead>
           <tr>
             <th>File Names</th>
@@ -51,7 +51,7 @@ const FilesTable: React.FC<FileTableProps> = ({ files }) => {
         <tbody>{files.map(renderFile)}</tbody>
       </table>
     </>
-  )
+  );
 };
 
 const FilePage: React.FC = () => {
@@ -69,12 +69,55 @@ const FilePage: React.FC = () => {
         `/modules/simple/${module_id}/${folder_id}/get_all_files`
       );
       console.log(response.data);
-      setFiles(response.data)
+      setFiles(response.data);
     } catch (error) {
       console.log("There was an error getting the folder contents", error);
     } finally {
       setLoading(false);
     }
+  };
+
+  const DownLoadButton: React.FC = () => {
+    const handleDownload = async () => {
+      try {
+        console.log(module_id, folder_id);
+
+        const response = await api.get(
+          `/modules/simple/${module_id}/${folder_id}/download`,
+          {
+            responseType: "blob", // 👈 Important for binary files
+          }
+        );
+
+        // Get the filename from Content-Disposition header
+        const disposition = response.headers["content-disposition"];
+        const filenameMatch = disposition?.match(/filename="?(.+?)"?$/);
+        const filename = filenameMatch?.[1] || "module.zip";
+
+        // Create a Blob URL and trigger download
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", filename);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        window.URL.revokeObjectURL(url);
+      } catch (error) {
+        console.error(
+          "There was an error downloading the folder contents",
+          error
+        );
+      }
+    };
+
+    return (
+      <>
+        <button className="btn btn-primary" onClick={handleDownload}>
+          Download Files
+        </button>
+      </>
+    );
   };
 
   useEffect(() => {
@@ -83,9 +126,11 @@ const FilePage: React.FC = () => {
 
   return (
     <div className="container-fluid m-4">
-    {loading ? <p>Loading folders...</p> : <FilesTable files={files} />}
-  </div>
-  )
+      
+      {loading ? <p>Loading folders...</p> : <FilesTable files={files} />}
+      <DownLoadButton />
+    </div>
+  );
 };
 
 export default FilePage;

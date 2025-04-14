@@ -3,7 +3,7 @@ from typing import List, Dict, Any
 from fastapi import APIRouter, Depends
 from pydantic import BaseModel
 from sqlmodel import Session
-
+from fastapi.responses import FileResponse, StreamingResponse
 from ..data import crud as service
 from ..data.database import get_session
 from ..model.module_db import Module, Folder, File, ModuleSimple
@@ -64,6 +64,21 @@ def get_folder_content(
     ):
         return service.get_folder_files(module_id,folder_id,session=session)
 
+@router.get("/simple/{module_id}/{folder_id}/download", response_class=StreamingResponse)
+def download_single_folder(
+    module_id:int,
+    folder_id:int,
+    session: Session = Depends(get_session)
+):
+    return service.download_single_folder(module_id, folder_id, session)
+
+
+@router.get("/simple/{module_id}/download", response_class=StreamingResponse)
+def download_single_folder(
+    module_id:int,
+    session: Session = Depends(get_session)
+):
+    return service.download_all_folders_in_module(module_id, session)
 
 
 # These still work but will need to refactor 
