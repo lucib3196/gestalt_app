@@ -4,7 +4,23 @@ from fastapi import HTTPException
 from .database import engine
 from ..model.question_models import Package, QuestionFolder, QuestionFile
 import json
+# Standard Library Imports
+import os
+import io
+import json
+import tempfile
+import zipfile
+from typing import List, Tuple, Dict, Any, Optional
+from io import BytesIO
 
+# Third-Party Imports
+from fastapi import HTTPException
+from fastapi.responses import FileResponse, StreamingResponse
+from sqlmodel import Session, select
+
+# Internal App Imports
+from .database import engine
+from .helpers import create_zip_file
 # Retrieve all question folders associated with a specific package
 def get_package_folders(package_id: int, session: Session = None) -> List[QuestionFolder]:
     package = session.get(Package, package_id)
@@ -101,3 +117,108 @@ def create_package(package: Package, session: Session) -> Package:
     session.commit()
     session.refresh(package)
     return package
+
+
+# Downloads
+
+file_name_map: dict[str, str] = {
+    "question_txt": "question.txt",
+    "question_html": "question.html",
+    "server_js": "server.js",
+    "server_py": "server.py",
+    "solution_html": "solution.html",
+    "metadata": "info.json",
+}
+
+
+
+def download_single_folder(package_id: int, folder_id: int, session: Session):
+
+    folder: QuestionFolder = (
+        session.query(QuestionFolder).filter_by(id=folder_id, package_id=package_id).first()
+    )
+    if not folder:
+        raise HTTPException(status_code=404, detail="Folder not found for this module")
+    folder_name = folder.name
+    folder_files: List[QuestionFile] = folder.files
+    temp_filepaths = []
+    with tempfile.TemporaryDirectory() as tmpdir:
+        for file in folder_files:
+            tempfile_path = os.path.join(
+                tmpdir,
+                (
+                    file.save_name
+                    if file.save_name is not None
+                    else file_name_map.get(file.name)
+                ),
+            )
+            content = file.content
+            if isinstance(content, str):
+                content = content.encode("utf-8")
+            elif isinstance(content, dict):
+                content = json.dumps(content)
+
+            with open(tempfile_path, "wb") as f:
+                f.write(content)
+
+            temp_filepaths.append(tempfile_path)
+        zip_stream = create_zip_file(temp_filepaths)
+        headers = {"Content-Disposition": f"attachment; filename={folder_name}.zip"}
+        return StreamingResponse(
+            zip_stream, media_type="application/zip", headers=headers
+        )
+
+
+
+
+
+
+def download_all_folders_in_module(package_id: int, session: Session):
+    """
+    Downloads a ZIP containing all folders associated with the specified module.
+    Each folder is zipped individually and combined into a master ZIP.
+    """
+    folders: List[QuestionFolder] = (
+        session.query(QuestionFolder).filter(QuestionFolder.package_id == package_id).all()
+    )
+
+    if not folders:
+        raise HTTPException(status_code=404, detail="No folders found for this module.")
+
+    master_zip_buffer = BytesIO()
+
+    with zipfile.ZipFile(master_zip_buffer, "w", zipfile.ZIP_DEFLATED) as master_zip:
+        for folder in folders:
+            folder_name = folder.name
+            folder_id = folder.id
+            folder_files: List[QuestionFile] = folder.files
+
+            folder_zip_buffer = BytesIO()
+
+            with zipfile.ZipFile(
+                folder_zip_buffer, "w", zipfile.ZIP_DEFLATED
+            ) as folder_zip:
+                for file in folder_files:
+                    filename = file.save_name or file_name_map.get(file.name, file.name)
+                    content = file.content
+
+                    if isinstance(content, str):
+                        content = content.encode("utf-8")
+                    elif isinstance(content, dict):
+                        content = json.dumps(content).encode("utf-8")
+
+                    folder_zip.writestr(filename, content)
+
+            folder_zip_buffer.seek(0)
+            master_zip.writestr(
+                f"{folder_name}_{folder_id}.zip", folder_zip_buffer.read()
+            )
+
+    master_zip_buffer.seek(0)
+    headers = {
+        "Content-Disposition": f"attachment; filename=module_{package_id}_folders.zip"
+    }
+
+    return StreamingResponse(
+        master_zip_buffer, media_type="application/zip", headers=headers
+    )
