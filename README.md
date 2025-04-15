@@ -92,4 +92,4 @@
   - One for the backend (`python -m backend.main`)
   - One for the frontend (`npm run dev` inside `gestalt/`)
 
-- On first startup, a **database file will be created** automatically in the at `backend\data\database.db`
+- On first startup, a **database file will be created** automatically in the at `backend\data\database.db` this will store all the generated data. There are other databases present however these have different uses. 
