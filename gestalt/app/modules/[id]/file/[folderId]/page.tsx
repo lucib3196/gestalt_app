@@ -54,6 +54,7 @@ const FilesTable: React.FC<FileTableProps> = ({ files }) => {
   );
 };
 
+
 const FilePage: React.FC = () => {
   const [files, setFiles] = useState<FileResponse[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
