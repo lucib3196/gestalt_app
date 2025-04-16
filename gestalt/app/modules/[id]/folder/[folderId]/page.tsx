@@ -28,12 +28,18 @@ interface FileTableProps {
 
 const FilesTable: React.FC<FileTableProps> = ({ files }) => {
   const router = useRouter();
+  const params = useParams();
+  const module_id = params.id as string;
+  const folder_id = params.folderId as string;
 
   const renderFile = (file: FileResponse) => {
     return (
       <tr key={file.id}>
         <td>
-          <button className="btn btn-link p-0 text-start">
+          <button className="btn btn-link p-0 text-start" 
+          onClick={()=>{
+            router.push(`/modules/${folder.package_id}/folder/${folder.id}`)
+          }}>
             {FileNameMap[file.name] || file.name}
           </button>
         </td>
