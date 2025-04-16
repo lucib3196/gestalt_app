@@ -1,36 +1,113 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 Setup Instructions for `gestalt_app`
 
-## Getting Started
+> 🧠 **Note**: This project has been tested with:
+>
+> - **Python 3.13.1**
+> - **Node.js v22.14.0**
+>
+> These are very recent versions. While they should work fine, be aware that **some dependencies may not yet fully support these versions**. If you run into issues, consider switching to:
+> - Python 3.10–3.11
+> - Node.js 18–20
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🔧 Windows-Specific Prerequisite: Install Microsoft C++ Build Tools
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Some Python packages require compilation and depend on the Microsoft C++ Build Tools. If you're on Windows and encounter errors during `pip install`, follow these steps:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. **Download the Build Tools**:
+   - Visit the [Visual Studio Downloads](https://visualstudio.microsoft.com/downloads/) page.
+   - Scroll down to the **"Tools for Visual Studio"** section.
+   - Click on **"Build Tools for Visual Studio"** to download the installer.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2. **Run the Installer**:
+   - Launch the downloaded installer.
+   - In the installer, select the **"C++ build tools"** workload.
+   - Click **Install** to proceed.
+1. **Restart Your Computer**:
+   - After installation, it's recommended to restart your computer to ensure all changes take effect.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🔐 Create `.env` File
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. **In the root directory**, create a `.env` file:
+   ```bash
+   echo. > .env
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+2. **Paste the following into `.env`**:
+   ```
+   OPENAI_API_KEY=your_api_key_here
+   LANGCHAIN_TRACING_V2=true
+   LANGCHAIN_API_KEY=your_api_key_here
+   LANGCHAIN_PROJECT="Engineering_Tutor"
+   ```
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📦 Backend Setup
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. **Navigate to the root directory**:
+   ```
+   cd gestalt_app
+   ```
+
+2. **Create and activate a virtual environment**:
+   ```bash
+   python -m venv .venv
+   ```
+
+   - **On Windows**:
+     ```
+     .venv\Scripts\activate
+     ```
+   - **On macOS/Linux**:
+     ```
+     source .venv/bin/activate
+     ```
+
+3. **Install required Python packages**:
+   ```
+   pip install -r requirements.txt
+   ```
+
+4. **Run the backend server** from the root directory:
+   ```bash
+   python -m backend.main
+   ```
+
+5. **Access the API documentation**:
+   ```
+   http://127.0.0.1:8000/docs
+   ```
+
+---
+
+## 💻 Frontend Setup
+
+1. **Navigate to the frontend folder**:
+   ```bash
+   cd gestalt
+   ```
+
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+
+3. **Run the development server**:
+   ```bash
+   npm run dev
+   ```
+
+---
+
+## 🔄 Running Everything Together
+
+- Open **two terminal windows**:
+  - One for the backend run the following command (`python -m backend.main`)
+  - One for the frontend run the following command  (`npm run dev` inside `gestalt/`)
+
+- On first startup, a **database file will be created** automatically in the at `backend\data\database.db`
+
+
