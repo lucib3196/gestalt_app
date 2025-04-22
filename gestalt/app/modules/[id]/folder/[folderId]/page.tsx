@@ -28,12 +28,22 @@ interface FileTableProps {
 
 const FilesTable: React.FC<FileTableProps> = ({ files }) => {
   const router = useRouter();
+  const params = useParams();
+  const module_id = params.id as string;
+  const folder_id = params.folderId as string;
 
   const renderFile = (file: FileResponse) => {
     return (
       <tr key={file.id}>
         <td>
-          <button className="btn btn-link p-0 text-start" >
+          <button
+            className="btn btn-link p-0 text-start"
+            onClick={() =>
+              router?.push(
+                `/modules/${module_id}/folder/${folder_id}/${file.name}`
+              )
+            }
+          >
             {FileNameMap[file.name] || file.name}
           </button>
         </td>
@@ -53,7 +63,6 @@ const FilesTable: React.FC<FileTableProps> = ({ files }) => {
     </>
   );
 };
-
 
 const FilePage: React.FC = () => {
   const [files, setFiles] = useState<FileResponse[]>([]);
@@ -127,7 +136,6 @@ const FilePage: React.FC = () => {
 
   return (
     <div className="container-fluid m-4">
-      
       {loading ? <p>Loading folders...</p> : <FilesTable files={files} />}
       <DownLoadButton />
     </div>

@@ -1,0 +1,19 @@
+.developer_mode_container {
+  border: 2px solid black;
+}
+.developer_mode_header {
+  display: flex;
+  flex-direction: row;
+  position: sticky;
+  top: 0;
+  background-color: white;
+  padding: 2rem;
+  align-items: baseline;
+  justify-content: space-between;
+  border-bottom: 1px solid red;
+}
+.code_dropdown{
+    border: 3px solid black;
+    border-radius: 10px;
+    width: 100px;
+}

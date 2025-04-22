@@ -1,16 +1,25 @@
 import uvicorn
 from fastapi import FastAPI, WebSocket
+from starlette.middleware.sessions import SessionMiddleware
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List
-from .routes import chains, question_models, quiz,upload_images, image_chain,code_generator_chains
+from .routes import (
+    chains,
+    generate_quiz,
+    question_models,
+    upload_images,
+    image_chain,
+    code_generator_chains,
+)
 from .ai_workspace.agents.simple_chat.simple_chat import graph
+
 app = FastAPI(debug=True)
 
 # Include additional routers
 app.include_router(question_models.router)
 app.include_router(chains.router)
-app.include_router(quiz.router)
+app.include_router(generate_quiz.router)
 app.include_router(upload_images.router)
 app.include_router(image_chain.router)
 app.include_router(code_generator_chains.router)
@@ -27,21 +36,28 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+app.add_middleware(
+    SessionMiddleware,
+    secret_key="this-will-need-to-be-replaced-eventually-lol",
+    same_site="none",  # <-- allow cross-origin requests
+    https_only=True,  # <-- for local dev only, set to True in prod!
+)
 
 # Define the input for chat
 class ChatInput(BaseModel):
     messages: List[str]
     thread_id: str
-    
+
+
 # Testing
 class FormData(BaseModel):
     name: str
     email: str
+
+
 @app.post("/submit")
 async def submit_form(data: FormData):
     return {"message": f"Received data for {data.name} with email {data.email}"}
-
-
 
 
 # REST endpoint for chat requests
@@ -51,6 +67,7 @@ async def chat(input: ChatInput):
     response = await graph.ainvoke({"messages": input.messages}, config=config)
     return response["messages"][-1].content
 
+
 # WebSocket endpoint for streaming chat messages
 @app.websocket("/ws/{thread_id}")
 async def websocket_endpoint(websocket: WebSocket, thread_id: str):
@@ -58,9 +75,13 @@ async def websocket_endpoint(websocket: WebSocket, thread_id: str):
     await websocket.accept()
     while True:
         data = await websocket.receive_text()
-        async for event in graph.astream({"messages": [data]}, config=config, stream_mode="messages"):
+        async for event in graph.astream(
+            {"messages": [data]}, config=config, stream_mode="messages"
+        ):
             await websocket.send_text(event[0].content)
+
 
 if __name__ == "__main__":
     import uvicorn
+
     uvicorn.run(app, host="127.0.0.1", port=8000)

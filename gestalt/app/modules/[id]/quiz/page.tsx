@@ -1,63 +1,108 @@
 "use client";
 
-import { useParams } from "next/navigation";
-import { Container, Button } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import api from "@/api";
+import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
+import DeveloperMode from "@/components/DeveloperMode";
+import QuizView from "@/components/QuizView";
+import { LanguageProvider } from "@/app/hooks/LanguageContext";
 
-export default function QuizView() {
-  const params = useParams();
-  const moduleId = params.id as string;
-  const fileId = params.fileId as string;
+type ReviewComponentProps = {
+  reviewed: boolean | undefined;
+};
 
-  const [quizHTML, setQuizHTML] = useState("");
-  const [solutionHTML, setSolutionHTML] = useState("");
-  const [csrfToken, setCsrfToken] = useState("");
+const QuizPage: React.FC = () => {
+  const [devMode, setDevMode] = useState(false);
+  const [Question, setQuestion] = useState<QuestionFolder | null>(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await api.post(`/quiz/adaptive_quiz/${moduleId}`);
-        setQuizHTML(response.data);
-      } catch (err) {
-        console.error("Error loading quiz:", err);
-      }
-    };
-    fetchData();
-  }, [moduleId]);
+  const question_id = 6;
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const form = e.target as HTMLFormElement;
-    const formData = new FormData(form);
+  const handleToggleDevMode = () => setDevMode((prev) => !prev);
 
+  const fetchQuestion = async () => {
     try {
-      const response = await api.post("/quiz/grade", formData);
-      console.log("Grading response:", response.data);
+      const res = await api.get(`/packages/question/${question_id}`);
+      setQuestion(res.data);
     } catch (err) {
-      console.error("Submission error:", err);
+      console.error(err);
     }
   };
 
+  const ReviewComponent: React.FC<ReviewComponentProps> = ({ reviewed }) => {
+    return (
+      <div className="inline-grid grid-cols-2 gap-4 my-3 mx-2 items-baseline">
+        <p className="font-semibold">Reviewed:</p>
+        <div
+          className={`w-full rounded-full py-2 text-center shadow border font-medium ${
+            reviewed ? "bg-green-500 text-white" : "bg-red-500 text-white"
+          }`}
+        >
+          {reviewed ? "True" : "False"}
+        </div>
+      </div>
+    );
+  };
+
+  useEffect(() => {
+    fetchQuestion();
+  }, [question_id]);
+
   return (
-    <Container className="mt-4">
-      <form onSubmit={handleSubmit}>
-        <h1 className="mb-4">Module: {moduleId}, File: {fileId}</h1>
+    <>
+      {/* Header */}
+      <header className="bg-gray-100 shadow-sm">
+        <div className="flex justify-between items-center mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+          <div>
+            <h1 className="text-gray-800 text-3xl font-bold border-b-2 pb-1">
+              {Question?.title.split(/(?=[A-Z])/).join(" ") ?? "Loading..."}
+            </h1>
+            <div className="flex flex-wrap gap-2 mt-2">
+              {Question?.tags.map((value, index) => (
+                <span
+                  key={index}
+                  className="px-3 py-1 text-sm font-semibold border rounded-full text-gray-700 bg-white shadow"
+                >
+                  {value.split(/(?=[A-Z])/).join(" ")}
+                </span>
+              ))}
+            </div>
+            <ReviewComponent reviewed={Question?.reviewed ?? false} />
+          </div>
 
-        <div className="form-field mb-3" dangerouslySetInnerHTML={{ __html: quizHTML }} />
-        {/* <div className="container mb-3" dangerouslySetInnerHTML={{ __html: solutionHTML }} /> */}
-
-        {/* <input type="hidden" name="csrf_token" value={csrfToken} /> */}
-
-        <div className="quiz-btn-container mb-2">
-          <Button type="submit" variant="primary">Submit</Button>
-          <Button type="button" variant="secondary" onClick={() => location.reload()}>New Variant</Button>
+          <button
+            onClick={handleToggleDevMode}
+            className="rounded-xl bg-indigo-600 text-white font-semibold px-4 py-2 hover:bg-indigo-700 active:bg-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 transition"
+          >
+            Developer Mode
+          </button>
         </div>
+      </header>
 
-        <div className="step-btn-container">
-          <Button type="submit" name="action" value="hint" variant="info">Show Hint</Button>
-        </div>
-      </form>
-    </Container>
+      {/* Content Panel */}
+      <PanelGroup direction="horizontal">
+        {devMode && (
+          <>
+            <Panel defaultSize={30} minSize={10} id="left" order={1}>
+              <DeveloperMode question_id={question_id} />
+            </Panel>
+            <PanelResizeHandle />
+          </>
+        )}
+
+        <Panel defaultSize={70} minSize={20} id="main" order={2}>
+          <QuizView folder_id={question_id} />
+        </Panel>
+      </PanelGroup>
+    </>
   );
-}
+};
+
+const Page: React.FC = () => {
+  return (
+    <LanguageProvider>
+      <QuizPage />;
+    </LanguageProvider>
+  );
+};
+
+export default Page;

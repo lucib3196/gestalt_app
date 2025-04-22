@@ -33,17 +33,20 @@ from ..model.question_models import Package, QuestionFolder, QuestionFile
 # CRUD Service Functions
 # ─────────────────────────────────────────────────────────────
 
-def get_package_folders(package_id: int, session: Session = None) -> List[QuestionFolder]:
+
+def get_package_folders(
+    package_id: int, session: Session = None
+) -> List[QuestionFolder]:
     """
     Retrieve all question folders associated with a specific package.
-    
+
     Args:
         package_id (int): The ID of the package.
         session (Session, optional): A SQLModel session. If not provided, the caller should supply one.
-    
+
     Returns:
         List[QuestionFolder]: A list of question folders belonging to the package.
-    
+
     Raises:
         HTTPException: If the package does not exist or no folders are found.
     """
@@ -55,7 +58,10 @@ def get_package_folders(package_id: int, session: Session = None) -> List[Questi
         raise HTTPException(status_code=404, detail="Question folders not found")
     return folders
 
-def get_folder_files(package_id: int, folder_id: int, session: Session = None) -> List[QuestionFile]:
+
+def get_folder_files(
+    folder_id: int, session: Session = None
+) -> List[QuestionFile]:
     """
     Retrieve all question files within a specific folder of a package.
 
@@ -70,13 +76,62 @@ def get_folder_files(package_id: int, folder_id: int, session: Session = None) -
     Raises:
         HTTPException: If the folder is not found.
     """
-    get_package_folders(package_id=package_id, session=session)  # Ensures the package exists
-    folder = session.query(QuestionFolder).filter_by(id=folder_id).first()
-    if not folder:
-        raise HTTPException(status_code=404, detail="Question folder not found")
+    folder = get_question_folder(folder_id=folder_id, session=session)
     return folder.question_files
 
-def get_all_question_folders(skip: int = 0, limit: int = 10, session: Session = None) -> List[QuestionFolder]:
+
+
+
+
+
+def get_question_folder(folder_id: int, session: Session = None) -> QuestionFolder:
+    statement = select(QuestionFolder).where((QuestionFolder.id == folder_id))
+    results = session.exec(statement)
+    question_folder = results.first()
+    if not question_folder:
+        raise HTTPException(status_code=404, detail="Question folder not found")
+    return question_folder
+
+
+def get_all_question_files(folder_id: int, session=None) -> List[QuestionFile]:
+    statement = select(QuestionFile).where(
+        (QuestionFile.question_folder_id == folder_id)
+    )
+    results = session.exec(statement)
+    question_files = results.all()
+    if not question_files:
+        raise HTTPException(status_code=404, detail="Question files not found")
+    return question_files
+
+
+def update_filecontents(
+    folder_id: int, file_name: str, new_content: str, session: Session
+) -> QuestionFile:
+    statement = select(QuestionFile).where(
+        (QuestionFile.name == file_name)
+        & (QuestionFile.question_folder_id == folder_id)
+    )
+    result = session.exec(statement)
+    file = result.first()
+
+    if not file:
+        raise ValueError("File not found")
+
+    print("This is the old content",print(file.content))
+    file.content = new_content
+    
+    print("This is the new content", file.content)
+    session.add(file)
+    session.commit()
+    session.refresh(file)
+
+    return file
+
+
+
+def get_all_question_folders(
+    skip: int = 0, limit: int = 10, session: Session = None
+) -> List[QuestionFolder]:
     """
     Retrieve all question folders with pagination.
 
@@ -89,6 +144,7 @@ def get_all_question_folders(skip: int = 0, limit: int = 10, session: Session = 
         List[QuestionFolder]: The list of retrieved question folders.
     """
     return session.exec(select(QuestionFolder).offset(skip).limit(limit)).all()
+
 
 def get_package_by_id(package_id: int, session: Session = None) -> Package:
     """
@@ -109,6 +165,7 @@ def get_package_by_id(package_id: int, session: Session = None) -> Package:
         raise HTTPException(status_code=404, detail="Package not found")
     return package
 
+
 def get_package_folder(package_id: int, session: Session = None) -> QuestionFolder:
     """
     Retrieve the first question folder associated with a given package.
@@ -127,6 +184,7 @@ def get_package_folder(package_id: int, session: Session = None) -> QuestionFold
     if not folder:
         raise HTTPException(status_code=404, detail="Question folder not found")
     return folder
+
 
 def get_package_files(package_id: int, session: Session) -> List[QuestionFile]:
     """
@@ -147,7 +205,10 @@ def get_package_files(package_id: int, session: Session) -> List[QuestionFile]:
         raise HTTPException(status_code=404, detail="Question folder not found")
     return folder.question_files
 
-def get_packages(skip: int = 0, limit: int = 10, session: Session = None) -> List[Package]:
+
+def get_packages(
+    skip: int = 0, limit: int = 10, session: Session = None
+) -> List[Package]:
     """
     Retrieve a list of packages with pagination.
 
@@ -160,6 +221,7 @@ def get_packages(skip: int = 0, limit: int = 10, session: Session = None) -> Lis
         List[Package]: A list of packages.
     """
     return session.exec(select(Package).offset(skip).limit(limit)).all()
+
 
 def get_single_file(package_id: int, file_id: int, session: Session) -> str:
     """
@@ -183,8 +245,35 @@ def get_single_file(package_id: int, file_id: int, session: Session) -> str:
         .first()
     )
     if not file:
-        raise HTTPException(status_code=404, detail="Question file not found in this package")
+        raise HTTPException(
+            status_code=404, detail="Question file not found in this package"
+        )
     return file.content
+
+
+def get_single_file_name(
+    package_id: int, question_folder_id: int, file_name: str, session: Session
+) -> QuestionFile | None:
+    """
+    Retrieve a single QuestionFile record by its name and associated question folder ID.
+
+    Parameters:
+        package_id (int): The ID of the package. (Note: Currently unused in this function.)
+        question_folder_id (int): The ID of the question folder containing the file.
+        file_name (str): The name of the file to retrieve.
+        session (Session): The SQLModel session for database access.
+
+    Returns:
+        QuestionFile | None: The matching QuestionFile object if found; otherwise, None.
+    """
+    statement = select(QuestionFile).where(
+        (QuestionFile.name == file_name)
+        & (QuestionFile.question_folder_id == question_folder_id)
+    )
+    result = session.exec(statement)
+    file = result.first()
+    return file
+
 
 def create_file(file: QuestionFile, session: Session) -> QuestionFile:
     """
@@ -202,7 +291,10 @@ def create_file(file: QuestionFile, session: Session) -> QuestionFile:
     session.refresh(file)
     return file
 
-def create_folder(folder: QuestionFolder, data: Dict[str, Any], session: Session) -> QuestionFolder:
+
+def create_folder(
+    folder: QuestionFolder, data: Dict[str, Any], session: Session
+) -> QuestionFolder:
     """
     Create a new question folder and its associated question files.
 
@@ -222,14 +314,18 @@ def create_folder(folder: QuestionFolder, data: Dict[str, Any], session: Session
     for filename, contents in data.items():
         if isinstance(contents, dict):
             contents = json.dumps(contents)
-        file = QuestionFile(name=filename, content=contents, save_name=filename, question_folder_id=folder.id)
+        file = QuestionFile(
+            name=filename,
+            content=contents,
+            save_name=filename,
+            question_folder_id=folder.id,
+        )
         create_file(file, session)
     return folder
 
+
 def create_package_with_folders(
-    package: Package,
-    folders: List[Tuple[str, Dict[str, Any]]],
-    session: Session
+    package: Package, folders: List[Tuple[str, Dict[str, Any]]], session: Session
 ) -> Package:
     """
     Create a new package along with its associated question folders and files.
@@ -251,6 +347,7 @@ def create_package_with_folders(
         create_folder(folder, files_content, session)
     return package
 
+
 def create_package(package: Package, session: Session) -> Package:
     """
     Create a new package record.
@@ -267,6 +364,7 @@ def create_package(package: Package, session: Session) -> Package:
     session.refresh(package)
     return package
 
+
 # ─────────────────────────────────────────────────────────────
 # Download Services
 # ─────────────────────────────────────────────────────────────
@@ -281,10 +379,11 @@ file_name_map: Dict[str, str] = {
     "metadata": "info.json",
 }
 
+
 def download_single_folder(package_id: int, folder_id: int, session: Session):
     """
     Download a specific question folder as a ZIP file.
-    
+
     This function retrieves a folder by its package ID and folder ID, writes its files
     to temporary files, and zips them up for download.
 
@@ -295,7 +394,7 @@ def download_single_folder(package_id: int, folder_id: int, session: Session):
 
     Returns:
         StreamingResponse: A streaming response containing the ZIP file.
-    
+
     Raises:
         HTTPException: If the folder is not found.
     """
@@ -306,7 +405,7 @@ def download_single_folder(package_id: int, folder_id: int, session: Session):
     )
     if not folder:
         raise HTTPException(status_code=404, detail="Folder not found for this module")
-    
+
     folder_name = folder.title
     folder_files: List[QuestionFile] = folder.question_files
     temp_filepaths = []
@@ -314,7 +413,11 @@ def download_single_folder(package_id: int, folder_id: int, session: Session):
         for file in folder_files:
             tempfile_path = os.path.join(
                 tmpdir,
-                file.save_name if file.save_name is not None else file_name_map.get(file.name)
+                (
+                    file.save_name
+                    if file.save_name is not None
+                    else file_name_map.get(file.name)
+                ),
             )
             content = file.content
             if isinstance(content, str):
@@ -326,12 +429,15 @@ def download_single_folder(package_id: int, folder_id: int, session: Session):
             temp_filepaths.append(tempfile_path)
         zip_stream = create_zip_file(temp_filepaths)
         headers = {"Content-Disposition": f"attachment; filename={folder_name}.zip"}
-        return StreamingResponse(zip_stream, media_type="application/zip", headers=headers)
+        return StreamingResponse(
+            zip_stream, media_type="application/zip", headers=headers
+        )
+
 
 def download_all_folders_in_module(package_id: int, session: Session):
     """
     Download a ZIP file containing all question folders for a given package.
-    
+
     Each folder is zipped individually and then combined into a master ZIP file.
 
     Args:
@@ -340,12 +446,14 @@ def download_all_folders_in_module(package_id: int, session: Session):
 
     Returns:
         StreamingResponse: A streaming response containing the master ZIP file.
-    
+
     Raises:
         HTTPException: If no folders are found for the package.
     """
     folders: List[QuestionFolder] = (
-        session.query(QuestionFolder).filter(QuestionFolder.package_id == package_id).all()
+        session.query(QuestionFolder)
+        .filter(QuestionFolder.package_id == package_id)
+        .all()
     )
 
     if not folders:
@@ -361,7 +469,9 @@ def download_all_folders_in_module(package_id: int, session: Session):
 
             folder_zip_buffer = BytesIO()
 
-            with zipfile.ZipFile(folder_zip_buffer, "w", zipfile.ZIP_DEFLATED) as folder_zip:
+            with zipfile.ZipFile(
+                folder_zip_buffer, "w", zipfile.ZIP_DEFLATED
+            ) as folder_zip:
                 for file in folder_files:
                     filename = file.save_name or file_name_map.get(file.name, file.name)
                     content = file.content
@@ -372,9 +482,15 @@ def download_all_folders_in_module(package_id: int, session: Session):
                     folder_zip.writestr(filename, content)
 
             folder_zip_buffer.seek(0)
-            master_zip.writestr(f"{folder_name}_{folder_id}.zip", folder_zip_buffer.read())
+            master_zip.writestr(
+                f"{folder_name}_{folder_id}.zip", folder_zip_buffer.read()
+            )
 
     master_zip_buffer.seek(0)
-    headers = {"Content-Disposition": f"attachment; filename=module_{package_id}_folders.zip"}
+    headers = {
+        "Content-Disposition": f"attachment; filename=module_{package_id}_folders.zip"
+    }
 
-    return StreamingResponse(master_zip_buffer, media_type="application/zip", headers=headers)
+    return StreamingResponse(
+        master_zip_buffer, media_type="application/zip", headers=headers
+    )

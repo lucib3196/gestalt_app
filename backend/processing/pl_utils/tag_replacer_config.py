@@ -3,7 +3,7 @@ tag_replacer_configs = {
         "target_tag": "pl-question-panel",
         "replacement_tag": "div",
         "attributes": {
-            "class": "card mb-4 p-3 bg-light"
+            "class": "pl-question-panel"
         },
         "mapping": {}
     },
@@ -11,7 +11,7 @@ tag_replacer_configs = {
         "target_tag": "pl-checkbox",
         "replacement_tag": "fieldset",
         "attributes": {
-            "class": "form-check mb-3"
+            "class": "pl-checkbox"
         },
         "mapping": {
             "answers-name": "answers-name",
@@ -24,7 +24,7 @@ tag_replacer_configs = {
         "replacement_tag": "input",
         "attributes": {
             "type": "checkbox",
-            "class": "form-check-input me-2"
+            "class": "pl-answer"
         },
         "mapping": {
             "correct": "data-correct"
@@ -38,11 +38,11 @@ tag_replacer_configs = {
             "size": "50",
             "value": "",
             "step": "any",
-            "class": "form-control mb-2"
+            "class": "pl-number-input"
         },
         "mapping": {
-            "answers-name": "answers-name",
-            "id": "answers-name",
+            "answers-name": "name",
+            "id": "id",
             "comparison": "comparison",
             "digits": "digits",
             "label": "label"
@@ -52,7 +52,7 @@ tag_replacer_configs = {
         "target_tag": "pl-solution-panel",
         "replacement_tag": "div",
         "attributes": {
-            "class": "alert alert-info p-3"
+            "class": "pl-solution-panel"
         },
         "mapping": {}
     },
@@ -60,7 +60,7 @@ tag_replacer_configs = {
         "target_tag": "pl-hint",
         "replacement_tag": "div",
         "attributes": {
-            "class": "alert alert-warning p-3"
+            "class": "pl-hint"
         },
         "mapping": {
             "data-type": "data-type",
@@ -71,7 +71,7 @@ tag_replacer_configs = {
         "target_tag": "pl-multiple-choice",
         "replacement_tag": "fieldset",
         "attributes": {
-            "class": "card p-3 mb-3"
+            "class": "pl-multiple-choice"
         },
         "mapping": {
             "answers-name": "answers-name",
@@ -86,10 +86,10 @@ tag_replacer_configs = {
             "type": "text",
             "size": "50",
             "value": "",
-            "class": "form-control mb-2"
+            "class": "pl-text-input"
         },
         "mapping": {
-            "answers-name": "answers-name",
+            "answers-name": "name",
             "label": "aria-label"
         }
     },
@@ -100,7 +100,7 @@ tag_replacer_configs = {
             "alt": "Picture for problem",
             "width": "300",
             "height": "300",
-            "class": "img-fluid mx-auto d-block mb-3"
+            "class": "pl-figure"
         },
         "mapping": {
             "file-name": "src"
@@ -114,7 +114,7 @@ tag_replacer_configs = {
             "size": "50",
             "value": "",
             "step": "any",
-            "class": "form-control mb-2"
+            "class": "pl-input-field"
         },
         "mapping": {
             "variable-name": "name",
@@ -127,7 +127,7 @@ tag_replacer_configs = {
         "target_tag": "pl-input-panel",
         "replacement_tag": "div",
         "attributes": {
-            "class": "card p-3 mb-3"
+            "class": "pl-input-panel"
         },
         "mapping": {}
     }

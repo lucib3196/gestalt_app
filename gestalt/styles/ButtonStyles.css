@@ -1,0 +1,15 @@
+.action-button{
+    background-color: var(--light-accent);
+    color:var(--dark-shades);
+    padding: 15px 30px;
+    border-radius: 15px;
+    font-size: 1.2rem;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}   
+.action-button:hover{
+    background-color: #d99636;
+    color: var(--dark-shades)
+
+}

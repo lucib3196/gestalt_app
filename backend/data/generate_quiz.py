@@ -3,12 +3,22 @@ import os
 import tempfile
 import asyncio
 import aiofiles
-from typing import Dict, Any
-from .question_models import get_package_files
+from typing import Dict, Any, Union
+from .question_models import get_folder_files
 from ..data.helpers import read_file, format_question
-from ..processing.code_runners.code_runner import run_generate
+from ..processing.code_runners.code_runner import run_generate, Response
+from pydantic import BaseModel
+from typing import Literal
 
-async def generate_quiz(module_id: int, session) -> str:
+
+
+
+
+async def generate_quiz(
+    question_folder_id: int,
+    session,
+    server_type: Literal["javascript", "python"] = "javascript",
+) -> Response:
     """
     Asynchronously generates a quiz for a given module.
 
@@ -22,7 +32,7 @@ async def generate_quiz(module_id: int, session) -> str:
 
     Returns:
         str: The rendered HTML for the quiz question.
-    
+
     Raises:
         ValueError: If the required question file is missing.
     """
@@ -36,26 +46,42 @@ async def generate_quiz(module_id: int, session) -> str:
         "metadata": "info.json",
     }
     # Retrieve files associated with the module in a thread to avoid blocking.
-    files = await asyncio.to_thread(get_package_files, module_id=module_id, session=session)
+    files = await asyncio.to_thread(
+        get_folder_files, question_folder_id, session=session
+    )
     for f in files:
         # Set the save name based on the map.
-        f.save_name = question_name_map.get(f.name, f.name)
-    
+        f.save_name = question_name_map.get(f.name)
+
     # Create a temporary directory for file operations.
     with tempfile.TemporaryDirectory() as tmpdir:
         # Write file contents to the temporary directory asynchronously.
         for f in files:
             filepath = os.path.join(tmpdir, f.save_name)
-            async with aiofiles.open(filepath, "w") as file:
+
+            if isinstance(f.content, bytes):
+                f.content = f.content.decode("utf-8")
+
+            async with aiofiles.open(filepath, "w", encoding="utf-8") as file:
                 await file.write(f.content)
-        
+
         # Run the generator file in a background thread.
-        server_file = os.path.join(tmpdir, "server.js")
-        generated_data = await asyncio.to_thread(run_generate, server_file)
+        if server_type == "javascript":
+            server_file = os.path.join(tmpdir, "server.js")
+        else:
+            server_file = os.path.join(tmpdir, "server.py")
+
+        results: Response = await asyncio.to_thread(run_generate, server_file)
+        print("This is the result", results)
+        # Catch an error
+        if not results.success:
+            return results
+
+        generated_data = results.result
+        print(generated_data)
+
         params = generated_data.get("params", {})
         correct_answers = generated_data.get("correct_answers", {})
-
-        # Prepare the data payload for formatting.
         data = {
             "params": params,
             "correct_answers": correct_answers,
@@ -64,5 +90,11 @@ async def generate_quiz(module_id: int, session) -> str:
         question_html_path = os.path.join(tmpdir, "question.html")
         html_content = await asyncio.to_thread(read_file, question_html_path)
         # Format the question asynchronously in a thread.
-        rendered_question_html = await asyncio.to_thread(format_question, html=html_content, data=data)
-        return rendered_question_html
+        rendered_question_html = await asyncio.to_thread(
+            format_question, html=html_content, data=data
+        )
+        quiz_data = QuizData(**data)
+        data = GenerateQuizResponse(
+            question_html=rendered_question_html, quiz_data=quiz_data
+        )
+        return Response(success=True, error=None, result=data)

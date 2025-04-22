@@ -1,0 +1,53 @@
+/* Main Form Container */
+.form-review {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    padding: 2rem;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  
+  /* Header */
+  .form-review-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .form-review > hr {
+    width: 100%;
+    border: none;
+    border-top: 3px solid #000;
+    margin: 1rem 0;
+  }
+  
+  /* Form Content Section */
+  .form-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+  }
+  
+  /* Individual Question Blocks */
+  .form-question-container {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+  }
+  
+  .form-question-container p {
+    margin: 0;
+    flex: 1;
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+  

@@ -2,6 +2,7 @@ from typing import Dict, List
 from bs4 import BeautifulSoup
 from .TagReplacer import TagReplacer
 from .tag_replacer_config import tag_replacer_configs
+from .create_tag_replacer import create_tag_replacer
 
 
 def create_tag_replacer(html_string: str, config: Dict[str, Dict]) -> List[TagReplacer]:
@@ -22,10 +23,11 @@ def create_tag_replacer(html_string: str, config: Dict[str, Dict]) -> List[TagRe
             target_tag=cfg.get("target_tag", ""),
             replacement_tag=cfg.get("replacement_tag", ""),
             attributes=cfg.get("attributes", {}),
-            mapping=cfg.get("mapping", {})
+            mapping=cfg.get("mapping", {}),
         )
         replacers.append(replacer)
     return replacers
+
 
 
 def apply_tag_replacers(html_string: str, replacers: List[TagReplacer]) -> str:
@@ -49,7 +51,8 @@ def apply_tag_replacers(html_string: str, replacers: List[TagReplacer]) -> str:
 
     return soup.prettify()
 
-def process(html:str):
+
+def process(html: str):
     replacers = create_tag_replacer(html, tag_replacer_configs)
     modified_html = apply_tag_replacers(html, replacers)
     return modified_html
@@ -71,7 +74,6 @@ def main():
           <pl-answer correct="false">\( P = \rho RT \)</pl-answer>
         </pl-checkbox>
         """,
-
         # Example 2: Multiple choice question block
         r"""
         <pl-multiple-choice answers-name="unitSystem" inline="true">
@@ -79,13 +81,21 @@ def main():
           <pl-answer correct="false">Imperial</pl-answer>
         </pl-multiple-choice>
         """,
-
         # Example 3: Input panel with number input
         r"""
         <pl-input-panel>
           <pl-number-input answers-name="forceValue" label="Enter the force:"></pl-number-input>
         </pl-input-panel>
-        """
+        """,
+        r"""<pl-question-panel>
+<p>
+A {{params.m}} {{params.unitsMass}} block of iron at temperature {{params.Ti}} {{params.unitsTemperature}} is supplied heat of {{params.Q}} {{params.unitsHeat}} so that the final temperature is {{params.Tf}} {{params.unitsTemperature}}.
+</p>
+</pl-question-panel>
+
+<p> Determine its final temperature. </p>
+<pl-number-input answers-name="Tf" comparison="sigfig" digits="3" label="Tf  (in {{params.unitsTemperature}})"></pl-number-input>
+        """,
     ]
 
     for i, html_string in enumerate(html_examples, start=1):

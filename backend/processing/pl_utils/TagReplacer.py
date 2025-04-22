@@ -24,7 +24,7 @@ class TagReplacer:
         target_tag: str,
         replacement_tag: str,
         attributes: Optional[Dict[str, str]] = None,
-        mapping: Optional[Dict[str, str]] = None
+        mapping: Optional[Dict[str, str]] = None,
     ):
         """
         Initialize the TagReplacer.
@@ -43,7 +43,9 @@ class TagReplacer:
         self.mapping: Dict[str, str] = mapping or {}
         self.soup: BeautifulSoup = BeautifulSoup(self.html, "html.parser")
 
-    def map_attributes(self, old_attrs: Dict[str, str], mapping: Dict[str, str]) -> Dict[str, str]:
+    def map_attributes(
+        self, old_attrs: Dict[str, str], mapping: Dict[str, str]
+    ) -> Dict[str, str]:
         """
         Maps old attributes to new attribute names using a provided mapping.
 
@@ -64,6 +66,12 @@ class TagReplacer:
         if unmapped_keys:
             print(f"[Warning] Unmapped attributes: {unmapped_keys}")
 
+        # # Handle the case where there is a label attribute
+        # label = new_attrs.get('label',{})
+        # if (label):
+        #     print(label)
+        # print(new_attrs)
+
         return new_attrs
 
     def replace_tag(self) -> BeautifulSoup:
@@ -76,6 +84,7 @@ class TagReplacer:
         for tag in self.soup.find_all(self.target_tag):
             mapped_attrs = self.map_attributes(tag.attrs, self.mapping)
             merged_attrs = {**self.attributes, **mapped_attrs}
+
             new_tag = self.soup.new_tag(name=self.replacement_tag, attrs=merged_attrs)
 
             for child in tag.contents:
@@ -96,6 +105,7 @@ class TagReplacer:
         if tag:
             mapped_attrs = self.map_attributes(tag.attrs, self.mapping)
             merged_attrs = {**self.attributes, **mapped_attrs}
+
             new_tag = self.soup.new_tag(name=self.replacement_tag, attrs=merged_attrs)
 
             for child in list(tag.children):
@@ -103,6 +113,27 @@ class TagReplacer:
 
             tag.replace_with(new_tag)
 
+            self.handle_labels(new_tag,merged_attrs)
+
+        return self.soup
+
+    def handle_labels(self, new_tag: Tag, merged_attrs: dict[str, str], className: str = 'form-label'):
+        """
+        Wraps a new_tag with a <label> tag if a 'label' key exists in merged_attrs.
+
+        Args:
+            new_tag (Tag): The BeautifulSoup tag to wrap.
+            merged_attrs (dict[str, str]): Attributes including optional 'label'.
+            className (str): The class to apply to the <label> tag. Default is 'form-label'.
+
+        Returns:
+            BeautifulSoup: The updated soup object.
+        """
+        label = merged_attrs.get("label", "")
+        if label:
+            label_tag = self.soup.new_tag("label", attrs={"class": className})
+            label_tag.string = label
+            new_tag.wrap(label_tag)
         return self.soup
 
     def run(self) -> BeautifulSoup:
@@ -135,7 +166,6 @@ class TagReplacer:
         self.soup = BeautifulSoup(html, "html.parser")
 
 
-
 def main():
     html_string = r"""
     <pl-question-panel>
@@ -154,13 +184,22 @@ def main():
     </pl-checkbox>
     """
 
+    html_string2 = r""""<pl-question-panel>
+<p>
+A {{params.m}} {{params.unitsMass}} block of iron at temperature {{params.Ti}} {{params.unitsTemperature}} is supplied heat of {{params.Q}} {{params.unitsHeat}} so that the final temperature is {{params.Tf}} {{params.unitsTemperature}}.
+</p>
+</pl-question-panel>
+
+<p> Determine its final temperature. </p>
+<pl-number-input answers-name="Tf" comparison="sigfig" digits="3" label="Tf  (in {{params.unitsTemperature}})"></pl-number-input>"""
+
     # Step 1: Replace <pl-question-panel> → <div>
     print("\n[1] Replacing <pl-question-panel> with <div>...")
     pl_panel_replacer = TagReplacer(
         html=html_string,
         target_tag="pl-question-panel",
         replacement_tag="div",
-        attributes={"class": "question-panel-wrapper"}
+        attributes={"class": "question-panel-wrapper"},
     )
     new_soup = pl_panel_replacer.run()
     print(new_soup.prettify())
@@ -172,7 +211,7 @@ def main():
         target_tag="pl-figure",
         replacement_tag="img",
         attributes={"class": "question-figure"},
-        mapping={"file-name": "src"}
+        mapping={"file-name": "src"},
     )
     new_soup = pl_figure_replacer.run()
     print(new_soup.prettify())
@@ -184,7 +223,7 @@ def main():
         target_tag="pl-answer",
         replacement_tag="input",
         attributes={"type": "checkbox"},
-        mapping={"correct": "data-correct"}
+        mapping={"correct": "data-correct"},
     )
     new_soup = pl_answer_replacer.run()
     print(new_soup.prettify())
@@ -199,10 +238,25 @@ def main():
         mapping={
             "answers-name": "answers-name",
             "weight": "data-weight",
-            "inline": "data-inline"
-        }
+            "inline": "data-inline",
+        },
     )
     new_soup = pl_checkbox_replacer.run()
+    print(new_soup.prettify())
+
+    print("/n test 2")
+
+    from .tag_replacer_config import tag_replacer_configs
+
+    pl_number_input_data = tag_replacer_configs.get("pl_number_input")
+    pl_number_input_replacer = TagReplacer(
+        html=str(html_string2),
+        target_tag=pl_number_input_data.get("target_tag"),
+        replacement_tag=pl_number_input_data.get("replacement_tag"),
+        attributes=pl_number_input_data.get("attributes"),
+        mapping=pl_number_input_data.get("mapping"),
+    )
+    new_soup = pl_number_input_replacer.run()
     print(new_soup.prettify())
 
 

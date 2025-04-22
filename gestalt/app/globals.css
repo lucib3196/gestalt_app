@@ -1,3 +1,12 @@
+@import "tailwindcss";
+@theme {
+  --color-lightShades: #faf8f7;
+  --color-lightAccent: #eeaf48;
+  --color-mainBrand: #75b0d9;
+  --color-DarkAccent: #2aafda;
+  --color-DarkShades: #363962;
+}
+
 /* ==========================
    🎨 COLOR SCHEME
    ========================== */
@@ -103,8 +112,6 @@ body {
   transition: background-color 0.3s ease;
 }
 
-
-
 /* ==========================
      🔘 BUTTON STYLES
      ========================== */
@@ -126,4 +133,131 @@ body {
   text-decoration: none;
   font-weight: bold;
   color: var(--dark-shades);
+}
+
+/* Question CSS */
+/* Theme Variables */
+:root {
+  --panel-bg: #ffffff;
+  --panel-border: #e2e8f0;
+  --panel-shadow: rgba(0, 0, 0, 0.05);
+  --text-primary: #1a202c;
+  --hint-bg: #ebf8ff;
+  --hint-border: #3182ce;
+  --input-focus: rgba(49, 130, 206, 0.3);
+}
+
+/* Question & Solution Panels */
+#main{
+  margin:4rem;
+}
+.pl-question-panel,
+.pl-solution-panel {
+  background-color: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 4px var(--panel-shadow);
+  padding: 1.25rem;
+  margin: 1.5rem 0;
+  color: var(--text-primary);
+}
+
+.pl-question-panel p{
+  align-items: center;
+}
+/* Input Panel Layout */
+.pl-input-panel {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Checkbox & Multiple Choice Fieldsets */
+.pl-checkbox,
+.pl-multiple-choice {
+  border: 1px solid var(--panel-border);
+  padding: 1rem;
+  border-radius: 0.375rem;
+  background-color: #f7fafc;
+  margin-bottom: 1rem;
+}
+
+.pl-checkbox legend,
+.pl-multiple-choice legend {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+
+/* Answer Checkbox (Hidden) */
+.pl-answer {
+  position: absolute;
+  opacity: 0;
+}
+
+/* Custom Checkbox Styling */
+.pl-answer + label {
+  position: relative;
+  padding-left: 1.5rem;
+  cursor: pointer;
+  display: inline-block;
+  line-height: 1.5rem;
+}
+
+.pl-answer + label::before {
+  content: '';
+  position: absolute;
+  top: 0.2rem;
+  left: 0;
+  width: 1rem;
+  height: 1rem;
+  border: 1px solid var(--panel-border);
+  background-color: #fff;
+  border-radius: 0.25rem;
+}
+
+.pl-answer:checked + label::before {
+  background-color: var(--hint-border);
+  border-color: var(--hint-border);
+}
+
+/* General Number & Text Inputs */
+.pl-number-input,
+.pl-text-input,
+.pl-input-field {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--panel-border);
+  border-radius: 0.375rem;
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+
+.pl-number-input:focus,
+.pl-text-input:focus,
+.pl-input-field:focus {
+  outline: none;
+  border-color: var(--hint-border);
+  box-shadow: 0 0 0 3px var(--input-focus);
+}
+
+/* Hint Styling */
+.pl-hint {
+  border-left: 4px solid var(--hint-border);
+  background-color: var(--hint-bg);
+  padding: 0.75rem 1rem;
+  margin: 1rem 0;
+  border-radius: 0.375rem;
+  font-size: 0.95rem;
+}
+
+/* Image Figure */
+.pl-figure {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 1rem auto;
+  border-radius: 0.25rem;
+  border: 1px solid var(--panel-border);
 }
