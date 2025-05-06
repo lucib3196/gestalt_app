@@ -15,6 +15,7 @@ from fastapi.responses import FileResponse, StreamingResponse
 from pydantic import BaseModel
 from sqlmodel import Session
 from fastapi import FastAPI, Request, HTTPException
+from typing import Union
 
 # ─────────────────────────────────────────────────────────────
 # Internal App Imports
@@ -72,20 +73,42 @@ def create_folder_route(
 # GET Endpoints
 # ─────────────────────────────────────────────────────────────
 
-@router.get("/question/{question_id}",response_model=QuestionFolder)
-def get_question(question_id:int,session=Depends(get_session))->QuestionFolder:
+# Retrieving all contents
+@router.get("/get_all", response_model=List[Package])
+def get_all_packages_route(session: Session = Depends(get_session)) -> List[Package]:
+    """
+    Retrieve all packages.
+    """
+    return service.get_packages(session=session)
+
+@router.get(
+    "/simple/{skip}/{limit}/get_all_folders", response_model=List[QuestionFolder]
+)
+def get_paginated_folders_route(
+    skip: Union[str, int],
+    limit: Union[str, int],
+    session: Session = Depends(get_session),
+) -> List[QuestionFolder]:
+    """
+    Retrieve a paginated list of question folders.
+    """
+    return service.get_all_question_folders(skip, limit, session)
+
+
+@router.get("/question/{question_id}", response_model=QuestionFolder)
+def get_question(question_id: int, session=Depends(get_session)) -> QuestionFolder:
     """Get a question from database
 
     Args:
-        question_id (int): question id used to identify the question 
+        question_id (int): question id used to identify the question
 
     Returns:
-        _type_: Question Folder object 
+        _type_: Question Folder object
     """
     return service.get_question_folder(question_id, session)
-    
-    
-@router.get("/simple/{package_id}/get_all_folders", response_model=List[QuestionFolder])
+
+
+@router.get("/{package_id}/get_all_folders", response_model=List[QuestionFolder])
 def get_all_folders_route(
     package_id: int, session: Session = Depends(get_session)
 ) -> List[QuestionFolder]:
@@ -94,17 +117,11 @@ def get_all_folders_route(
     """
     return service.get_package_folders(package_id=package_id, session=session)
 
-
-@router.get(
-    "/simple/{skip}/{limit}/get_all_folders", response_model=List[QuestionFolder]
-)
-def get_paginated_folders_route(
-    skip: int, limit: int, session: Session = Depends(get_session)
-) -> List[QuestionFolder]:
-    """
-    Retrieve a paginated list of question folders.
-    """
-    return service.get_all_question_folders(skip, limit, session)
+@router.get("/{question_id}/get_question_files")
+def get_question_files_route(
+    question_id:int,session:Session=Depends(get_session)
+)->List[QuestionFile]:
+    return service.get_all_question_files(folder_id=question_id,session=session)
 
 
 @router.get(
@@ -167,14 +184,6 @@ def download_all_folders_route(
     return service.download_all_folders_in_module(module_id, session)
 
 
-@router.get("/simple", response_model=List[Package])
-def get_all_packages_route(session: Session = Depends(get_session)) -> List[Package]:
-    """
-    Retrieve all packages.
-    """
-    return service.get_packages(session=session)
-
-
 @router.get("/simple/{package_id}", response_model=Package)
 def get_package_by_id_route(
     package_id: int, session: Session = Depends(get_session)
@@ -232,8 +241,8 @@ def get_question_folder_id(
 
 
 class FileUpdate(BaseModel):
-    question_folder_id:int
-    question_file_name:str
+    question_folder_id: int
+    question_file_name: str
     content: str
 
 
@@ -247,7 +256,7 @@ async def update_filecontents(
             folder_id=update.question_folder_id,
             file_name=update.question_file_name,
             new_content=update.content,
-            session=session
+            session=session,
         )
     except Exception as e:
         print(f"Error updating file contents: {e}")

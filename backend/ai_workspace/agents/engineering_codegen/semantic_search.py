@@ -165,3 +165,7 @@ if __name__ == "__main__":
     
     query = "A car travels a total distance of 100 miles in 5 hours. Calculate its speed"
     example_formatter.extract_examples_prettyprint(query, 2)
+    
+    print(f"-------------------\n\n\n")
+    query = "If a 100 g iron piece at 100°C is inserted into a calorimeter containing 390 g of water at 20°C, what will the final temperature of iron be?"
+    example_formatter.extract_examples_prettyprint(query, 2)

@@ -1,5 +1,5 @@
 from ..data import generate_quiz as quiz_service
-from ..data.generate_quiz import QuizData, GenerateQuizResponse, Response
+from ..data.generate_quiz import QuizData, GenerateQuizResponse,CodeRunResponse
 from fastapi import APIRouter, HTTPException, Query
 from ..data.database import get_session
 from sqlmodel import Session
@@ -19,7 +19,7 @@ async def get_adaptive_quiz(
     request: Request, question_folder_id: int,data:QuizArg, session: Session = Depends(get_session)
 ):
     print(f"This is the server" ,data.server_type)
-    response: Response = await quiz_service.generate_quiz(question_folder_id,server_type=data.server_type, session=session)
+    response: CodeRunResponse = await quiz_service.generate_quiz(question_folder_id,server_type=data.server_type, session=session)
     if response.success:
         request.session["quiz_data"] = response.result.quiz_data.model_dump()
         return HTMLResponse(content=response.result.question_html)

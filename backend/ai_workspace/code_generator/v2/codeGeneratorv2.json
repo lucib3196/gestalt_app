@@ -1,0 +1,168 @@
+{
+    "question_payload": {
+        "question": "A car is traveling along a straight road at 60 mph; calculate distance after 4 hours",
+        "source": null,
+        "requires_external_data": null,
+        "requires_image": null,
+        "completeness": null,
+        "additiona_information": null,
+        "solution": []
+    },
+    "question_metadata": {
+        "title": "CalculateDistanceTraveledByCar",
+        "question": "A car is traveling along a straight road at 60 mph; calculate distance after 4 hours.",
+        "stem": "Using the formula for distance, which is speed multiplied by time, find out how far the car will have traveled after 4 hours at a constant speed of 60 mph.",
+        "topic": "Kinematics",
+        "tags": [
+            "distance",
+            "speed",
+            "velocity",
+            "kinematics",
+            "motion"
+        ],
+        "prereqs": {
+            "engineering": null,
+            "math": [
+                "Algebra"
+            ]
+        },
+        "isAdaptive": "True"
+    },
+    "files": {
+        "question_html": "<pl-question-panel>\n  <p> A {{params.v1}} {{params.unitsSpeed}} - 0 {{params.unitsSpeed}} braking distance for a car is {{params.d1}} {{params.unitsDist}}. How far (in {{params.unitsDist}}) will the car travel in {{params.t1}} {{params.unitsTime}}?</p>\n</pl-question-panel>\n\n<pl-number-input answers-name=\"d\" comparison=\"sigfig\" digits=\"3\" label=\"Distance (in {{params.unitsDist}})\" required></pl-number-input>",
+        "server_js": "const { unit } = require(\"mathjs\");\n\nconst generate = () => {\n    // External Data Integration:\n    // Placeholder values for the example, in a real scenario these would be imported or dynamically generated.\n\n    // 1. Dynamic Parameter Selection:\n    // Randomly select units for speed, distance, and time.\n    const unitsSpeed = ['mph', 'kmh'];\n    const unitsDist = ['feet', 'meters'];\n    const unitsTime = ['seconds'];\n\n    // Randomly select a unit system for the problem.\n    const selectedSpeedUnit = unitsSpeed[Math.floor(Math.random() * unitsSpeed.length)];\n    const selectedDistUnit = unitsDist[Math.floor(Math.random() * unitsDist.length)];\n    const selectedTimeUnit = unitsTime[Math.floor(Math.random() * unitsTime.length)];\n\n    // Conversion factors\n    const mphToFeetPerSec = 5280 / 3600;\n    const mphToMeterPerSec = 1609.344 / 3600;\n    const kmhToMeterPerSec = 1000 / 3600;\n    const kmhToFeetPerSec = 3280.8399 / 3600;\n\n    // Convert speed to the appropriate unit\n    const convertSpeed = (speed, unit_speed, unit_distance) => {\n        let speed_converted;\n\n        if (unit_speed === \"mph\" && unit_distance === \"feet\") {\n            speed_converted = speed * mphToFeetPerSec;\n        } else if (unit_speed === \"mph\" && unit_distance === \"meters\") {\n            speed_converted = speed * mphToMeterPerSec;\n        } else if (unit_speed === \"kmh\" && unit_distance === \"feet\") {\n            speed_converted = speed * kmhToFeetPerSec;\n        } else if (unit_speed === \"kmh\" && unit_distance === \"meters\") {\n            speed_converted = speed * kmhToMeterPerSec;\n        } else {\n            speed_converted = speed;\n        }\n\n        return speed_converted;\n    };\n\n    // 3. Value Generation:\n    // Generate random values for initial speed and braking distance\n    const initialSpeed = Math.round((Math.random() * (100 - 20) + 20), 3); // Random speed between 20 and 100\n    const brakingDistance = Math.round(Math.random() * (500 - 100) + 100, 3); // Random distance between 100 and 500\n    const time = Math.round((Math.random() * 2 + 1) * 100) / 100; // Given time in seconds between 1-3 and up to 3 decimals\n\n    // 4. Solution Synthesis:\n    // Unit Conversion to Appropriate Units\n    const converted_speed = convertSpeed(initialSpeed, selectedSpeedUnit, selectedDistUnit);\n\n    // Calculate deceleration using the formula a = -(V_0^2) / (2 * \u0394x)\n    const deceleration = -(converted_speed ** 2) / (2 * brakingDistance);\n\n    // Calculate the distance traveled using \u0394x = V_0 * t + (1/2) * a * t^2\n    const distanceTraveled = converted_speed * time + 0.5 * deceleration * time ** 2;\n\n    // Return the result\n    data = {\n        params: {\n            v1: initialSpeed,\n            d1: brakingDistance,\n            t1: time,\n            unitsSpeed: selectedSpeedUnit,\n            unitsDist: selectedDistUnit,\n            unitsTime: selectedTimeUnit\n        },\n        correct_answers: {\n            d: distanceTraveled\n        },\n        nDigits: 3,\n        sigfigs: 3\n    };\n    return data;\n};\n\nmodule.exports = {\n    generate\n};",
+        "server_py": "import numpy as np\nimport random\nimport sympy as sp\nimport pandas as pd\n\n\ndef generate():\n    # Set up potential parameters for the problem\n    unitsSpeed = ['mph', 'km/h']\n    unitsDist = ['miles', 'kilometers']\n    unitsTime = ['hours', 'hours']  # Assume time is always in hours for this scenario\n    \n    # Dynamic parameter selection\n    # Randomly choose speed unit and distance unit\n    selected_unitsSpeed = random.choice(unitsSpeed)\n    selected_unitsDist = random.choice(unitsDist)\n    selected_unitsTime = random.choice(unitsTime)\n\n    # Given values for the problem\n    v1 = 60 \n    t1 = 4  \n    d1 = None  # Distance to be calculated\n\n    # Generate distance using the formula: Distance = Speed * Time\n    if selected_unitsSpeed == 'mph' and selected_unitsDist == 'miles':\n        d1 = v1 * t1  # Speed in mph and distance in miles\n    elif selected_unitsSpeed == 'km/h' and selected_unitsDist == 'kilometers':\n        d1 = (v1 * 1.60934) * t1  # Convert mph to km/h and calculate distance\n\n    # Prepare the results\n    correct_answers = {'d': round(d1, 3)}  # Rounded to 3 decimal places\n    params = {\n        'v1': v1,\n        'unitsSpeed': selected_unitsSpeed,\n        'd1': round(d1, 3),\n        'unitsDist': selected_unitsDist,\n        't1': t1,\n        'unitsTime': selected_unitsTime\n    }\n\n    return {\n        'params': params,\n        'correct_answers': correct_answers,\n        'nDigits': 3,  # Decimal places.\n        'sigfigs': 3   # Significant figures.\n    }\n\n# Example of calling the function to generate and print the result\nresult = generate()\nprint(result)",
+        "solution_html": "<pl-question-panel>\n  <p>A car is traveling along a straight road at {{params.v1}} {{params.unitsSpeed}}; calculate the distance it traveled after {{params.t1}} {{params.unitsTime}}. How far will the car travel in {{params.unitsDist}}?</p>\n</pl-question-panel>\n\n<pl-number-input answers-name=\"distance\" comparison=\"sigfig\" digits=\"3\" label=\"Distance (in {{params.unitsDist}})\"></pl-number-input>",
+        "metadata": {
+            "title": "CalculateDistanceTraveledByCar",
+            "question": "A car is traveling along a straight road at 60 mph; calculate distance after 4 hours.",
+            "stem": "Using the formula for distance, which is speed multiplied by time, find out how far the car will have traveled after 4 hours at a constant speed of 60 mph.",
+            "topic": "Kinematics",
+            "tags": [
+                "distance",
+                "speed",
+                "velocity",
+                "kinematics",
+                "motion"
+            ],
+            "prereqs": {
+                "engineering": null,
+                "math": [
+                    "Algebra"
+                ]
+            },
+            "isAdaptive": "True"
+        }
+    },
+    "token_usage": [
+        {
+            "step_name": "classify_question",
+            "token_usage": {
+                "completion_tokens": 109,
+                "prompt_tokens": 591,
+                "total_tokens": 700,
+                "completion_tokens_details": {
+                    "accepted_prediction_tokens": 0,
+                    "audio_tokens": 0,
+                    "reasoning_tokens": 0,
+                    "rejected_prediction_tokens": 0
+                },
+                "prompt_tokens_details": {
+                    "audio_tokens": 0,
+                    "cached_tokens": 0
+                }
+            }
+        },
+        {
+            "step_name": "generate_question_html",
+            "token_usage": {
+                "completion_tokens": 123,
+                "prompt_tokens": 942,
+                "total_tokens": 1065,
+                "completion_tokens_details": {
+                    "accepted_prediction_tokens": 0,
+                    "audio_tokens": 0,
+                    "reasoning_tokens": 0,
+                    "rejected_prediction_tokens": 0
+                },
+                "prompt_tokens_details": {
+                    "audio_tokens": 0,
+                    "cached_tokens": 0
+                }
+            }
+        },
+        {
+            "step_name": "generate_server_js",
+            "token_usage": {
+                "completion_tokens": 872,
+                "prompt_tokens": 1527,
+                "total_tokens": 2399,
+                "completion_tokens_details": {
+                    "accepted_prediction_tokens": 0,
+                    "audio_tokens": 0,
+                    "reasoning_tokens": 0,
+                    "rejected_prediction_tokens": 0
+                },
+                "prompt_tokens_details": {
+                    "audio_tokens": 0,
+                    "cached_tokens": 0
+                }
+            }
+        },
+        {
+            "step_name": "generate_server_py",
+            "token_usage": {
+                "completion_tokens": 460,
+                "prompt_tokens": 710,
+                "total_tokens": 1170,
+                "completion_tokens_details": {
+                    "accepted_prediction_tokens": 0,
+                    "audio_tokens": 0,
+                    "reasoning_tokens": 0,
+                    "rejected_prediction_tokens": 0
+                },
+                "prompt_tokens_details": {
+                    "audio_tokens": 0,
+                    "cached_tokens": 0
+                }
+            }
+        },
+        {
+            "step_name": "generate_solution_html",
+            "token_usage": {
+                "completion_tokens": 106,
+                "prompt_tokens": 715,
+                "total_tokens": 821,
+                "completion_tokens_details": {
+                    "accepted_prediction_tokens": 0,
+                    "audio_tokens": 0,
+                    "reasoning_tokens": 0,
+                    "rejected_prediction_tokens": 0
+                },
+                "prompt_tokens_details": {
+                    "audio_tokens": 0,
+                    "cached_tokens": 0
+                }
+            }
+        },
+        {
+            "step_name": "adaptive_combine",
+            "token_usage": {
+                "completion_tokens": 108,
+                "prompt_tokens": 989,
+                "total_tokens": 1097,
+                "completion_tokens_details": {
+                    "accepted_prediction_tokens": 0,
+                    "audio_tokens": 0,
+                    "reasoning_tokens": 0,
+                    "rejected_prediction_tokens": 0
+                },
+                "prompt_tokens_details": {
+                    "audio_tokens": 0,
+                    "cached_tokens": 0
+                }
+            }
+        }
+    ],
+    "isAdaptive": "True"
+}

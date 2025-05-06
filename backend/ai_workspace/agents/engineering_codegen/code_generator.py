@@ -400,7 +400,7 @@ def solution_improvement_router(state: QuestionPackage) -> str:
         is_adaptive = literal_eval(is_adaptive)
     else:
         is_adaptive = bool(is_adaptive)
-    return "adaptive_combine" if is_adaptive else END
+    return "adaptive_combine" if is_adaptive else "final_combine"
 
 
 # =============================================================================

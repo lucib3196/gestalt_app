@@ -1,0 +1,77 @@
+{
+    "lecture_summary": {
+        "lecture_name": "Kinetics of Particles and Rigid Body Dynamics \u2013 Equations of Motion, Tension & Inertia",
+        "summary": "This lecture discusses the kinetics of particles, introduces Newton's Second Law, force and kinetic diagrams, and applies these to particles and rigid bodies. It includes worked problems on pendulum and conical motion (tension in cord, reaction forces), derivations of the equations of motion for rigid bodies, and the concept of moment of inertia.",
+        "key_takeaways": [
+            {
+                "section_title": "Newton's Second Law for Particles and Rigid Bodies",
+                "description": "Newton's Second Law governs particle motion as \\( \\vec{F} = m\\vec{a} \\), and for a system of particles or a rigid body, summing over all constituent particles leads to force and moment equations.",
+                "subsections": null
+            },
+            {
+                "section_title": "Diagrammatic Representation",
+                "description": "Free-body diagrams (FBD) and kinetic diagrams represent force and acceleration relationships. They are key in mechanically analyzing and solving problems for both particles and rigid bodies.",
+                "subsections": null
+            },
+            {
+                "section_title": "Moments and Moment of Inertia",
+                "description": "The moment of inertia \\( I \\) is defined as \\( I = \\int r^2 \\; dm \\). Parallel axis theorem is \\( I_P = I_G + md^2 \\).",
+                "subsections": null
+            }
+        ],
+        "learning_objectives": [
+            {
+                "section_title": "Apply Newton\u2019s Second Law to Particles",
+                "description": "Students should be able to write and use \\( \\vec{F} = m\\vec{a} \\) for single particles and solve for unknowns using FBD and kinetic diagrams.",
+                "subsections": null
+            },
+            {
+                "section_title": "Extend Newton\u2019s Laws to Rigid Bodies",
+                "description": "Understand how force and moment summations lead to the equations \\( \\sum \\vec{F} = m\\vec{a}_G \\), \\( \\sum \\vec{M}_G = I_G \\alpha \\).",
+                "subsections": null
+            },
+            {
+                "section_title": "Analyze Planar Motion of Rigid Bodies",
+                "description": "Write and utilize planar equations of motion for translation and rotation, including use of the center of mass location.",
+                "subsections": null
+            }
+        ],
+        "technical_concepts": [
+            {
+                "section_title": "Force and Kinetic Diagrams",
+                "description": "Used for both particles (\\( \\sum \\vec{F} = m\\vec{a} \\)) and rigid bodies (\\( \\sum \\vec{F} = m\\vec{a}_G \\), \\( \\sum \\vec{M}_G = I_G \\alpha \\)).",
+                "subsections": null
+            },
+            {
+                "section_title": "Tangential and Normal Acceleration Components",
+                "description": "In curved motion, accelerations have tangential (\\( a_t \\)) and normal (\\( a_n \\)) components: \\( a_t = \\dot{v} \\), \\( a_n = v^2/r \\).",
+                "subsections": null
+            },
+            {
+                "section_title": "Moment of Inertia and Parallel Axis Theorem",
+                "description": "\\( I = \\int r^2 dm \\); \\( I_P = I_G + md^2 \\). The radius of gyration is \\( k = \\sqrt{I/m} \\).",
+                "subsections": null
+            }
+        ]
+    },
+    "token_usage": [
+        {
+            "step_name": "extract_summary",
+            "token_usage": {
+                "completion_tokens": 800,
+                "prompt_tokens": 22243,
+                "total_tokens": 23043,
+                "completion_tokens_details": {
+                    "accepted_prediction_tokens": 0,
+                    "audio_tokens": 0,
+                    "reasoning_tokens": 0,
+                    "rejected_prediction_tokens": 0
+                },
+                "prompt_tokens_details": {
+                    "audio_tokens": 0,
+                    "cached_tokens": 0
+                }
+            }
+        }
+    ]
+}

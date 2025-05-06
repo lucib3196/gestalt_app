@@ -3,22 +3,22 @@ import os
 import tempfile
 import asyncio
 import aiofiles
-from typing import Dict, Any, Union
 from .question_models import get_folder_files
 from ..data.helpers import read_file, format_question
-from ..processing.code_runners.code_runner import run_generate, Response
-from pydantic import BaseModel
+from ..processing.code_runners.code_runner import run_generate
 from typing import Literal
-
-
-
+from ..processing.code_runners.utils import (
+    CodeRunResponse,
+    QuizData,
+    GenerateQuizResponse,
+)
 
 
 async def generate_quiz(
     question_folder_id: int,
     session,
     server_type: Literal["javascript", "python"] = "javascript",
-) -> Response:
+) -> CodeRunResponse:
     """
     Asynchronously generates a quiz for a given module.
 
@@ -71,21 +71,18 @@ async def generate_quiz(
         else:
             server_file = os.path.join(tmpdir, "server.py")
 
-        results: Response = await asyncio.to_thread(run_generate, server_file)
+        results: CodeRunResponse = await asyncio.to_thread(run_generate, server_file)
         print("This is the result", results)
+
         # Catch an error
         if not results.success:
             return results
 
-        generated_data = results.result
-        print(generated_data)
+        generated_data: QuizData = results.result
+        params = generated_data.params
+        correct_answers = generated_data.correct_answers
+        data = {"params": params, "correct_answers": correct_answers}
 
-        params = generated_data.get("params", {})
-        correct_answers = generated_data.get("correct_answers", {})
-        data = {
-            "params": params,
-            "correct_answers": correct_answers,
-        }
         # Read the question HTML file asynchronously via a thread.
         question_html_path = os.path.join(tmpdir, "question.html")
         html_content = await asyncio.to_thread(read_file, question_html_path)
@@ -93,8 +90,7 @@ async def generate_quiz(
         rendered_question_html = await asyncio.to_thread(
             format_question, html=html_content, data=data
         )
-        quiz_data = QuizData(**data)
         data = GenerateQuizResponse(
-            question_html=rendered_question_html, quiz_data=quiz_data
+            question_html=rendered_question_html, quiz_data=generated_data
         )
-        return Response(success=True, error=None, result=data)
+        return CodeRunResponse(success=True, error=None, result=data)

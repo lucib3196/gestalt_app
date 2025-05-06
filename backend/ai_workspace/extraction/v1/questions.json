@@ -1,0 +1,190 @@
+{
+    "questions": {
+        "questions": [
+            {
+                "question": "The 5\\,\\mathrm{kg} pendulum bob is released from rest when \\( \\theta = 0 \\). Determine the initial tension in the cord. Also determine the tension at the instant \\( \\theta = 45^\\circ \\). Neglect the size of the bob and assume \\( r = 2\\,\\mathrm{m} \\).",
+                "source": "Slide 4",
+                "requires_external_data": false,
+                "requires_image": true,
+                "completeness": true,
+                "additiona_information": null,
+                "solution": [
+                    {
+                        "section_title": "Step 1: Analyze Initial Condition (\\(\\theta = 0\\))",
+                        "description": "At \\(\\theta = 0\\), the bob is released from rest. The acceleration is zero. The free-body diagram would have the tension \\(T\\) upwards along the string and weight \\(mg\\) downwards. Thus, \\[ \\sum F_x = m a_x \\rightarrow T - mg = 0 \\rightarrow T = mg \\]",
+                        "subsections": null
+                    },
+                    {
+                        "section_title": "Step 2: Analyze Condition at \\(\\theta = 45^\\circ\\)",
+                        "description": "At \\(\\theta = 45^\\circ\\), the forces on the bob have radial (normal) and tangential components. The equation in the radial direction is: \\[ \\sum F_n = m a_n \\implies T - mg \\sin\\theta = m\\frac{v^2}{r} \\]",
+                        "subsections": null
+                    },
+                    {
+                        "section_title": "Step 3: Find Velocity at \\(\\theta = 45^\\circ\\)",
+                        "description": "Use tangential acceleration to determine the velocity: \\( a_t = g \\cos\\theta \\). Integrate: \\[ \\int_0^{\\pi/4} g \\cos\\theta \\; r\\,d\\theta = \\int_0^{V} v \\, dv \\] This gives a symbolic solution for \\(V\\).",
+                        "subsections": null
+                    },
+                    {
+                        "section_title": "Step 4: Express the Final Tension Symbolically",
+                        "description": "Express tension as \\[ T = mg\\sin\\theta + m\\frac{v^2}{r} \\] at \\( \\theta = 45^\\circ \\). Substitute the (symbolic) result for \\( v \\) from the previous step.",
+                        "subsections": null
+                    }
+                ]
+            },
+            {
+                "question": "At the instant \\( \\theta = 45^\\circ \\), what is the velocity \\( V \\) of the pendulum bob? Express in terms of \\(m\\), \\(g\\), \\(r\\), and \\(\\theta\\).",
+                "source": "Slide 6",
+                "requires_external_data": false,
+                "requires_image": true,
+                "completeness": true,
+                "additiona_information": null,
+                "solution": [
+                    {
+                        "section_title": "Step 1: Write the Differential Equation for \\(a_t\\)",
+                        "description": "Tangential acceleration: \\( a_t = g \\cos\\theta \\). For circular motion: \\( ds = r d\\theta \\), use \\( a_t ds = v dv \\).",
+                        "subsections": null
+                    },
+                    {
+                        "section_title": "Step 2: Integrate to Solve for \\(v\\)",
+                        "description": "\\[ \\int_0^{\\pi/4} g \\cos\\theta \\cdot r\\,d\\theta = \\int_0^{V} v \\, dv \\]\n\\[ rg \\int_0^{\\pi/4} \\cos\\theta \\, d\\theta = \\frac{1}{2} V^2 \\]\nSymbolically evaluate the left integral and solve for \\(V\\).",
+                        "subsections": null
+                    }
+                ]
+            },
+            {
+                "question": "The smooth block \\(b\\) having a mass of \\(m\\) is attached to the vertex \\(A\\) of the right circular cone using a light cord. The cone is rotating at constant angular speed about the z-axis such that the block attains a speed of \\(v\\). At this speed, determine the tension in the cord and the reaction the cone exerts on the block. Neglect the size of the block.",
+                "source": "Slide 8",
+                "requires_external_data": false,
+                "requires_image": true,
+                "completeness": true,
+                "additiona_information": null,
+                "solution": [
+                    {
+                        "section_title": "Step 1: Identify All Forces and Set Up Equilibrium Equations",
+                        "description": "Draw the Free Body Diagram with forces: tension \\(T\\), normal \\(N\\), and weight \\(mg\\).\nWrite equilibrium equations:\n\\[ \\sum F_y = 0: -mg + N\\cos\\theta + T\\sin\\theta = 0 \\]\n\\[ \\sum F_x = m\\frac{v^2}{r}: T\\cos\\theta - N\\sin\\theta = m\\frac{v^2}{r} \\]\nExpress \\(r\\) in terms of cone geometry.",
+                        "subsections": null
+                    },
+                    {
+                        "section_title": "Step 2: Solve for Tension and Normal Force Symbolically",
+                        "description": "Solve the above linear system for \\(T\\) and \\(N\\) in terms of \\(m\\), \\(g\\), \\(\\theta\\), \\(r\\), and \\(v\\).",
+                        "subsections": null
+                    }
+                ]
+            },
+            {
+                "question": "A 0.5-lb ball is guided along the vertical circular path \\( r = 2r_c \\cos \\theta \\) using the arm \\( OA \\). If the arm has an angular velocity \\( \\dot{\\theta} \\) and an angular acceleration \\( \\ddot{\\theta} \\) at the instant \\( \\theta = 30^\\circ \\), determine the force of the arm on the ball. Neglect friction and the size of the ball. Set \\( r_c \\) as a constant.",
+                "source": "Slide 11",
+                "requires_external_data": false,
+                "requires_image": true,
+                "completeness": true,
+                "additiona_information": null,
+                "solution": [
+                    {
+                        "section_title": "Step 1: Write the Position Vector and Take Derivatives",
+                        "description": "Position: \\( r = 2r_c \\cos\\theta \\)\nVelocity: \\[ \\dot{r} = -2r_c \\sin\\theta \\dot{\\theta} \\]\nAcceleration (radial and transverse components):\n\\[ \\ddot{r} = -2r_c \\cos\\theta \\dot{\\theta}^2 - 2r_c \\sin\\theta \\ddot{\\theta} \\]",
+                        "subsections": null
+                    },
+                    {
+                        "section_title": "Step 2: Write Force Equations in Polar Coordinates",
+                        "description": "Radial: \\( \\sum F_r = m a_r \\ ), \\( a_r = \\ddot{r} - r \\dot{\\theta}^2 \\)\nTransverse: \\( \\sum F_\\theta = m a_\\theta \\), \\( a_\\theta = r\\ddot{\\theta} + 2\\dot{r}\\dot{\\theta} \\)\nExpress force components symbolically.",
+                        "subsections": null
+                    },
+                    {
+                        "section_title": "Step 3: Express Contact Force (Force of Arm on Ball) Symbolically",
+                        "description": "The force of the arm on the ball is the sum of radial and transverse components computed above, written in polar vectors.",
+                        "subsections": null
+                    }
+                ]
+            },
+            {
+                "question": "For a general function \\( r = f(\\theta) \\), what is the slope \\( \\psi \\) of the tangent to the path at any point?",
+                "source": "Slide 15",
+                "requires_external_data": false,
+                "requires_image": true,
+                "completeness": true,
+                "additiona_information": null,
+                "solution": [
+                    {
+                        "section_title": "Calculation of the Slope of the Tangent",
+                        "description": "The slope \\( \\psi \\) of the tangent to the curve described by \\( r = f(\\theta) \\) is given by:\n\\[ \\tan\\psi = \\frac{r}{\\frac{dr}{d\\theta}} \\]",
+                        "subsections": null
+                    }
+                ]
+            },
+            {
+                "question": "For a rigid body, what are the equations of motion relating the sum of the forces and the sum of the moments to the acceleration of the center of mass and the angular acceleration (about the center of mass)?",
+                "source": "Slides 16-18",
+                "requires_external_data": false,
+                "requires_image": false,
+                "completeness": true,
+                "additiona_information": null,
+                "solution": [
+                    {
+                        "section_title": "Equations of Motion for a Rigid Body",
+                        "description": "\\[ \\sum \\vec{F} = m \\vec{a}_G \\]\n\\[ \\sum M_G = I_G \\alpha \\]\nwhere \\( m \\) is mass, \\( I_G \\) is the moment of inertia about the center of mass, \\( \\vec{a}_G \\) is the acceleration of the center of mass, and \\( \\alpha \\) is the angular acceleration.",
+                        "subsections": null
+                    }
+                ]
+            },
+            {
+                "question": "Where do we get the equations of motion for a rigid body from?",
+                "source": "Slide 19",
+                "requires_external_data": false,
+                "requires_image": false,
+                "completeness": true,
+                "additiona_information": null,
+                "solution": null
+            },
+            {
+                "question": "What is the parallel axis theorem for the moment of inertia?",
+                "source": "Slide 22",
+                "requires_external_data": false,
+                "requires_image": true,
+                "completeness": true,
+                "additiona_information": null,
+                "solution": [
+                    {
+                        "section_title": "Statement of the Parallel Axis Theorem",
+                        "description": "\\[ I_P = I_G + m d^2 \\]\nwhere \\(I_P\\) is the moment of inertia about a point \\(P\\), \\(I_G\\) is the moment of inertia about the center of mass, \\(m\\) is the total mass, and \\(d\\) is the distance between the center of mass and point \\(P\\).",
+                        "subsections": null
+                    }
+                ]
+            },
+            {
+                "question": "For planar motion of a rigid body, write the equations of motion relating forces and moments to linear and angular acceleration.",
+                "source": "Slides 23-25",
+                "requires_external_data": false,
+                "requires_image": false,
+                "completeness": true,
+                "additiona_information": null,
+                "solution": [
+                    {
+                        "section_title": "Equations of Planar Motion for a Rigid Body",
+                        "description": "\\[\n\\sum F_x = m (a_G)_x \\\\\n\\sum F_y = m (a_G)_y \\\\\n\\sum M_G = I_G \\alpha\n\\]",
+                        "subsections": null
+                    }
+                ]
+            }
+        ]
+    },
+    "token_usage": [
+        {
+            "step_name": "extract_questions",
+            "token_usage": {
+                "completion_tokens": 2229,
+                "prompt_tokens": 22366,
+                "total_tokens": 24595,
+                "completion_tokens_details": {
+                    "accepted_prediction_tokens": 0,
+                    "audio_tokens": 0,
+                    "reasoning_tokens": 0,
+                    "rejected_prediction_tokens": 0
+                },
+                "prompt_tokens_details": {
+                    "audio_tokens": 0,
+                    "cached_tokens": 0
+                }
+            }
+        }
+    ]
+}

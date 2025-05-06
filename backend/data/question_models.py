@@ -13,7 +13,7 @@ import json
 import tempfile
 import zipfile
 from io import BytesIO
-from typing import List, Tuple, Dict, Any, Optional
+from typing import List, Tuple, Dict, Any, Optional, Union
 
 # ─────────────────────────────────────────────────────────────
 # Third-Party Imports
@@ -59,9 +59,7 @@ def get_package_folders(
     return folders
 
 
-def get_folder_files(
-    folder_id: int, session: Session = None
-) -> List[QuestionFile]:
+def get_folder_files(folder_id: int, session: Session = None) -> List[QuestionFile]:
     """
     Retrieve all question files within a specific folder of a package.
 
@@ -78,10 +76,6 @@ def get_folder_files(
     """
     folder = get_question_folder(folder_id=folder_id, session=session)
     return folder.question_files
-
-
-
-
 
 
 def get_question_folder(folder_id: int, session: Session = None) -> QuestionFolder:
@@ -107,26 +101,90 @@ def get_all_question_files(folder_id: int, session=None) -> List[QuestionFile]:
 def update_filecontents(
     folder_id: int, file_name: str, new_content: str, session: Session
 ) -> QuestionFile:
+
+    if file_name == "metadata":
+        print("Updating metadata")
+        return update_metadata(
+            folder_id=folder_id, updates=new_content, session=session
+        )
+    else:
+
+        statement = select(QuestionFile).where(
+            (QuestionFile.name == file_name)
+            & (QuestionFile.question_folder_id == folder_id)
+        )
+        result = session.exec(statement)
+        file = result.first()
+
+        if not file:
+            raise ValueError("File not found")
+
+        print("This is the old content", print(file.content))
+        file.content = new_content
+
+        print("This is the new content", file.content)
+        session.add(file)
+        session.commit()
+        session.refresh(file)
+
+        return file
+
+
+def update_metadata(folder_id: int, updates: Union[dict, str], session: Session):
+    # Search through database
     statement = select(QuestionFile).where(
-        (QuestionFile.name == file_name)
+        (QuestionFile.name == "metadata")
         & (QuestionFile.question_folder_id == folder_id)
     )
     result = session.exec(statement)
     file = result.first()
 
+    statement = select(QuestionFolder).where(QuestionFolder.id == folder_id)
+    result = session.exec(statement)
+    folder = result.first()
+
     if not file:
         raise ValueError("File not found")
+    if not folder:
+        raise ValueError("Folder Not Found")
 
-    print("This is the old content",print(file.content))
-    file.content = new_content
-    
-    print("This is the new content", file.content)
-    session.add(file)
-    session.commit()
-    session.refresh(file)
+    try:
+        # Retrieve the current file content
+        content = json.loads(file.content)
+        # Handle just incase updates is not a string
+        if isinstance(updates, str):
+            updates = json.loads(updates)
+        # Override old values and add new values
+        for key, value in updates.items():
+            content[key] = value
+            
+        print(f"This is the new content ", content)
+        file.content = json.dumps(content)
 
-    return file
+        #
+        valid_updates = {
+            key: value
+            for key, value in updates.items()
+            if key in QuestionFolder.model_fields
+        }
+        
+        
 
+        updated_folder = folder.model_copy(update=valid_updates)
+        print(valid_updates)
+        
+        print("This is the updated folder", updated_folder)
+
+        session.add(file)
+        session.commit()
+        session.refresh(file)
+
+        session.add(updated_folder)
+        session.commit()
+        session.refresh(updated_folder)
+        return file, updated_folder
+    except json.JSONDecodeError:
+        raise ValueError("Invalid JSON provided in content.")
 
 
 def get_all_question_folders(

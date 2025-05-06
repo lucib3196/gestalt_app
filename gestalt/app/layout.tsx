@@ -26,7 +26,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const links = [{ name: "Modules", path: "/modules" }];
+  const links = [{ name: "Packages", path: "/packages" }];
 
   return (
     <html lang="en">

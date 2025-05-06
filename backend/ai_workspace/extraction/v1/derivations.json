@@ -1,0 +1,128 @@
+{
+    "derivations": {
+        "all_derivations": [
+            {
+                "derivation_name": "Pendulum Bob Tension Analysis",
+                "derivation_steps": [
+                    {
+                        "section_title": "Extracted Questions",
+                        "description": "1. The 5 kg pendulum bob is released from rest when \\( \\theta = 0 \\). \n   (a) Determine the initial tension in the cord. \n   (b) Also determine the tension at the instant \\( \\theta = 45^{\\circ} \\). \n   Neglect the size of the bob and assume \\( r = 2\\text{ m} \\).",
+                        "subsections": null
+                    },
+                    {
+                        "section_title": "Solution Steps (as present in images)",
+                        "description": "(a) For \\( \\theta = 0 \\):\n\\[ \\sum F_x = m a_x \\implies T = 0 \\]\n\n(b) For \\( \\theta = 45^{\\circ} \\):\n\\[ \\sum F_n = m a_n \\]\n\\[ T - mg \\sin\\theta = \\frac{m v^2}{r} \\]\n\\[ T = mg\\sin\\theta + \\frac{mv^2}{r} \\]\n\nTo find \\( v \\) for \\( \\theta = 45^{\\circ} \\):\n- Use \\( a_t = g \\cos\\theta \\), integrate tangential acceleration:\n\\[ a_t ds = v dv \\implies \\int_0^{\\pi/4} (g \\cos\\theta) r d\\theta = \\int_0^{v} v dv \\]\n- For \\( r = 2 \\), this gives (up to symbolic relational expression):\n\\[ r g \\sin\\theta |_{0}^{\\pi/4} = \\frac{v^2}{2} |_{0}^{v} \\]\n- Thus:\n\\[ T = mg\\sin\\theta + \\frac{mv^2}{r} \\] for \\( \\theta = 45^{\\circ} \\).\n\n**Note:** Numerical substitution is visible in images, but omitted here per instructions.",
+                        "subsections": null
+                    },
+                    {
+                        "section_title": "Image and Diagram Analysis",
+                        "description": "Yes, images are necessary to comprehend the: (1) pendulum geometry and (2) force diagrams (free-body and kinetic diagram) for proper breakdown of forces and accelerations as \\( \\theta \\) changes. \n\nThese images clarify how to resolve forces (tension, gravity), how the acceleration projects along normal/tangential axes, and the path of the pendulum bob.",
+                        "subsections": null
+                    },
+                    {
+                        "section_title": "External Data Considerations",
+                        "description": "No external data is required; all parameters and relationships are given symbolically or described in the images. However, if the mass was not specified, a variable \\( m \\) could be used.",
+                        "subsections": null
+                    }
+                ],
+                "source": "Slides 4--7 (Pendulum problem)",
+                "requires_image": true,
+                "completeness": true
+            },
+            {
+                "derivation_name": "Cone and Rotating Cord Tension Analysis",
+                "derivation_steps": [
+                    {
+                        "section_title": "Extracted Questions",
+                        "description": "The smooth block b having mass \\( m = 0.2 \\) kg is attached to the vertex A of the right circular cone using a light cord. The cone is rotating at constant angular speed about the z-axis such that the block attains a speed of \\( v = 0.5 \\) m/s. At this speed:\n(a) Determine the tension in the cord. \n(b) Determine the reaction the cone exerts on the block.\nNeglect the size of the block.",
+                        "subsections": null
+                    },
+                    {
+                        "section_title": "Solution Steps (from images)",
+                        "description": "Let \\( \\theta \\) denote the cone's apex angle. \n- Set up force balances in y-direction and x-direction:\n\\[ -mg + N \\cos\\theta + T \\sin\\theta = 0 \\]\n\\[ T \\cos\\theta - N \\sin\\theta = \\frac{mv^2}{r} \\]\n- Geometry of the cone:\n\\[ r = 200 \\frac{3}{5} \\] (using similar triangles; parameterize as \\( r = h \\frac{\\text{base}}{\\text{hypotenuse}} \\) if needed for symbolic answer)\n- Solve for \\( T \\) and \\( N \\) (symbolically):\n\\[ T = ... \\text{(in terms of } m, v, r, \\theta, g \\text{)} \\]\n\\[ N = ... \\text{(in terms of } m, v, r, \\theta, g \\text{)} \\]\nCertain numerical values have been filled in but should be replaced by variables.",
+                        "subsections": null
+                    },
+                    {
+                        "section_title": "Image and Diagram Analysis",
+                        "description": "The problem depends critically on the cone diagram to define geometry, the force diagram (showing \\( T, N, mg \\)), and the velocity/axes relationship. These images are needed to:\n- Express \\( r \\) in terms of \\( \\theta \\) and known dimensions,\n- Resolve forces in the proper directions relative to \\( \\theta \\).\nSketches should include:\n- The cone with labeled height, base, radius, and apex angle\n- The block position, velocity vector, and all forces.",
+                        "subsections": null
+                    },
+                    {
+                        "section_title": "External Data Considerations",
+                        "description": "No external data is required. If cone dimensions were not given, a general relation for \\( r \\) in terms of \\( \\theta \\) and the cone's height and base would be required.",
+                        "subsections": null
+                    }
+                ],
+                "source": "Slides 8--9 (Cone/block problem)",
+                "requires_image": true,
+                "completeness": true
+            },
+            {
+                "derivation_name": "Force on a Ball Guided Along a Path (Cylindrical Coordinates)",
+                "derivation_steps": [
+                    {
+                        "section_title": "Extracted Questions",
+                        "description": "The 0.5-lb ball is guided along the vertical circular path \\( r = 2r_c \\cos\\theta \\) using the arm OA. If the arm has an angular velocity \\( \\dot{\\theta} = 0.4 \\) rad/s and an angular acceleration \\( \\ddot{\\theta} = 0.8 \\) rad/s\u00b2 at the instant \\( \\theta = 30^{\\circ} \\):\nDetermine the force of the arm on the ball. Neglect friction and the size of the ball. Set \\( r_c = 0.4 \\) ft.",
+                        "subsections": null
+                    },
+                    {
+                        "section_title": "Solution Steps (from images)",
+                        "description": "In cylindrical coordinates:\n- \\( r = 2r_c\\cos\\theta \\)\n- \\( \\dot{r} = 2r_c(-\\sin\\theta)\\dot{\\theta} \\)\n- \\( \\ddot{r} = 2r_c(-\\cos\\theta)\\dot{\\theta}^2 + 2r_c(-\\sin\\theta)\\ddot{\\theta} \\)\n\nForce equations (slide 13):\n\\[ \\sum F_r = m a_r \\]\n\\[ \\sum F_\\theta = m a_\\theta \\]\nWhere:\n\\[ a_r = \\ddot{r} - r \\dot{\\theta}^2 \\]\n\\[ a_{\\theta} = r \\ddot{\\theta} + 2\\dot{r}\\dot{\\theta} \\]\n\nResolve forces on FBD:\n\\[ \\sum F_r = N \\cos\\theta - W \\sin\\theta = m a_r \\]\n\\[ \\sum F_\\theta = F_{OA} + N \\sin\\theta - W \\cos\\theta = m a_{\\theta} \\]\nSolving for \\( F_{OA} \\) yields the force of the arm on the ball.\n\nNumerical substitutions from image are omitted; keep all variables symbolic.",
+                        "subsections": null
+                    },
+                    {
+                        "section_title": "Image and Diagram Analysis",
+                        "description": "Use is made of (1) the physical diagram showing the guided arm OA and the circular path, and (2) the force/acceleration diagrams showing the r/\\( \\theta \\) coordinate system and force resolution. These are essential for:\n- Defining \\( r, \\theta \\), and all acceleration components,\n- Visualizing all forces and directions for correct setup.\n\nDiagrams should include:\n- Circular path with \\( r(\\theta) \\), O/A locations,\n- Ball with \\( F_{OA} \\), Normal, and Weight vector decompositions,\n- Unit vectors \\( u_r, u_{\\theta} \\) at \\( \\theta \\).",
+                        "subsections": null
+                    },
+                    {
+                        "section_title": "External Data Considerations",
+                        "description": "The calculation employs only the symbols defined in the problem (\\( r_c, \\theta, m, W, F_{OA}, N, \\dot{\\theta}, \\ddot{\\theta} \\)). No external tables or datasets are required.",
+                        "subsections": null
+                    }
+                ],
+                "source": "Slides 10--12 (Cylindrical coordinates ball/arm)",
+                "requires_image": true,
+                "completeness": true
+            },
+            {
+                "derivation_name": "Where do we get these Equations?",
+                "derivation_steps": [
+                    {
+                        "section_title": "Extracted Questions",
+                        "description": "Where do we get these equations? (refers to equations of motion for rigid bodies)\nNo explicit mathematical or physics problem is presented; this is a conceptual prompt.",
+                        "subsections": null
+                    },
+                    {
+                        "section_title": "Solution Steps",
+                        "description": "No solution provided.",
+                        "subsections": null
+                    }
+                ],
+                "source": "Slide 15",
+                "requires_image": false,
+                "completeness": true
+            }
+        ]
+    },
+    "token_usage": [
+        {
+            "step_name": "extract_questions",
+            "token_usage": {
+                "completion_tokens": 2083,
+                "prompt_tokens": 22293,
+                "total_tokens": 24376,
+                "completion_tokens_details": {
+                    "accepted_prediction_tokens": 0,
+                    "audio_tokens": 0,
+                    "reasoning_tokens": 0,
+                    "rejected_prediction_tokens": 0
+                },
+                "prompt_tokens_details": {
+                    "audio_tokens": 0,
+                    "cached_tokens": 0
+                }
+            }
+        }
+    ]
+}

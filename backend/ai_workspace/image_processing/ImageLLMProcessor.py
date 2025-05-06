@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field
 from venv import create
 from langchain import hub
-from typing import Union, Optional,List
+from typing import Union, Optional, List
 from langchain_core.prompts.chat import ChatPromptTemplate
 
 from langchain_openai import ChatOpenAI
@@ -11,27 +11,33 @@ import base64
 from langchain_core.messages import HumanMessage
 from typing import Optional, Type
 
-async def encode_image(image_path:str)->str:
+import json
+
+
+async def encode_image(image_path: str) -> str:
     try:
-        with open(image_path,'rb') as image_file:
-            return base64.b64encode(image_file.read()).decode('utf-8')
+        with open(image_path, "rb") as image_file:
+            return base64.b64encode(image_file.read()).decode("utf-8")
     except Exception as e:
         print(f"Error encoding image {image_path}: {e}")
         raise
-async def encode_multiple_images(image_paths:List[str])->List[str]: # type: ignore
-    try: 
-        return await asyncio.gather(*(encode_image(image_path) for image_path in image_paths))
+
+
+async def encode_multiple_images(image_paths: List[str]) -> List[str]:  # type: ignore
+    try:
+        return await asyncio.gather(
+            *(encode_image(image_path) for image_path in image_paths)
+        )
     except Exception as e:
-        print(f'Error Encoding multiple images. Error : {e} ')
-async def create_image_content_payload(image_paths:List[str])->List[dict]:
+        print(f"Error Encoding multiple images. Error : {e} ")
+
+
+async def create_image_content_payload(image_paths: List[str]) -> List[dict]:
     encoded_images = await encode_multiple_images(image_paths)
     image_contents = [
         {
             "type": "image_url",
-            "image_url": {
-                "url": f"data:image/jpeg;base64,{image}",
-                "detail": "high"
-            }
+            "image_url": {"url": f"data:image/jpeg;base64,{image}", "detail": "high"},
         }
         for image in encoded_images
     ]
@@ -43,20 +49,24 @@ class ImageLLMProcessor:
     """
     A processor for handling image-based payloads and sending structured requests
     to an LLM with optional schema validation.
-    
+
     Attributes:
         prompt: The prompt string or ChatPromptTemplate for the LLM.
         schema: An optional Pydantic model for validating structured responses.
         model: The name of the LLM model to use (e.g., 'gpt-4o').
     """
+
     prompt: Union[str, ChatPromptTemplate]
     schema: Optional[Type[BaseModel]] = None
     model: str = "gpt-4o"
+    include_raw: bool = False
 
     def __post_init__(self):
         self.llm = ChatOpenAI(model=self.model)
         if self.schema is not None:
-            self.llm = self.llm.with_structured_output(self.schema)
+            self.llm = self.llm.with_structured_output(
+                self.schema, include_raw=self.include_raw
+            )
         # type: ignore
         self.processed_prompt = (
             self.prompt.messages[0].prompt.template  # type: ignore
@@ -65,7 +75,8 @@ class ImageLLMProcessor:
         )
 
     async def send_arequest_stream(
-        self, image_paths: list[str], delimiter: str = "content") -> Optional[dict]:
+        self, image_paths: list[str], delimiter: str = "content"
+    ) -> Optional[dict]:
         """
         Sends a request to the LLM with image data and streams the response.
 
@@ -89,15 +100,18 @@ class ImageLLMProcessor:
                     content = chunk[delimiter]
                     chunks.append(content)  # Optional: Collect streamed content
                     print(content, flush=True)  # Print to console (stream output)
-                
+
                 # Not Correctly Implemented
-                elif isinstance(chunk,BaseModel):
-                    if hasattr(chunk,delimiter):
+                elif isinstance(chunk, BaseModel):
+                    if hasattr(chunk, delimiter):
                         content = getattr(chunk, delimiter)
                         chunks.append(content)
                         print(getattr(chunk, delimiter), end="|", flush=True)
                     else:
-                        print(f"Delimiter '{delimiter}' not found in {chunk.__class__.__name__}. Available fields: {chunk.dict().keys()}", flush=True)
+                        print(
+                            f"Delimiter '{delimiter}' not found in {chunk.__class__.__name__}. Available fields: {chunk.dict().keys()}",
+                            flush=True,
+                        )
                 else:
                     # Handle unexpected chunk structure
                     print(f"Unexpected chunk format: {type(chunk)}", flush=True)
@@ -108,19 +122,37 @@ class ImageLLMProcessor:
             # Log the error and return a response
             print(f"Error streaming image request: {e}", flush=True)
             return {"error": str(e)}
-    
-    
-    async def send_arequest(self,image_paths:list[str]):
-        try: 
-            message = await  self.prepare_message(image_paths)
-            response = await self.llm.ainvoke([message])
-            return response.dict() # type: ignore
+
+    async def send_arequest(self, image_paths: list[str]):
+        try:
+            message = await self.prepare_message(image_paths)
+            response = await self.llm.ainvoke(
+                [message],
+            )
+
+            return response.dict()  # type: ignore
         except Exception as e:
             print(f"Error sending image request: {e}")
             return {"error": str(e)}
-            
-    
-    async def prepare_message(self,image_paths:list[str]):
+
+    async def send_arequest_raw(self, image_paths: list[str]):
+        """Return the raw response with the metadata etc.
+
+        Args:
+            image_paths (list[str]): list of image paths
+
+        Returns:
+            _type_: _description_
+        """
+        try:
+            message = await self.prepare_message(image_paths)
+            response = await self.llm.ainvoke([message])
+            return response
+        except Exception as e:
+            print(f"Error sending image request: {e}")
+            return {"error": str(e)}
+
+    async def prepare_message(self, image_paths: list[str]):
         try:
             self.validate_inputs(image_paths)
             image_contents = await create_image_content_payload(image_paths)
@@ -134,7 +166,7 @@ class ImageLLMProcessor:
             print(f"Error preparing message: {e}")
             return {"error": str(e)}
         return message
-        
+
     def validate_inputs(self, image_paths: list[str]):
         """
         Validates the input arguments for the request.
@@ -150,5 +182,3 @@ class ImageLLMProcessor:
             raise ValueError("The image_paths list cannot be empty.")
         if not isinstance(self.prompt, (str, ChatPromptTemplate)):
             raise TypeError("Prompt must be either a string or a ChatPromptTemplate.")
-    
-    

@@ -1,0 +1,1790 @@
+{
+    "lecture_metadata": {
+        "lecture_title": "Lecture 11",
+        "course_name": "Dynamics",
+        "course_code": 103,
+        "instructor_name": "Thomas Stahovich",
+        "lecture_date": null,
+        "processed_data": "2025-05-01 12:57:50.798180",
+        "semester": "Spring 2025"
+    },
+    "image_paths": [
+        "C:\\Users\\lberm\\OneDrive\\Documents\\Github\\gestalt_app\\Lectures\\lecture_images\\Lec11-post\\Lec11-post_page_0.png",
+        "C:\\Users\\lberm\\OneDrive\\Documents\\Github\\gestalt_app\\Lectures\\lecture_images\\Lec11-post\\Lec11-post_page_1.png",
+        "C:\\Users\\lberm\\OneDrive\\Documents\\Github\\gestalt_app\\Lectures\\lecture_images\\Lec11-post\\Lec11-post_page_2.png",
+        "C:\\Users\\lberm\\OneDrive\\Documents\\Github\\gestalt_app\\Lectures\\lecture_images\\Lec11-post\\Lec11-post_page_3.png",
+        "C:\\Users\\lberm\\OneDrive\\Documents\\Github\\gestalt_app\\Lectures\\lecture_images\\Lec11-post\\Lec11-post_page_4.png",
+        "C:\\Users\\lberm\\OneDrive\\Documents\\Github\\gestalt_app\\Lectures\\lecture_images\\Lec11-post\\Lec11-post_page_5.png",
+        "C:\\Users\\lberm\\OneDrive\\Documents\\Github\\gestalt_app\\Lectures\\lecture_images\\Lec11-post\\Lec11-post_page_6.png",
+        "C:\\Users\\lberm\\OneDrive\\Documents\\Github\\gestalt_app\\Lectures\\lecture_images\\Lec11-post\\Lec11-post_page_7.png",
+        "C:\\Users\\lberm\\OneDrive\\Documents\\Github\\gestalt_app\\Lectures\\lecture_images\\Lec11-post\\Lec11-post_page_8.png",
+        "C:\\Users\\lberm\\OneDrive\\Documents\\Github\\gestalt_app\\Lectures\\lecture_images\\Lec11-post\\Lec11-post_page_9.png",
+        "C:\\Users\\lberm\\OneDrive\\Documents\\Github\\gestalt_app\\Lectures\\lecture_images\\Lec11-post\\Lec11-post_page_10.png",
+        "C:\\Users\\lberm\\OneDrive\\Documents\\Github\\gestalt_app\\Lectures\\lecture_images\\Lec11-post\\Lec11-post_page_11.png",
+        "C:\\Users\\lberm\\OneDrive\\Documents\\Github\\gestalt_app\\Lectures\\lecture_images\\Lec11-post\\Lec11-post_page_12.png",
+        "C:\\Users\\lberm\\OneDrive\\Documents\\Github\\gestalt_app\\Lectures\\lecture_images\\Lec11-post\\Lec11-post_page_13.png",
+        "C:\\Users\\lberm\\OneDrive\\Documents\\Github\\gestalt_app\\Lectures\\lecture_images\\Lec11-post\\Lec11-post_page_14.png",
+        "C:\\Users\\lberm\\OneDrive\\Documents\\Github\\gestalt_app\\Lectures\\lecture_images\\Lec11-post\\Lec11-post_page_15.png",
+        "C:\\Users\\lberm\\OneDrive\\Documents\\Github\\gestalt_app\\Lectures\\lecture_images\\Lec11-post\\Lec11-post_page_16.png",
+        "C:\\Users\\lberm\\OneDrive\\Documents\\Github\\gestalt_app\\Lectures\\lecture_images\\Lec11-post\\Lec11-post_page_17.png",
+        "C:\\Users\\lberm\\OneDrive\\Documents\\Github\\gestalt_app\\Lectures\\lecture_images\\Lec11-post\\Lec11-post_page_18.png",
+        "C:\\Users\\lberm\\OneDrive\\Documents\\Github\\gestalt_app\\Lectures\\lecture_images\\Lec11-post\\Lec11-post_page_19.png",
+        "C:\\Users\\lberm\\OneDrive\\Documents\\Github\\gestalt_app\\Lectures\\lecture_images\\Lec11-post\\Lec11-post_page_20.png",
+        "C:\\Users\\lberm\\OneDrive\\Documents\\Github\\gestalt_app\\Lectures\\lecture_images\\Lec11-post\\Lec11-post_page_21.png",
+        "C:\\Users\\lberm\\OneDrive\\Documents\\Github\\gestalt_app\\Lectures\\lecture_images\\Lec11-post\\Lec11-post_page_22.png",
+        "C:\\Users\\lberm\\OneDrive\\Documents\\Github\\gestalt_app\\Lectures\\lecture_images\\Lec11-post\\Lec11-post_page_23.png",
+        "C:\\Users\\lberm\\OneDrive\\Documents\\Github\\gestalt_app\\Lectures\\lecture_images\\Lec11-post\\Lec11-post_page_24.png",
+        "C:\\Users\\lberm\\OneDrive\\Documents\\Github\\gestalt_app\\Lectures\\lecture_images\\Lec11-post\\Lec11-post_page_25.png",
+        "C:\\Users\\lberm\\OneDrive\\Documents\\Github\\gestalt_app\\Lectures\\lecture_images\\Lec11-post\\Lec11-post_page_26.png",
+        "C:\\Users\\lberm\\OneDrive\\Documents\\Github\\gestalt_app\\Lectures\\lecture_images\\Lec11-post\\Lec11-post_page_27.png"
+    ],
+    "seperate_image": true,
+    "extracted_content": {
+        "lecture_content": {
+            "content": [
+                "extract_lecture_derivations",
+                "extract_lecture_questions"
+            ]
+        },
+        "lecture_summary": {
+            "lecture_name": "Kinetics of Particles and Rigid Body Equations of Motion",
+            "summary": "This lecture introduces the kinetics of particles using Newton\u2019s Second Law, explores free body and kinetic diagrams, and develops the equations of motion for both particles and rigid bodies. It covers the derivation and significance of force and moment equations, including constraints for planar motion, and provides worked example problems involving tension and reactions in mechanical systems.",
+            "key_takeaways": [
+                {
+                    "section_title": "Newton\u2019s Second Law for Particles",
+                    "description": "The foundation of kinetics is Newton\u2019s second law: \\( \\vec{F} = m \\vec{a} \\).",
+                    "subsections": null
+                },
+                {
+                    "section_title": "Drawing Free-Body and Kinetic Diagrams",
+                    "description": "Free-body diagrams represent forces acting on a particle or rigid body, while kinetic diagrams correspond to the resulting accelerations.",
+                    "subsections": null
+                },
+                {
+                    "section_title": "Equations of Motion for Rigid Bodies",
+                    "description": "For a rigid body, \\( \\Sigma \\vec{F} = m \\vec{a}_G \\) and \\( \\Sigma M_G = I_G \\alpha \\) are the principal equations governing translation and rotation.",
+                    "subsections": null
+                }
+            ],
+            "learning_objectives": [
+                {
+                    "section_title": "Understanding of Particle Kinetics",
+                    "description": "Students should be able to apply Newton\u2019s Second Law to particles, draw correct free-body diagrams, and relate forces to particle motion.",
+                    "subsections": null
+                },
+                {
+                    "section_title": "Analyzing Mechanical Systems Symbolically",
+                    "description": "Students will solve mechanical equilibrium and motion problems strictly symbolically, identifying key variables and parameters.",
+                    "subsections": null
+                },
+                {
+                    "section_title": "Rigid Body Kinetics Derivation",
+                    "description": "Students should understand the derivation of generalized force and moment equations for rigid body motion and know their applicability.",
+                    "subsections": null
+                }
+            ],
+            "technical_concepts": [
+                {
+                    "section_title": "Newton\u2019s Second Law for Particles",
+                    "description": "Describes the relationship: \\( \\vec{F} = m \\vec{a} \\), where \\( \\vec{F} \\) is the net force, \\( m \\) the mass, and \\( \\vec{a} \\) the acceleration.",
+                    "subsections": null
+                },
+                {
+                    "section_title": "Equations of Motion for Rigid Bodies",
+                    "description": "The translational and rotational equations:\n\\( \\Sigma \\vec{F} = m\\vec{a}_G \\)\n\\( \\Sigma M_G = I_G \\alpha \\ ).",
+                    "subsections": null
+                },
+                {
+                    "section_title": "Moment of Inertia",
+                    "description": "Defined as \\( I_P = \\int_m r^2 dm \\). Parallel axis theorem: \\( I_P = I_G + md^2 \\).",
+                    "subsections": null
+                },
+                {
+                    "section_title": "Tangential and Normal Directions in Polar Coordinates",
+                    "description": "\\( \\tan \\psi = \\frac{r}{dr/d\\theta} \\), \\( ds = r d\\theta \\); normal and tangential acceleration components.",
+                    "subsections": null
+                }
+            ]
+        },
+        "lecture_derivations": {
+            "all_derivations": [
+                {
+                    "derivation_name": "Question Extraction from Moment Equation for a Rigid Body Slides",
+                    "derivation_steps": [
+                        {
+                            "section_title": "1. Extraction of Questions",
+                            "description": "Upon reviewing the provided slides, there are no explicit questions, exercises, or problems stated. The content consists entirely of formula derivations, explanations, and definitions regarding the moment equation for a rigid body. There are no sub-questions, queries, or request for calculations. Thus, no question is present that can be extracted for further symbolic solution.",
+                            "subsections": null
+                        }
+                    ],
+                    "source": "Slides on Moment Equation for a Rigid Body (pages 1 and 2)",
+                    "requires_image": true,
+                    "completeness": true
+                }
+            ]
+        },
+        "lecture_questions": {
+            "questions": [
+                {
+                    "question": "The 5\\,\\mathrm{kg} pendulum bob is released from rest when \\( \\theta = 0 \\).\\newline Determine the initial tension in the cord. Also determine the tension at the instant \\( \\theta = 45^\\circ \\).\\newline Neglect the size of the bob and assume \\( r = 2\\,\\mathrm{m} \\).",
+                    "source": "Image 1 (slide 3)",
+                    "requires_external_data": false,
+                    "requires_image": true,
+                    "completeness": true,
+                    "additiona_information": null,
+                    "solution": [
+                        {
+                            "section_title": "Understanding the Problem",
+                            "description": "A pendulum bob of mass \\( m = 5\\,\\mathrm{kg} \\) is attached to a cord of length \\( r = 2\\,\\mathrm{m} \\), released from rest with \\( \\theta = 0 \\). We are to determine: (1) the initial tension in the cord when \\( \\theta = 0 \\); (2) the tension when \\( \\theta = 45^\\circ \\).",
+                            "subsections": null
+                        },
+                        {
+                            "section_title": "Free-Body Diagram and Force Analysis at \\( \\theta = 0 \\)",
+                            "description": "At \\( \\theta = 0 \\), the bob is at rest and only two forces act on it: gravity (\\( mg \\)) and the tension \\( T \\) in the cord. Since the bob is at rest, the net force in the radial direction is zero.",
+                            "subsections": [
+                                {
+                                    "subsection_title": "Force equation at \\( \\theta = 0 \\)",
+                                    "description": "\\( \\sum F_r = m a_r \\rightarrow T - mg = 0 \\implies T = mg \\)\\newline Thus, the initial tension is \\( T = mg \\)."
+                                }
+                            ]
+                        },
+                        {
+                            "section_title": "Free-Body Diagram and Force Analysis at General \\( \\theta \\)",
+                            "description": "At an arbitrary angle \\( \\theta \\), the forces are gravity (decomposed into radial and tangential components) and tension. The radial equation is:",
+                            "subsections": [
+                                {
+                                    "subsection_title": "Radial force equation",
+                                    "description": "\\( \\sum F_n = m a_n \\implies T - mg\\sin\\theta = \\frac{mv^2}{r} \\implies T = mg\\sin\\theta + \\frac{mv^2}{r} \\)"
+                                }
+                            ]
+                        },
+                        {
+                            "section_title": "Finding the Speed \\( v \\) at \\( \\theta = 45^\\circ \\) Symbolically",
+                            "description": "Use the tangential acceleration to find the velocity at \\( \\theta = 45^\\circ \\).\\newline Tangential component: \\( m g \\cos\\theta = m a_t \\implies a_t = g\\cos\\theta \\).\\newline Use energy or kinematics for a variable tangential acceleration.",
+                            "subsections": [
+                                {
+                                    "subsection_title": "Differential for variable \\( a_t \\) in a circular arc",
+                                    "description": "Since \\( a_t = g\\cos\\theta \\),\\newline \\( a_t = \\frac{dv}{dt} = g\\cos\\theta \\)\\newline For a circular path, \\( ds = r d\\theta \\).\\newline \\( a_t = \\frac{dv}{dt} = \\frac{dv}{ds}\\frac{ds}{dt} = v \\frac{dv}{ds} \\).\\newline So, \\( a_t ds = v dv \\implies g\\cos\\theta \\cdot r d\\theta = v dv \\)"
+                                }
+                            ]
+                        },
+                        {
+                            "section_title": "Integration to Find \\( v \\) at \\( \\theta = 45^\\circ \\)",
+                            "description": "Integrate both sides from \\( \\theta = 0 \\) and \\( v=0 \\), to \\( \\theta = 45^\\circ \\) and \\( v = v_{45} \\):\\newline \\[ \\int_0^{\\pi/4} g r \\cos\\theta d\\theta = \\int_0^{v_{45}} v dv \\]",
+                            "subsections": [
+                                {
+                                    "subsection_title": "Result of integration (symbolic)",
+                                    "description": "\\[ g r \\int_0^{\\pi/4} \\cos\\theta d\\theta = \\frac{1}{2} v_{45}^2 \\]"
+                                }
+                            ]
+                        },
+                        {
+                            "section_title": "Expression for the Tension at \\( \\theta = 45^\\circ \\)",
+                            "description": "Substitute the symbolic result for \\( v_{45} \\) into the tension equation: \\newline \\[ T_{45} = mg\\sin(45^\\circ) + \\frac{m v_{45}^2}{r} \\]",
+                            "subsections": null
+                        }
+                    ]
+                },
+                {
+                    "question": "At a constant angular speed about the z-axis, a smooth block B of mass m is attached to the vertex A of a right circular cone using a light cord. The block attains a speed v. At this speed, determine symbolically:\n(a) the tension T in the cord, and\n(b) the reaction N that the cone exerts on the block.\nNeglect the size of the block. The relevant parameters are the cone's dimensions and the geometry as shown in the diagram.",
+                    "source": "Slide 7 (first image, problem statement)",
+                    "requires_external_data": false,
+                    "requires_image": true,
+                    "completeness": true,
+                    "additiona_information": "Cone geometry is given; variables m (mass), v (speed), T (tension), N (normal/reaction force), \u03b8 (angle of cone), and r (radius of rotation) must be retained symbolically.",
+                    "solution": [
+                        {
+                            "section_title": "Free Body Diagram and Force Equilibrium",
+                            "description": "Draw a free body diagram (FBD) for the block, identifying:\n- Gravity acting downward: mg\n- Tension T in the cord at angle \\( \\theta \\)\n- Reaction force (normal), N, from the cone at angle \\( \\theta \\)\n\nConsider components of forces along the vertical (y') and horizontal (x', towards the axis of rotation) directions.",
+                            "subsections": [
+                                {
+                                    "subsection_title": "Vertical Equilibrium (\\( \\Sigma F_{y'} = 0 \\))",
+                                    "description": "\\[\n-N \\cos \\theta - T \\sin \\theta + mg = 0\n\\]"
+                                },
+                                {
+                                    "subsection_title": "Radial/Centripetal Equilibrium (\\( \\Sigma F_{x'} = m\\frac{v^2}{r} \\))",
+                                    "description": "\\[\nT \\cos \\theta - N \\sin \\theta = m \\frac{v^2}{r}\n\\]"
+                                }
+                            ]
+                        },
+                        {
+                            "section_title": "Geometric Relations from the Cone",
+                            "description": "Let the slant height (hypotenuse) from apex A to B be L, the vertical height be h, and the base radius be b. From the diagram, assign symbolic lengths as needed.\n- \\( \\cos \\theta = \\frac{b}{L} \\)\n- \\( \\sin \\theta = \\frac{h}{L} \\)\n- Let the radius of motion (horizontal distance from axis to block), r, be found by similar triangles or direct trigonometric relations.",
+                            "subsections": null
+                        },
+                        {
+                            "section_title": "Solve Simultaneous Equations",
+                            "description": "Solve the two equations from the FBD:\n\\[\n-N \\cos \\theta - T \\sin \\theta + mg = 0 \\tag{1}\n\\]\n\\[\nT \\cos \\theta - N \\sin \\theta = m \\frac{v^2}{r} \\tag{2}\n\\]\nSymbolically solve for T and N in terms of m, g, v, r, and \\( \\theta \\):",
+                            "subsections": [
+                                {
+                                    "subsection_title": "Solution for Tension (T) and Normal Reaction (N)",
+                                    "description": "Solve (1) and (2) for T and N:\n\\begin{align*}\nN \\cos \\theta + T \\sin \\theta &= mg \\\\\nT \\cos \\theta - N \\sin \\theta &= m \\frac{v^2}{r}\n\\end{align*}\nSolve these simultaneously to express T and N symbolically."
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "question": "What is the significance of the radius r in determining the required tension and normal force, and how is it extracted from the geometry of the cone?",
+                    "source": "Slide 8 (second image, geometric construction)",
+                    "requires_external_data": false,
+                    "requires_image": true,
+                    "completeness": true,
+                    "additiona_information": "r must be expressed symbolically using the cone dimensions via similar triangles or trigonometric functions.",
+                    "solution": [
+                        {
+                            "section_title": "Geometric Analysis of the Cone",
+                            "description": "Construct a right triangle from the apex, slant height, and base radius, noting:\n- Slant height = L\n- Height = h\n- Base radius = b\n\nFrom similar triangles or trigonometry:\n\\[\n\\cos \\theta = \\frac{b}{L}\n\\]\n\\[\n\\sin \\theta = \\frac{h}{L}\n\\]\nLet the required radius of rotation be r.",
+                            "subsections": [
+                                {
+                                    "subsection_title": "Similar Triangles or Trigonometric Relationship for r",
+                                    "description": "If cord length from apex to block (slant height) is known (L), and projection to axis is proportionate to the base:\n\\[\nr = L \\cos \\theta\n\\]\nOr from similar triangles:\n\\[\n\\frac{r}{L} = \\frac{b}{\\text{slant height (total)}}\n\\]\nThe specific symbolic relation should reflect the geometry as depicted."
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "question": "The 0.5-lb ball is guided along the vertical circular path $r = 2r_c \\cos\\theta$ using the arm $OA$. If the arm has an angular velocity $\\dot{\\theta} = 0.4\\ \\text{rad}/s$ and an angular acceleration $\\ddot{\\theta} = 0.8\\ \\text{rad}/s^2$ at the instant $\\theta = 30^\\circ$, determine the force of the arm on the ball. Neglect friction and the size of the ball. Set $r_c = 0.4\\ \\text{m}$.",
+                    "source": "Image 1 (textbook and annotations, problem 13-100)",
+                    "requires_external_data": false,
+                    "requires_image": true,
+                    "completeness": true,
+                    "additiona_information": null,
+                    "solution": [
+                        {
+                            "section_title": "General Symbolic Solution Steps",
+                            "description": "We will write a symbolic solution, using only variables: $m$, $\\theta$, $r_c$, $g$, etc. Numerical values will not be substituted.",
+                            "subsections": [
+                                {
+                                    "subsection_title": "1. Express Ball's Radial Position as a Function of $\\theta$",
+                                    "description": "$r = 2r_c \\cos \\theta$\n\nFirst derivatives:\n$$\n\\dot{r} = \\frac{dr}{dt} = \\frac{dr}{d\\theta}\\dot{\\theta} = 2r_c (-\\sin\\theta)\\dot{\\theta}\n$$\nSecond derivatives:\n$$\n\\ddot{r} = \\frac{d^2r}{dt^2} = 2r_c\\left(-\\cos\\theta\\ (\\dot{\\theta})^2 - \\sin\\theta\\ \\ddot{\\theta}\\right)\n$$"
+                                },
+                                {
+                                    "subsection_title": "2. Write Out Radial and Transverse ($\\theta$) Equations of Motion",
+                                    "description": "Radial direction ($r$):\n$$\n\\sum F_r = m a_r\n$$\nwhere \n$$a_r = \\ddot{r} - r (\\dot{\\theta})^2\n$$\n\nTransverse direction ($\\theta$):\n$$\n\\sum F_{\\theta} = m a_{\\theta}\n$$\nwhere\n$$\na_{\\theta} = r \\ddot{\\theta} + 2 \\dot{r} \\dot{\\theta}\n$$"
+                                },
+                                {
+                                    "subsection_title": "3. Free-Body Diagram Forces and Equations",
+                                    "description": "Radial direction:\n$$\n\\sum F_r = N \\cos\\theta - W \\sin\\theta\n$$\nTransverse (theta) direction:\n$$\n\\sum F_{\\theta} = F_{OA} + N \\sin\\theta - W \\cos\\theta\n$$\nwhere $N$ is the normal reaction and $F_{OA}$ is the force from the arm along the $\\theta$ direction."
+                                },
+                                {
+                                    "subsection_title": "4. Final Symbolic Equations for Solving $N$ and $F_{OA}$",
+                                    "description": "Radial equilibrium:\n$$\nN \\cos\\theta - m g \\sin\\theta = m(\\ddot{r} - r (\\dot{\\theta})^2)\n$$\nTransverse equilibrium:\n$$\nF_{OA} + N \\sin\\theta - m g \\cos\\theta = m(r \\ddot{\\theta} + 2 \\dot{r} \\dot{\\theta})\n$$\n\nYou would solve these equations, symbolically, for $N$ and $F_{OA}$ in terms of $m, r_c, \\theta, g, \\dot{\\theta}, \\ddot{\\theta}$. No numbers are substituted."
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "question": "Given $r = 2r_c \\cos\\theta$, derive the first and second time derivatives $\\dot{r}$ and $\\ddot{r}$ in terms of $r_c$, $\\theta$, $\\dot{\\theta}$, and $\\ddot{\\theta}$, using the chain rule.",
+                    "source": "Image 1 (boxed red equations); also required in Image 3 for equation of motion setup",
+                    "requires_external_data": false,
+                    "requires_image": false,
+                    "completeness": true,
+                    "additiona_information": null,
+                    "solution": [
+                        {
+                            "section_title": "Derivatives of $r$ with respect to time",
+                            "description": "",
+                            "subsections": [
+                                {
+                                    "subsection_title": "First Derivative $\\dot{r}$",
+                                    "description": "$$\nr = 2r_c \\cos \\theta\n$$\n$$\n\\frac{dr}{dt} = \\frac{dr}{d\\theta} \\frac{d\\theta}{dt} = -2r_c \\sin\\theta\\ \\dot{\\theta}\n$$"
+                                },
+                                {
+                                    "subsection_title": "Second Derivative $\\ddot{r}$",
+                                    "description": "$$\n\\ddot{r} = \\frac{d}{dt}(\\dot{r}) = \\frac{d}{dt}(-2r_c \\sin\\theta\\ \\dot{\\theta})\n$$\nUsing product rule:\n$$\n\\ddot{r} = -2r_c (\\cos\\theta\\ \\dot{\\theta}) \\dot{\\theta} - 2r_c \\sin\\theta \\ddot{\\theta}\n$$\nSo\n$$\n\\ddot{r}= -2r_c \\cos\\theta\\ (\\dot{\\theta})^2 - 2r_c \\sin\\theta\\ \\ddot{\\theta}\n$$"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "question": "Write the general equations of motion for the $r$ and $\\theta$ directions for a particle moving in plane polar coordinates, expressing the acceleration components symbolically.",
+                    "source": "Image 3 (yellow highlighted box and equations)",
+                    "requires_external_data": false,
+                    "requires_image": false,
+                    "completeness": true,
+                    "additiona_information": null,
+                    "solution": [
+                        {
+                            "section_title": "Equations of Motion in Plane Polar Coordinates",
+                            "description": "",
+                            "subsections": [
+                                {
+                                    "subsection_title": "Radial Direction",
+                                    "description": "$$\n\\sum F_r = m a_r\n$$\nwhere \n$$a_r = \\ddot{r} - r (\\dot{\\theta})^2\n$$"
+                                },
+                                {
+                                    "subsection_title": "Transverse $(\\theta)$ Direction",
+                                    "description": "$$\\sum F_{\\theta} = m a_{\\theta}$$\nwhere\n$$\na_{\\theta} = r \\ddot{\\theta} + 2 \\dot{r} \\dot{\\theta}\n$$"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "question": "Write the symbolic equilibrium equations (force balances) in both $r$ and $\\theta$ directions, showing how to include $N$, $W$, and $F_{OA}$, for the described problem.",
+                    "source": "Image 3 and 4 (red equations lower right)",
+                    "requires_external_data": false,
+                    "requires_image": false,
+                    "completeness": true,
+                    "additiona_information": null,
+                    "solution": [
+                        {
+                            "section_title": "Force Equilibrium Equations in $r$ and $\\theta$ Directions",
+                            "description": "",
+                            "subsections": [
+                                {
+                                    "subsection_title": "Radial (r) Direction",
+                                    "description": "$$\nN \\cos\\theta - W \\sin\\theta = m (\\ddot{r} - r \\dot{\\theta}^2)\n$$"
+                                },
+                                {
+                                    "subsection_title": "Transverse $(\\theta)$ Direction",
+                                    "description": "$$\nF_{OA} + N \\sin\\theta - W \\cos\\theta = m (r \\ddot{\\theta} + 2 \\dot{r} \\dot{\\theta})\n$$"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    "generated_lecture": {
+        "final_lecture": "# Kinetics of Particles and Rigid Body Equations of Motion\n\n## Metadata\n- **Course**: Dynamics-103  \n- **Instructor**: Thomas Stahovich  \n- **Term**: Spring 2025\n\n*This lecture is part of the core sequence in undergraduate Engineering Dynamics, focusing on applying Newtonian principles to both particle and rigid body motion. It transitions students from static equilibrium to dynamic force and moment analysis.*\n\n---\n\n## Table of Contents\n1. [Introduction](#introduction)\n2. [Core Concepts](#core-concepts)\n    1. [Newton's Second Law for Particles](#newtons-second-law-for-particles)\n    2. [Free-Body Diagrams and Kinetic Diagrams](#free-body-diagrams-and-kinetic-diagrams)\n    3. [Equations of Motion for Rigid Bodies](#equations-of-motion-for-rigid-bodies)\n    4. [Moment of Inertia and the Parallel Axis Theorem](#moment-of-inertia-and-the-parallel-axis-theorem)\n    5. [Tangential and Normal Directions in Polar Coordinates](#tangential-and-normal-directions-in-polar-coordinates)\n3. [Mathematical Derivations](#mathematical-derivations)\n    1. [Moment Equation for a Rigid Body](#moment-equation-for-a-rigid-body)\n    2. [Equations of Motion in Plane Polar Coordinates](#equations-of-motion-in-plane-polar-coordinates)\n4. [Example Problems & Solutions](#example-problems--solutions)\n    1. [Pendulum Tension Calculation](#pendulum-tension-calculation)\n    2. [Conical Rotation: Tension and Normal Force](#conical-rotation-tension-and-normal-force)\n    3. [Particle on a Variable Circular Path](#particle-on-a-variable-circular-path)\n5. [Conclusion](#conclusion)\n\n---\n\n## Introduction\n\nThe study of kinetics in engineering dynamics involves understanding how forces and torques (moments) act on particles and rigid bodies in motion. This lecture builds on Newton\u2019s Second Law to develop the equations governing the motion of both point particles and extended bodies, introduces fundamental analytical tools such as the free-body diagram, and solves complex symbolic problems relevant to engineering mechanisms.\n\nUnderstanding these principles is essential for analyzing the behavior of machines, vehicles, robotic systems, and structures subjected to dynamic loading.\n\n---\n\n## Core Concepts\n\n### Newton's Second Law for Particles\nNewton\u2019s Second Law forms the foundation of classical dynamics. For a particle of mass $m$ subjected to a net force $\\vec{F}$:\n\n$$\n\\vec{F} = m \\vec{a}\n$$\n\nwhere $\\vec{a}$ is the acceleration. For scalar problems:\n- $F = m a$ along the chosen coordinate direction.\n\nThis law enables the translation of force diagrams into equations of motion.\n\n### Free-Body Diagrams and Kinetic Diagrams\n\nA **free-body diagram (FBD)** is a graphical representation isolating a particle or body and illustrating all external forces acting on it. **Kinetic diagrams** supplement the FBD by indicating corresponding accelerations or inertias.\n\nDrawing correct FBDs is integral for setting up Newton\u2019s equations. For particles, forces typically include:\n- Weight ($mg$)\n- Normal force\n- Tension\n- Reaction forces\n\n### Equations of Motion for Rigid Bodies\nFor planar motion of rigid bodies, Newton\u2019s laws generalize to consider both translational and rotational effects:\n- Translational:\n  $$\\sum \\vec{F} = m\\vec{a}_G$$\n- Rotational about the center of mass $G$:\n  $$\\sum M_G = I_G \\alpha$$\n  where $I_G$ is the moment of inertia about $G$, and $\\alpha$ is the angular acceleration.\n\n### Moment of Inertia and the Parallel Axis Theorem\nThe moment of inertia, $I_P$, quantifies a body\u2019s resistance to angular acceleration:\n\n$$\nI_P = \\int_m r^2 dm\n$$\n\nWhen evaluating $I_P$ about a parallel axis (distance $d$ from the center of mass $G$):\n\n$$\nI_P = I_G + m d^2\n$$\n\nThis is the **parallel axis theorem**.\n\n### Tangential and Normal Directions in Polar Coordinates\n\nAnalyzing particle motion in polar coordinates provides:\n- Tangential direction (along path): $a_t$\n- Normal direction (toward the center of curvature): $a_n$\n\nFor a path defined by $r(\\theta)$:\n- $\\tan \\psi = \\frac{r}{dr/d\\theta}$, with arc length $ds = r d\\theta$\n- Normal and tangential acceleration components are derived accordingly.\n\n---\n\n## Mathematical Derivations\n\n### Moment Equation for a Rigid Body\n\n**Purpose:** To derive the equation describing rotational motion for a rigid body in a plane due to applied moments.\n\n**Equation:**\n$$\n\\sum M_G = I_G \\alpha\n$$\nHere:\n- $\\sum M_G$ is the sum of moments about the center of mass $G$\n- $I_G$ is the mass moment of inertia about $G$\n- $\\alpha$ is the angular acceleration\n\n**Intuition:** The net external moment produces angular acceleration analogous to how force produces linear acceleration.\n\n### Equations of Motion in Plane Polar Coordinates\n\n**Purpose:** To develop force-balance equations for particles moving in a plane, particularly in radial and transverse (angular) directions.\n\n#### 1. Derivatives of $r$ with respect to time\nGiven $r = r(\\theta)$ (e.g., $r = 2r_c \\cos \\theta$):\n\n- First derivative:\n  $$\n  \\dot{r} = \\frac{dr}{dt} = \\frac{dr}{d\\theta} \\dot{\\theta}\n  $$\n- Second derivative (chain rule):\n  $$\n  \\ddot{r} = \\frac{d}{dt}(\\dot{r}) = \\frac{d^2r}{d\\theta^2}(\\dot{\\theta})^2 + \\frac{dr}{d\\theta} \\ddot{\\theta}\n  $$\n\n#### 2. General Equations of Motion\n- **Radial direction:**\n  $$\n  \\sum F_r = m a_r = m(\\ddot{r} - r \\dot{\\theta}^2)\n  $$\n- **Transverse (\\(\\theta\\)) direction:**\n  $$\n  \\sum F_{\\theta} = m a_{\\theta} = m(r \\ddot{\\theta} + 2 \\dot{r} \\dot{\\theta})\n  $$\n\n#### 3. Force Equilibrium with Reaction Forces\nFor a particle subject to normal force $N$, weight $W=mg$, and a force from an arm $F_{OA}$:\n- **Radial:**\n  $$\n  N \\cos\\theta - W \\sin\\theta = m(\\ddot{r} - r \\dot{\\theta}^2)\n  $$\n- **Transverse:**\n  $$\n  F_{OA} + N \\sin\\theta - W \\cos\\theta = m(r \\ddot{\\theta} + 2 \\dot{r} \\dot{\\theta})\n  $$\n\n**Note:** These balances allow for symbolic solution of unknown reaction forces given the kinematic relations.\n\n---\n\n## Example Problems & Solutions\n\n### 1. Pendulum Tension Calculation\n> **Question:**  \n> The 5 kg pendulum bob is released from rest when $\\theta = 0$. Determine the initial tension in the cord and the tension at $\\theta = 45^\\circ$. (Given: $r=2\\ \\text{m}$. Neglect bob size.)\n\n#### **Solution:**\n- **At $\\theta = 0$:**\n  Only gravity and tension act; no motion yet (rest \u21d2 $a=0$):\n  $$\n  \\sum F_r = T - mg = 0 \\implies T = mg\n  $$\n  \\*Initial tension is $T_0 = mg$.*\n\n- **At $\\theta = 45^\\circ$:**\n  Forces:\n  $$\n  T - mg\\sin \\theta = \\frac{mv^2}{r}\n  $$\n  $v$ found using energy or integrating tangential acceleration:\n  $$\n  g r \\int_0^{\\pi/4} \\cos \\theta d\\theta = \\int_0^{v_{45}} v dv\n  $$\n  $$\n  gr (\\sin(45^\\circ) - \\sin(0)) = \\frac{1}{2} v_{45}^2\n  $$\n  Substitute $v_{45}$ into tension equation:\n  $$\n  T_{45} = mg\\sin(45^\\circ) + \\frac{m v_{45}^2}{r}\n  $$\n\n*This problem reinforces the connection between force analysis and kinematics for curved motion.*\n\n### 2. Conical Rotation: Tension and Normal Force\n> **Question:**\n> A mass $m$ rotates with speed $v$ at the surface of a smooth right circular cone (see figure). Find, symbolically:  \n> (a) the tension $T$ in the string;  \n> (b) the reaction $N$ from the cone.  \n> Express using $m$, $g$, $v$, $r$, cone geometry ($\\theta$).\n\n#### **Solution:**\n- Draw Free Body Diagram: forces are gravity ($mg$ downward), tension ($T$ in chord), and normal ($N$ from cone), each at known angles.\n- Write equilibrium along vertical $(y')$ and horizontal/radial $(x')$ axes:\n  - Vertical:\n    $$\n    -N \\cos \\theta - T \\sin \\theta + mg = 0\n    $$\n  - Radial:\n    $$\n    T \\cos \\theta - N \\sin \\theta = m \\frac{v^2}{r}\n    $$\n- Solve simultaneously:\n    \n  $N \\cos \\theta + T \\sin \\theta = mg$\n  \n  $T \\cos \\theta - N \\sin \\theta = m \\frac{v^2}{r}$\n\n- Symbolic solution by algebraic manipulation yields $T$ and $N$ in terms of $m, g, v, r, \\theta$.\n- Geometry provides $r$ via:\n   $$\n   r = L \\cos \\theta\n   $$\n   or similar relations depending on cone proportions.\n\n*This problem illustrates the application of force balances in non-inertial (rotating) systems and the use of geometry in kinetic problems.*\n\n### 3. Particle on a Variable Circular Path\n> **Question:**\n> A $0.5$-lb ball is guided along $r = 2r_c \\cos \\theta$ by arm $OA$. At $\\theta = 30^\\circ$: $\\dot{\\theta}=0.4$ rad/s, $\\ddot{\\theta}=0.8$ rad/s$^2$. Find the force arm $OA$ exerts on the ball (symbolically, in terms of $m$, $r_c$, $\\theta$, $\\dot{\\theta}$, $\\ddot{\\theta}$).\n\n#### **Solution:**\n- **Step 1: Kinematics**\n  - $r = 2r_c \\cos\\theta$\n  - $\\dot{r} = -2r_c \\sin\\theta\\ \\dot{\\theta}$\n  - $\\ddot{r} = -2r_c [\\cos\\theta\\ (\\dot{\\theta})^2 + \\sin\\theta\\ \\ddot{\\theta}]$\n\n- **Step 2: Equations of Motion in Polar Coordinates**\n  - Radial:\n    $$\n    N \\cos\\theta - mg \\sin\\theta = m (\\ddot{r} - r \\dot{\\theta}^2)\n    $$\n  - Transverse:\n    $$\n    F_{OA} + N \\sin\\theta - mg \\cos\\theta = m (r \\ddot{\\theta} + 2 \\dot{r} \\dot{\\theta})\n    $$\n  - Solve for $N$ and $F_{OA}$ as functions of $m, r_c, \\theta, \\dot{\\theta}, \\ddot{\\theta}$.\n\n*This example shows the power of variable substitution and application of polar coordinate dynamics to mechanism analysis.*\n\n---\n\n## Conclusion\n\nKinetics bridges the gap between force and motion for both particles and rigid bodies. Through Newton\u2019s laws, free-body diagrams, and appropriate coordinate systems (Cartesian or polar), one can systematically analyze and symbolically solve for unknowns in a wide variety of mechanical systems. Key takeaways include:\n- Importance of constructing accurate force and kinetic diagrams\n- Rigorous application of Newton\u2019s Second Law in both translation and rotation\n- Critical role of geometry and kinematics in multi-variable motion problems\n\n**Extensions:** Advanced study may include energy methods (work-energy, power), three-dimensional motion, or non-inertial reference frames (moving coordinates, Coriolis effects).\n",
+        "lecture_base": "# Kinetics of Particles and Rigid Body Equations of Motion\n This lecture introduces the kinetics of particles using Newton\u2019s Second Law, explores free body and kinetic diagrams, and develops the equations of motion for both particles and rigid bodies. It covers the derivation and significance of force and moment equations, including constraints for planar motion, and provides worked example problems involving tension and reactions in mechanical systems.  \n\n## Understanding of Particle Kinetics\n\nStudents should be able to apply Newton\u2019s Second Law to particles, draw correct free-body diagrams, and relate forces to particle motion.\n\n## Analyzing Mechanical Systems Symbolically\n\nStudents will solve mechanical equilibrium and motion problems strictly symbolically, identifying key variables and parameters.\n\n## Rigid Body Kinetics Derivation\n\nStudents should understand the derivation of generalized force and moment equations for rigid body motion and know their applicability.\n\n## Understanding of Particle Kinetics\n\nStudents should be able to apply Newton\u2019s Second Law to particles, draw correct free-body diagrams, and relate forces to particle motion.\n\n## Analyzing Mechanical Systems Symbolically\n\nStudents will solve mechanical equilibrium and motion problems strictly symbolically, identifying key variables and parameters.\n\n## Rigid Body Kinetics Derivation\n\nStudents should understand the derivation of generalized force and moment equations for rigid body motion and know their applicability.\n\n## Newton\u2019s Second Law for Particles\n\nDescribes the relationship: \\( \\vec{F} = m \\vec{a} \\), where \\( \\vec{F} \\) is the net force, \\( m \\) the mass, and \\( \\vec{a} \\) the acceleration.\n\n## Equations of Motion for Rigid Bodies\n\nThe translational and rotational equations:\n\\( \\Sigma \\vec{F} = m\\vec{a}_G \\)\n\\( \\Sigma M_G = I_G \\alpha \\ ).\n\n## Moment of Inertia\n\nDefined as \\( I_P = \\int_m r^2 dm \\). Parallel axis theorem: \\( I_P = I_G + md^2 \\).\n\n## Tangential and Normal Directions in Polar Coordinates\n\n\\( \\tan \\psi = \\frac{r}{dr/d\\theta} \\), \\( ds = r d\\theta \\); normal and tangential acceleration components.",
+        "derivation_str": "# Question Extraction from Moment Equation for a Rigid Body Slides\n \nSource: Slides on Moment Equation for a Rigid Body (pages 1 and 2) \n\n## 1. Extraction of Questions\n\nUpon reviewing the provided slides, there are no explicit questions, exercises, or problems stated. The content consists entirely of formula derivations, explanations, and definitions regarding the moment equation for a rigid body. There are no sub-questions, queries, or request for calculations. Thus, no question is present that can be extracted for further symbolic solution.",
+        "question_str": "The 5\\,\\mathrm{kg} pendulum bob is released from rest when \\( \\theta = 0 \\).\\newline Determine the initial tension in the cord. Also determine the tension at the instant \\( \\theta = 45^\\circ \\).\\newline Neglect the size of the bob and assume \\( r = 2\\,\\mathrm{m} \\).\n\nSource: Image 1 (slide 3)\n\n## Understanding the Problem\n\nA pendulum bob of mass \\( m = 5\\,\\mathrm{kg} \\) is attached to a cord of length \\( r = 2\\,\\mathrm{m} \\), released from rest with \\( \\theta = 0 \\). We are to determine: (1) the initial tension in the cord when \\( \\theta = 0 \\); (2) the tension when \\( \\theta = 45^\\circ \\).\n\n## Free-Body Diagram and Force Analysis at \\( \\theta = 0 \\)\n\nAt \\( \\theta = 0 \\), the bob is at rest and only two forces act on it: gravity (\\( mg \\)) and the tension \\( T \\) in the cord. Since the bob is at rest, the net force in the radial direction is zero.\n\n### Force equation at \\( \\theta = 0 \\)\n\n\\( \\sum F_r = m a_r \\rightarrow T - mg = 0 \\implies T = mg \\)\\newline Thus, the initial tension is \\( T = mg \\).\n\n## Free-Body Diagram and Force Analysis at General \\( \\theta \\)\n\nAt an arbitrary angle \\( \\theta \\), the forces are gravity (decomposed into radial and tangential components) and tension. The radial equation is:\n\n### Radial force equation\n\n\\( \\sum F_n = m a_n \\implies T - mg\\sin\\theta = \\frac{mv^2}{r} \\implies T = mg\\sin\\theta + \\frac{mv^2}{r} \\)\n\n## Finding the Speed \\( v \\) at \\( \\theta = 45^\\circ \\) Symbolically\n\nUse the tangential acceleration to find the velocity at \\( \\theta = 45^\\circ \\).\\newline Tangential component: \\( m g \\cos\\theta = m a_t \\implies a_t = g\\cos\\theta \\).\\newline Use energy or kinematics for a variable tangential acceleration.\n\n### Differential for variable \\( a_t \\) in a circular arc\n\nSince \\( a_t = g\\cos\\theta \\),\\newline \\( a_t = \\frac{dv}{dt} = g\\cos\\theta \\)\\newline For a circular path, \\( ds = r d\\theta \\).\\newline \\( a_t = \\frac{dv}{dt} = \\frac{dv}{ds}\\frac{ds}{dt} = v \\frac{dv}{ds} \\).\\newline So, \\( a_t ds = v dv \\implies g\\cos\\theta \\cdot r d\\theta = v dv \\)\n\n## Integration to Find \\( v \\) at \\( \\theta = 45^\\circ \\)\n\nIntegrate both sides from \\( \\theta = 0 \\) and \\( v=0 \\), to \\( \\theta = 45^\\circ \\) and \\( v = v_{45} \\):\\newline \\[ \\int_0^{\\pi/4} g r \\cos\\theta d\\theta = \\int_0^{v_{45}} v dv \\]\n\n### Result of integration (symbolic)\n\n\\[ g r \\int_0^{\\pi/4} \\cos\\theta d\\theta = \\frac{1}{2} v_{45}^2 \\]\n\n## Expression for the Tension at \\( \\theta = 45^\\circ \\)\n\nSubstitute the symbolic result for \\( v_{45} \\) into the tension equation: \\newline \\[ T_{45} = mg\\sin(45^\\circ) + \\frac{m v_{45}^2}{r} \\]\n\nAt a constant angular speed about the z-axis, a smooth block B of mass m is attached to the vertex A of a right circular cone using a light cord. The block attains a speed v. At this speed, determine symbolically:\n(a) the tension T in the cord, and\n(b) the reaction N that the cone exerts on the block.\nNeglect the size of the block. The relevant parameters are the cone's dimensions and the geometry as shown in the diagram.\n\nSource: Slide 7 (first image, problem statement)\n\n## Free Body Diagram and Force Equilibrium\n\nDraw a free body diagram (FBD) for the block, identifying:\n- Gravity acting downward: mg\n- Tension T in the cord at angle \\( \\theta \\)\n- Reaction force (normal), N, from the cone at angle \\( \\theta \\)\n\nConsider components of forces along the vertical (y') and horizontal (x', towards the axis of rotation) directions.\n\n### Vertical Equilibrium (\\( \\Sigma F_{y'} = 0 \\))\n\n\\[\n-N \\cos \\theta - T \\sin \\theta + mg = 0\n\\]\n\n### Radial/Centripetal Equilibrium (\\( \\Sigma F_{x'} = m\\frac{v^2}{r} \\))\n\n\\[\nT \\cos \\theta - N \\sin \\theta = m \\frac{v^2}{r}\n\\]\n\n## Geometric Relations from the Cone\n\nLet the slant height (hypotenuse) from apex A to B be L, the vertical height be h, and the base radius be b. From the diagram, assign symbolic lengths as needed.\n- \\( \\cos \\theta = \\frac{b}{L} \\)\n- \\( \\sin \\theta = \\frac{h}{L} \\)\n- Let the radius of motion (horizontal distance from axis to block), r, be found by similar triangles or direct trigonometric relations.\n\n## Solve Simultaneous Equations\n\nSolve the two equations from the FBD:\n\\[\n-N \\cos \\theta - T \\sin \\theta + mg = 0 \\tag{1}\n\\]\n\\[\nT \\cos \\theta - N \\sin \\theta = m \\frac{v^2}{r} \\tag{2}\n\\]\nSymbolically solve for T and N in terms of m, g, v, r, and \\( \\theta \\):\n\n### Solution for Tension (T) and Normal Reaction (N)\n\nSolve (1) and (2) for T and N:\n\\begin{align*}\nN \\cos \\theta + T \\sin \\theta &= mg \\\\\nT \\cos \\theta - N \\sin \\theta &= m \\frac{v^2}{r}\n\\end{align*}\nSolve these simultaneously to express T and N symbolically.\n\nWhat is the significance of the radius r in determining the required tension and normal force, and how is it extracted from the geometry of the cone?\n\nSource: Slide 8 (second image, geometric construction)\n\n## Geometric Analysis of the Cone\n\nConstruct a right triangle from the apex, slant height, and base radius, noting:\n- Slant height = L\n- Height = h\n- Base radius = b\n\nFrom similar triangles or trigonometry:\n\\[\n\\cos \\theta = \\frac{b}{L}\n\\]\n\\[\n\\sin \\theta = \\frac{h}{L}\n\\]\nLet the required radius of rotation be r.\n\n### Similar Triangles or Trigonometric Relationship for r\n\nIf cord length from apex to block (slant height) is known (L), and projection to axis is proportionate to the base:\n\\[\nr = L \\cos \\theta\n\\]\nOr from similar triangles:\n\\[\n\\frac{r}{L} = \\frac{b}{\\text{slant height (total)}}\n\\]\nThe specific symbolic relation should reflect the geometry as depicted.\n\nThe 0.5-lb ball is guided along the vertical circular path $r = 2r_c \\cos\\theta$ using the arm $OA$. If the arm has an angular velocity $\\dot{\\theta} = 0.4\\ \\text{rad}/s$ and an angular acceleration $\\ddot{\\theta} = 0.8\\ \\text{rad}/s^2$ at the instant $\\theta = 30^\\circ$, determine the force of the arm on the ball. Neglect friction and the size of the ball. Set $r_c = 0.4\\ \\text{m}$.\n\nSource: Image 1 (textbook and annotations, problem 13-100)\n\n## General Symbolic Solution Steps\n\nWe will write a symbolic solution, using only variables: $m$, $\\theta$, $r_c$, $g$, etc. Numerical values will not be substituted.\n\n### 1. Express Ball's Radial Position as a Function of $\\theta$\n\n$r = 2r_c \\cos \\theta$\n\nFirst derivatives:\n$$\n\\dot{r} = \\frac{dr}{dt} = \\frac{dr}{d\\theta}\\dot{\\theta} = 2r_c (-\\sin\\theta)\\dot{\\theta}\n$$\nSecond derivatives:\n$$\n\\ddot{r} = \\frac{d^2r}{dt^2} = 2r_c\\left(-\\cos\\theta\\ (\\dot{\\theta})^2 - \\sin\\theta\\ \\ddot{\\theta}\\right)\n$$\n\n### 2. Write Out Radial and Transverse ($\\theta$) Equations of Motion\n\nRadial direction ($r$):\n$$\n\\sum F_r = m a_r\n$$\nwhere \n$$a_r = \\ddot{r} - r (\\dot{\\theta})^2\n$$\n\nTransverse direction ($\\theta$):\n$$\n\\sum F_{\\theta} = m a_{\\theta}\n$$\nwhere\n$$\na_{\\theta} = r \\ddot{\\theta} + 2 \\dot{r} \\dot{\\theta}\n$$\n\n### 3. Free-Body Diagram Forces and Equations\n\nRadial direction:\n$$\n\\sum F_r = N \\cos\\theta - W \\sin\\theta\n$$\nTransverse (theta) direction:\n$$\n\\sum F_{\\theta} = F_{OA} + N \\sin\\theta - W \\cos\\theta\n$$\nwhere $N$ is the normal reaction and $F_{OA}$ is the force from the arm along the $\\theta$ direction.\n\n### 4. Final Symbolic Equations for Solving $N$ and $F_{OA}$\n\nRadial equilibrium:\n$$\nN \\cos\\theta - m g \\sin\\theta = m(\\ddot{r} - r (\\dot{\\theta})^2)\n$$\nTransverse equilibrium:\n$$\nF_{OA} + N \\sin\\theta - m g \\cos\\theta = m(r \\ddot{\\theta} + 2 \\dot{r} \\dot{\\theta})\n$$\n\nYou would solve these equations, symbolically, for $N$ and $F_{OA}$ in terms of $m, r_c, \\theta, g, \\dot{\\theta}, \\ddot{\\theta}$. No numbers are substituted.\n\nGiven $r = 2r_c \\cos\\theta$, derive the first and second time derivatives $\\dot{r}$ and $\\ddot{r}$ in terms of $r_c$, $\\theta$, $\\dot{\\theta}$, and $\\ddot{\\theta}$, using the chain rule.\n\nSource: Image 1 (boxed red equations); also required in Image 3 for equation of motion setup\n\n## Derivatives of $r$ with respect to time\n\n\n\n### First Derivative $\\dot{r}$\n\n$$\nr = 2r_c \\cos \\theta\n$$\n$$\n\\frac{dr}{dt} = \\frac{dr}{d\\theta} \\frac{d\\theta}{dt} = -2r_c \\sin\\theta\\ \\dot{\\theta}\n$$\n\n### Second Derivative $\\ddot{r}$\n\n$$\n\\ddot{r} = \\frac{d}{dt}(\\dot{r}) = \\frac{d}{dt}(-2r_c \\sin\\theta\\ \\dot{\\theta})\n$$\nUsing product rule:\n$$\n\\ddot{r} = -2r_c (\\cos\\theta\\ \\dot{\\theta}) \\dot{\\theta} - 2r_c \\sin\\theta \\ddot{\\theta}\n$$\nSo\n$$\n\\ddot{r}= -2r_c \\cos\\theta\\ (\\dot{\\theta})^2 - 2r_c \\sin\\theta\\ \\ddot{\\theta}\n$$\n\nWrite the general equations of motion for the $r$ and $\\theta$ directions for a particle moving in plane polar coordinates, expressing the acceleration components symbolically.\n\nSource: Image 3 (yellow highlighted box and equations)\n\n## Equations of Motion in Plane Polar Coordinates\n\n\n\n### Radial Direction\n\n$$\n\\sum F_r = m a_r\n$$\nwhere \n$$a_r = \\ddot{r} - r (\\dot{\\theta})^2\n$$\n\n### Transverse $(\\theta)$ Direction\n\n$$\\sum F_{\\theta} = m a_{\\theta}$$\nwhere\n$$\na_{\\theta} = r \\ddot{\\theta} + 2 \\dot{r} \\dot{\\theta}\n$$\n\nWrite the symbolic equilibrium equations (force balances) in both $r$ and $\\theta$ directions, showing how to include $N$, $W$, and $F_{OA}$, for the described problem.\n\nSource: Image 3 and 4 (red equations lower right)\n\n## Force Equilibrium Equations in $r$ and $\\theta$ Directions\n\n\n\n### Radial (r) Direction\n\n$$\nN \\cos\\theta - W \\sin\\theta = m (\\ddot{r} - r \\dot{\\theta}^2)\n$$\n\n### Transverse $(\\theta)$ Direction\n\n$$\nF_{OA} + N \\sin\\theta - W \\cos\\theta = m (r \\ddot{\\theta} + 2 \\dot{r} \\dot{\\theta})\n$$"
+    },
+    "gestalt_modules": [
+        {
+            "question_payload": {
+                "question": "The 5\\,\\mathrm{kg} pendulum bob is released from rest when \\( \\theta = 0 \\).\\newline Determine the initial tension in the cord. Also determine the tension at the instant \\( \\theta = 45^\\circ \\).\\newline Neglect the size of the bob and assume \\( r = 2\\,\\mathrm{m} \\).",
+                "source": "Image 1 (slide 3)",
+                "requires_external_data": false,
+                "requires_image": true,
+                "completeness": true,
+                "additiona_information": null,
+                "solution": [
+                    {
+                        "section_title": "Understanding the Problem",
+                        "description": "A pendulum bob of mass \\( m = 5\\,\\mathrm{kg} \\) is attached to a cord of length \\( r = 2\\,\\mathrm{m} \\), released from rest with \\( \\theta = 0 \\). We are to determine: (1) the initial tension in the cord when \\( \\theta = 0 \\); (2) the tension when \\( \\theta = 45^\\circ \\).",
+                        "subsections": null
+                    },
+                    {
+                        "section_title": "Free-Body Diagram and Force Analysis at \\( \\theta = 0 \\)",
+                        "description": "At \\( \\theta = 0 \\), the bob is at rest and only two forces act on it: gravity (\\( mg \\)) and the tension \\( T \\) in the cord. Since the bob is at rest, the net force in the radial direction is zero.",
+                        "subsections": [
+                            {
+                                "subsection_title": "Force equation at \\( \\theta = 0 \\)",
+                                "description": "\\( \\sum F_r = m a_r \\rightarrow T - mg = 0 \\implies T = mg \\)\\newline Thus, the initial tension is \\( T = mg \\)."
+                            }
+                        ]
+                    },
+                    {
+                        "section_title": "Free-Body Diagram and Force Analysis at General \\( \\theta \\)",
+                        "description": "At an arbitrary angle \\( \\theta \\), the forces are gravity (decomposed into radial and tangential components) and tension. The radial equation is:",
+                        "subsections": [
+                            {
+                                "subsection_title": "Radial force equation",
+                                "description": "\\( \\sum F_n = m a_n \\implies T - mg\\sin\\theta = \\frac{mv^2}{r} \\implies T = mg\\sin\\theta + \\frac{mv^2}{r} \\)"
+                            }
+                        ]
+                    },
+                    {
+                        "section_title": "Finding the Speed \\( v \\) at \\( \\theta = 45^\\circ \\) Symbolically",
+                        "description": "Use the tangential acceleration to find the velocity at \\( \\theta = 45^\\circ \\).\\newline Tangential component: \\( m g \\cos\\theta = m a_t \\implies a_t = g\\cos\\theta \\).\\newline Use energy or kinematics for a variable tangential acceleration.",
+                        "subsections": [
+                            {
+                                "subsection_title": "Differential for variable \\( a_t \\) in a circular arc",
+                                "description": "Since \\( a_t = g\\cos\\theta \\),\\newline \\( a_t = \\frac{dv}{dt} = g\\cos\\theta \\)\\newline For a circular path, \\( ds = r d\\theta \\).\\newline \\( a_t = \\frac{dv}{dt} = \\frac{dv}{ds}\\frac{ds}{dt} = v \\frac{dv}{ds} \\).\\newline So, \\( a_t ds = v dv \\implies g\\cos\\theta \\cdot r d\\theta = v dv \\)"
+                            }
+                        ]
+                    },
+                    {
+                        "section_title": "Integration to Find \\( v \\) at \\( \\theta = 45^\\circ \\)",
+                        "description": "Integrate both sides from \\( \\theta = 0 \\) and \\( v=0 \\), to \\( \\theta = 45^\\circ \\) and \\( v = v_{45} \\):\\newline \\[ \\int_0^{\\pi/4} g r \\cos\\theta d\\theta = \\int_0^{v_{45}} v dv \\]",
+                        "subsections": [
+                            {
+                                "subsection_title": "Result of integration (symbolic)",
+                                "description": "\\[ g r \\int_0^{\\pi/4} \\cos\\theta d\\theta = \\frac{1}{2} v_{45}^2 \\]"
+                            }
+                        ]
+                    },
+                    {
+                        "section_title": "Expression for the Tension at \\( \\theta = 45^\\circ \\)",
+                        "description": "Substitute the symbolic result for \\( v_{45} \\) into the tension equation: \\newline \\[ T_{45} = mg\\sin(45^\\circ) + \\frac{m v_{45}^2}{r} \\]",
+                        "subsections": null
+                    }
+                ]
+            },
+            "question_metadata": {
+                "title": "PendulumTensionCalculation",
+                "question": "What is the initial tension in the cord of a pendulum bob released from rest, and what is the tension at the moment the pendulum is at an angle of 45 degrees?",
+                "stem": "Consider a pendulum bob with a mass of 5 kg released from rest at angle theta = 0. The length of the pendulum is 2 m. Analyze the forces acting on the bob to determine the tension in the cord initially and at 45 degrees.",
+                "topic": "Dynamics",
+                "tags": [
+                    "Pendulum",
+                    "Tension",
+                    "Forces",
+                    "Dynamics",
+                    "Physics"
+                ],
+                "prereqs": {
+                    "engineering": [
+                        "Dynamics"
+                    ],
+                    "math": [
+                        "Trigonometry",
+                        "Algebra"
+                    ]
+                },
+                "isAdaptive": "True"
+            },
+            "files": {
+                "question_html": "<pl-question-panel>\nThe pendulum bob has a mass of {{params.m}} {{params.unitsMass}} and is released from rest at an angle of \\( \\theta = 0 \\). \n<p>\n   Determine the initial tension in the cord when the pendulum is released. Also, determine the tension at the instant \\( \\theta = 45^{\\circ} \\).\n</p>\n<p>\n   Assume that the radius of the pendulum is \\( r = {{params.r}} {{params.unitsDist}} \\).\n</p>\n</pl-question-panel>\n\n<pl-number-input answers-name=\"initial_tension\" comparison=\"sigfig\" digits=\"3\" label=\"Initial tension in the cord (in {{params.unitsForce}})\"></pl-number-input>\n<pl-number-input answers-name=\"tension_45\" comparison=\"sigfig\" digits=\"3\" label=\"Tension at \\( \\theta = 45^{\\circ} \\) (in {{params.unitsForce}})\"></pl-number-input>",
+                "server_js": "const math = require('mathjs');\n\nconst generate = () => {\n    const mass = 5; // mass of the pendulum bob in kg\n    const r = 2; // length of the cord in meters\n    const g = 9.81; // acceleration due to gravity in m/s^2\n\n    // 1. Initial Tension at theta = 0\n    const theta_initial = 0;  // in degrees\n    const T_initial = mass * g; // T = mg\n\n    // 2. Tension at theta = 45 degrees\n    const theta_rad = math.unit(45, 'degrees').toNumber('rad'); // Convert to radians\n    const v_squared = 2 * g * r * (1 - math.cos(theta_rad)); // Derived from energy conservation\n    const T_45 = mass * g * math.sin(theta_rad) + (mass * v_squared) / r; // T = mg*sin(theta) + (mv^2)/r\n\n    return {\n        params: {\n            mass: mass,\n            length: r,\n            theta_initial: theta_initial,\n            theta_45: 45,\n        },\n        correct_answers: {\n            initial_tension: T_initial,\n            tension_at_45: T_45,\n        },\n        nDigits: 3,\n        sigfigs: 3\n    };\n};\n\nmodule.exports = { generate };",
+                "server_py": "import numpy as np\nimport sympy as sp\nimport pandas as pd\n\n# Constants\nm = 5  # mass of the bob in kg\nr = 2  # length of the pendulum in meters\ng = 9.81  # acceleration due to gravity in m/s^2\n\ndef generate():\n    # Calculate initial tension at theta = 0\n    theta_0 = 0  # initial angle in radians\n    T_0 = m * g  # Tension at theta = 0\n\n    # Calculate tension at theta = 45 degrees\n    theta_45 = np.radians(45)  # convert to radians\n    # Speed at theta = 45 calculated with energy conservation or kinematics\n    # Energy at theta = 0\n    potential_energy_start = m * g * (1 - np.cos(theta_0)) * r  # Initial PE\n    # Energy at theta = 45\n    potential_energy_45 = m * g * (1 - np.cos(theta_45)) * r  # PE at angle 45\n    kinetic_energy_45 = potential_energy_start - potential_energy_45  # KE at angle 45\n    v_45 = np.sqrt(2 * kinetic_energy_45 / m)  # Speed at theta = 45\n\n    # Calculate tension at theta = 45\n    T_45 = m * g * np.sin(theta_45) + (m * v_45**2) / r\n\n    return {\n        'params': {\n            'T_0': T_0,  # Initial tension\n            'T_45': T_45,  # Tension at 45 degrees\n            'mass': m,  # Mass of the pendulum bob\n            'length': r  # Length of the pendulum\n        },\n        'correct_answers': {\n            'Tension at theta=0': T_0,  # Tension at initial position\n            'Tension at theta=45': T_45  # Tension at 45 degrees\n        },\n        'nDigits': 3,  # Decimal places\n        'sigfigs': 3   # Significant figures\n    }\n\n# Example usage\nprint(generate())",
+                "solution_html": "<pl-question-panel>\nThe pendulum bob has a mass of <strong>{{params.mass}} kg</strong> and is released from rest when <strong>{{params.angle}} = {{params.theta_initial}} degrees</strong>.<br>\nDetermine the initial tension in the cord. Also, determine the tension at the instant <strong>{{params.angle}} = {{params.theta_45}} degrees</strong>.<br>\nNeglect the size of the bob and assume <strong>{{params.length}} m</strong> is the length of the cord.\n<p>\n  What are the initial tension (in <strong>{{params.unitsForce}}</strong>) in the cord and the tension (in <strong>{{params.unitsForce}}</strong>) at <strong>{{params.angle}} = {{params.theta_45}} degrees</strong>?\n</p>\n</pl-question-panel>\n\n<pl-number-input answers-name=\"initial_tension\" comparison=\"sigfig\" digits=\"{{nDigits}}\" label=\"Initial Tension in Cord\"></pl-number-input>\n<pl-number-input answers-name=\"tension_45\" comparison=\"sigfig\" digits=\"{{nDigits}}\" label=\"Tension at \\theta = {{params.theta_45}} degrees\"></pl-number-input>",
+                "metadata": {
+                    "title": "PendulumTensionCalculation",
+                    "question": "What is the initial tension in the cord of a pendulum bob released from rest, and what is the tension at the moment the pendulum is at an angle of 45 degrees?",
+                    "stem": "Consider a pendulum bob with a mass of 5 kg released from rest at angle theta = 0. The length of the pendulum is 2 m. Analyze the forces acting on the bob to determine the tension in the cord initially and at 45 degrees.",
+                    "topic": "Dynamics",
+                    "tags": [
+                        "Pendulum",
+                        "Tension",
+                        "Forces",
+                        "Dynamics",
+                        "Physics"
+                    ],
+                    "prereqs": {
+                        "engineering": [
+                            "Dynamics"
+                        ],
+                        "math": [
+                            "Trigonometry",
+                            "Algebra"
+                        ]
+                    },
+                    "isAdaptive": "True"
+                }
+            },
+            "token_usage": [
+                {
+                    "step_name": "classify_question",
+                    "token_usage": {
+                        "completion_tokens": 150,
+                        "prompt_tokens": 646,
+                        "total_tokens": 796,
+                        "completion_tokens_details": {
+                            "accepted_prediction_tokens": 0,
+                            "audio_tokens": 0,
+                            "reasoning_tokens": 0,
+                            "rejected_prediction_tokens": 0
+                        },
+                        "prompt_tokens_details": {
+                            "audio_tokens": 0,
+                            "cached_tokens": 0
+                        }
+                    }
+                },
+                {
+                    "step_name": "generate_question_html",
+                    "token_usage": {
+                        "completion_tokens": 225,
+                        "prompt_tokens": 1476,
+                        "total_tokens": 1701,
+                        "completion_tokens_details": {
+                            "accepted_prediction_tokens": 0,
+                            "audio_tokens": 0,
+                            "reasoning_tokens": 0,
+                            "rejected_prediction_tokens": 0
+                        },
+                        "prompt_tokens_details": {
+                            "audio_tokens": 0,
+                            "cached_tokens": 0
+                        }
+                    }
+                },
+                {
+                    "step_name": "generate_server_js",
+                    "token_usage": {
+                        "completion_tokens": 324,
+                        "prompt_tokens": 2884,
+                        "total_tokens": 3208,
+                        "completion_tokens_details": {
+                            "accepted_prediction_tokens": 0,
+                            "audio_tokens": 0,
+                            "reasoning_tokens": 0,
+                            "rejected_prediction_tokens": 0
+                        },
+                        "prompt_tokens_details": {
+                            "audio_tokens": 0,
+                            "cached_tokens": 0
+                        }
+                    }
+                },
+                {
+                    "step_name": "generate_server_py",
+                    "token_usage": {
+                        "completion_tokens": 490,
+                        "prompt_tokens": 1675,
+                        "total_tokens": 2165,
+                        "completion_tokens_details": {
+                            "accepted_prediction_tokens": 0,
+                            "audio_tokens": 0,
+                            "reasoning_tokens": 0,
+                            "rejected_prediction_tokens": 0
+                        },
+                        "prompt_tokens_details": {
+                            "audio_tokens": 0,
+                            "cached_tokens": 0
+                        }
+                    }
+                },
+                {
+                    "step_name": "generate_solution_html",
+                    "token_usage": {
+                        "completion_tokens": 247,
+                        "prompt_tokens": 1680,
+                        "total_tokens": 1927,
+                        "completion_tokens_details": {
+                            "accepted_prediction_tokens": 0,
+                            "audio_tokens": 0,
+                            "reasoning_tokens": 0,
+                            "rejected_prediction_tokens": 0
+                        },
+                        "prompt_tokens_details": {
+                            "audio_tokens": 0,
+                            "cached_tokens": 0
+                        }
+                    }
+                },
+                {
+                    "step_name": "adaptive_combine",
+                    "token_usage": {
+                        "completion_tokens": 267,
+                        "prompt_tokens": 631,
+                        "total_tokens": 898,
+                        "completion_tokens_details": {
+                            "accepted_prediction_tokens": 0,
+                            "audio_tokens": 0,
+                            "reasoning_tokens": 0,
+                            "rejected_prediction_tokens": 0
+                        },
+                        "prompt_tokens_details": {
+                            "audio_tokens": 0,
+                            "cached_tokens": 0
+                        }
+                    }
+                }
+            ],
+            "isAdaptive": "True"
+        },
+        {
+            "question_payload": {
+                "question": "At a constant angular speed about the z-axis, a smooth block B of mass m is attached to the vertex A of a right circular cone using a light cord. The block attains a speed v. At this speed, determine symbolically:\n(a) the tension T in the cord, and\n(b) the reaction N that the cone exerts on the block.\nNeglect the size of the block. The relevant parameters are the cone's dimensions and the geometry as shown in the diagram.",
+                "source": "Slide 7 (first image, problem statement)",
+                "requires_external_data": false,
+                "requires_image": true,
+                "completeness": true,
+                "additiona_information": "Cone geometry is given; variables m (mass), v (speed), T (tension), N (normal/reaction force), \u03b8 (angle of cone), and r (radius of rotation) must be retained symbolically.",
+                "solution": [
+                    {
+                        "section_title": "Free Body Diagram and Force Equilibrium",
+                        "description": "Draw a free body diagram (FBD) for the block, identifying:\n- Gravity acting downward: mg\n- Tension T in the cord at angle \\( \\theta \\)\n- Reaction force (normal), N, from the cone at angle \\( \\theta \\)\n\nConsider components of forces along the vertical (y') and horizontal (x', towards the axis of rotation) directions.",
+                        "subsections": [
+                            {
+                                "subsection_title": "Vertical Equilibrium (\\( \\Sigma F_{y'} = 0 \\))",
+                                "description": "\\[\n-N \\cos \\theta - T \\sin \\theta + mg = 0\n\\]"
+                            },
+                            {
+                                "subsection_title": "Radial/Centripetal Equilibrium (\\( \\Sigma F_{x'} = m\\frac{v^2}{r} \\))",
+                                "description": "\\[\nT \\cos \\theta - N \\sin \\theta = m \\frac{v^2}{r}\n\\]"
+                            }
+                        ]
+                    },
+                    {
+                        "section_title": "Geometric Relations from the Cone",
+                        "description": "Let the slant height (hypotenuse) from apex A to B be L, the vertical height be h, and the base radius be b. From the diagram, assign symbolic lengths as needed.\n- \\( \\cos \\theta = \\frac{b}{L} \\)\n- \\( \\sin \\theta = \\frac{h}{L} \\)\n- Let the radius of motion (horizontal distance from axis to block), r, be found by similar triangles or direct trigonometric relations.",
+                        "subsections": null
+                    },
+                    {
+                        "section_title": "Solve Simultaneous Equations",
+                        "description": "Solve the two equations from the FBD:\n\\[\n-N \\cos \\theta - T \\sin \\theta + mg = 0 \\tag{1}\n\\]\n\\[\nT \\cos \\theta - N \\sin \\theta = m \\frac{v^2}{r} \\tag{2}\n\\]\nSymbolically solve for T and N in terms of m, g, v, r, and \\( \\theta \\):",
+                        "subsections": [
+                            {
+                                "subsection_title": "Solution for Tension (T) and Normal Reaction (N)",
+                                "description": "Solve (1) and (2) for T and N:\n\\begin{align*}\nN \\cos \\theta + T \\sin \\theta &= mg \\\\\nT \\cos \\theta - N \\sin \\theta &= m \\frac{v^2}{r}\n\\end{align*}\nSolve these simultaneously to express T and N symbolically."
+                            }
+                        ]
+                    }
+                ]
+            },
+            "question_metadata": {
+                "title": "ConeBlockDynamics",
+                "question": "At a constant angular speed about the z-axis, a smooth block B of mass m is attached to the vertex A of a right circular cone using a light cord. The block attains a speed v. At this speed, determine symbolically: (a) the tension T in the cord, and (b) the reaction N that the cone exerts on the block. Neglect the size of the block. The relevant parameters are the cone's dimensions and the geometry as shown in the diagram.",
+                "stem": "This problem involves the dynamics of a block in circular motion on a cone, where we need to analyze the forces at play due to the tension in the cord and the normal reaction from the cone.",
+                "topic": "Dynamics",
+                "tags": [
+                    "Dynamics",
+                    "Circular Motion",
+                    "Tension",
+                    "Normal Reaction",
+                    "Forces",
+                    "Kinematics"
+                ],
+                "prereqs": {
+                    "engineering": [
+                        "Dynamics"
+                    ],
+                    "math": [
+                        "Algebra",
+                        "Trigonometry"
+                    ]
+                },
+                "isAdaptive": "True"
+            },
+            "files": {
+                "question_html": "<pl-question-panel>\nThe figure shows a right circular cone with a vertex A, where a smooth block B of mass {{params.m}} {{params.unitsMass}} is attached to A by a light cord. The block rotates about the z-axis with a constant speed of {{params.v}} {{params.unitsSpeed}}. Neglecting the size of the block:\n\n<p>\n  Determine symbolically:\n  <ul>\n    <li>(a) the tension T in the cord (in {{params.unitsForce}})</li>\n    <li>(b) the reaction N that the cone exerts on the block (in {{params.unitsForce}})</li>\n  </ul>\n</p>\n</pl-question-panel>\n\n{{params.svgString}}\n\n<pl-number-input answers-name=\"tension\" comparison=\"sigfig\" digits=\"3\" label=\"Tension in cord\"></pl-number-input>\n<pl-number-input answers-name=\"reaction\" comparison=\"sigfig\" digits=\"3\" label=\"Reaction at the cone\"></pl-number-input>",
+                "server_js": "const math = require('mathjs');\n\nconst generate = () => {\n\n    unitSystems = ['si', \"uscs\"];\n    masslabels = [\"mass\", \"weight\"];\n    \n    units = { \n        \"si\": { \n            \"masslabel\": \"mass\",\n            \"mass\": \"kg\",\n            \"speed\": \"kmph\",\n            \"dist\": \"m\",\n            \"force\": \"N\",\n            \"angle\": \"degrees\"\n        },\n        \"uscs\": {\n            \"masslabel\": \"weight\",\n            \"mass\": \"lb\",\n            \"speed\": \"mph\",\n            \"dist\": \"ft\",\n            \"force\": \"lb\",\n            \"angle\": \"degrees\"\n        }\n    }\n    \n    unitSel = math.randomInt(0, 2);\n    unitsDist = units[unitSystems[unitSel]].dist;\n    unitsSpeed = units[unitSystems[unitSel]].speed;\n    unitsMass = units[unitSystems[unitSel]].mass;\n    unitsForce = units[unitSystems[unitSel]].force;\n    unitsAngle = units[unitSystems[unitSel]].angle;\n    masslabel = units[unitSystems[unitSel]].masslabel;    \n\n    m = math.randomInt(10, 30); // mass of block B\n    v = math.randomInt(5, 20); // speed of block B (arbitrary range)\n    h = math.randomInt(40, 80); // height of the cone\n    r = math.randomInt(30, 60); // horizontal distance from apex to block at speed\n    \n    // Determine angle theta using geometry of the cone \n    theta = math.atan(h / r); // height over radius\n    \n    // Tension (T) and Normal Reaction (N) equations derived from FBD\n    T = (m * (v ** 2) / r) / math.cos(theta);\n    N = (m * 9.81 * math.cos(theta) + T * math.sin(theta)) / math.cos(theta);\n\n    // Return SVG string example\n    let svgString = `<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"300\" height=\"150\">\\n`;\n    svgString += `  <line x1=\"0\" y1=\"100\" x2=\"${r}\" y2=\"100\" stroke=\"blue\" stroke-width=\"2\"/>\\n`;\n    svgString += `  <line x1=\"${r}\" y1=\"100\" x2=\"${r - 10 * math.cos(theta)}\" y2=\"${100 - 10 * math.sin(theta)}\" stroke=\"red\" stroke-width=\"2\"/>\\n`;\n    svgString += `  <text x=\"${r / 2}\" y=\"90\">Block B</text>\\n`;\n    svgString += `</svg>\\n`;\n\n    let data = {\n        params: { \n            masslabel: masslabel,\n            unitsMass: unitsMass,\n            unitsDist: unitsDist,\n            unitsForce: unitsForce,\n            m: m,\n            h: h,\n            r: r,\n        },\n        correct_answers: {\n            tension: T,\n            normal_reaction: N,\n        },\n        nDigits: 2,\n        sigfigs: 2,\n        svgString: svgString\n    }\n\n    console.log(data);\n    return data;\n}\n\nmodule.exports = {\n    generate\n};",
+                "server_py": "import numpy as np\nimport sympy as sp\nimport pandas as pd\n\n\ndef generate():\n    # Define symbols\n    m, g, v, theta, L, r = sp.symbols('m g v theta L r')\n    \n    # Geometric relations\n    b = L * sp.sin(theta)  # radius at the cone base\n    # Calculate components\n    N = sp.symbols('N')  # Normal reaction\n    T = sp.symbols('T')  # Tension in the cord\n    \n    # Free body equations\n    eq1 = sp.Eq(-N * sp.cos(theta) - T * sp.sin(theta) + m * g, 0)  # Vertical equilibrium\n    eq2 = sp.Eq(T * sp.cos(theta) - N * sp.sin(theta), m * (v**2) / r)  # Radial equilibrium\n    \n    # Solve for T and N\n    solutions = sp.solve((eq1, eq2), (T, N))\n    tension = solutions[T]  # Tension T\n    reaction = solutions[N]  # Reaction N\n\n    # Return structured output\n    return {\n        'params': {\n            'm': m,\n            'g': g,\n            'v': v,\n            'r': r,\n            'theta': theta,\n            'b': b\n        },\n        'correct_answers': {\n            'Tension (T)': tension,\n            'Reaction (N)': reaction\n        },\n        'nDigits': 3,  # Decimal places.\n        'sigfigs': 3   # Significant figures.\n    }",
+                "solution_html": "<pl-question-panel>\nAt a constant angular speed about the z-axis, a smooth block B of mass {{params.m}} {{params.unitsMass}} is attached to the vertex A of a right circular cone using a light cord. The block attains a speed of {{params.v}} {{params.unitsSpeed}}. \n\n<p>\nDetermine symbolically:<br> \n(a) the tension T in the cord (in {{params.unitsForce}}), and <br> \n(b) the reaction N that the cone exerts on the block (in {{params.unitsForce}}).\n</p>  \n\n<p>The relevant parameters are the cone's dimensions and the geometry as shown in the diagram.</p>\n</pl-question-panel>\n\n{{params.svgString}}\n\n<pl-number-input answers-name=\"tension\" comparison=\"sigfig\" digits=\"2\" label=\"Tension in cord (T) in {{params.unitsForce}}\"></pl-number-input>\n<pl-number-input answers-name=\"reaction\" comparison=\"sigfig\" digits=\"2\" label=\"Reaction from cone (N) in {{params.unitsForce}}\"></pl-number-input>\n\n### Solution Guide: \n## Free Body Diagram and Force Equilibrium\n\nDraw a free body diagram (FBD) for the block, identifying:\n- Gravity acting downward: mg\n- Tension T in the cord at angle \\( \\theta \\)\n- Reaction force (normal), N, from the cone at angle \\( \\theta \\)\n\nConsider components of forces along the vertical (y') and horizontal (x', towards the axis of rotation) directions.\n\n### Vertical Equilibrium (\\( \\Sigma F_{y'} = 0 \\))\n\\[\n-N \\cos \\theta - T \\sin \\theta + mg = 0\n\\]\n\n### Radial/Centripetal Equilibrium (\\( \\Sigma F_{x'} = m\\frac{v^2}{r} \\))\n\\[\nT \\cos \\theta - N \\sin \\theta = m \\frac{v^2}{r}\n\\]\n\n## Geometric Relations from the Cone\n\nLet the slant height (hypotenuse) from apex A to B be L, the vertical height be h, and the base radius be b. From the diagram, assign symbolic lengths as needed.\n- \\( \\cos \\theta = \\frac{b}{L} \\)\n- \\( \\sin \\theta = \\frac{h}{L} \\)\n- Let the radius of motion (horizontal distance from axis to block), r, be found by similar triangles or direct trigonometric relations.\n\n## Solve Simultaneous Equations\n\nSolve the two equations from the FBD:\n\\[ \n-N \\cos \\theta - T \\sin \\theta + mg = 0 \\tag{1}\n\\]\n\\[ \nT \\cos \\theta - N \\sin \\theta = m \\frac{v^2}{r} \\tag{2}\n\\]\n\n### Solution for Tension (T) and Normal Reaction (N)\n\nSolve (1) and (2) for T and N:\n\\begin{align*} \nN \\cos \\theta + T \\sin \\theta &= mg \\\\\nT \\cos \\theta - N \\sin \\theta &= m \\frac{v^2}{r}\n\\end{align*}\nSolve these simultaneously to express T and N symbolically.",
+                "metadata": {
+                    "title": "ConeBlockDynamics",
+                    "question": "At a constant angular speed about the z-axis, a smooth block B of mass m is attached to the vertex A of a right circular cone using a light cord. The block attains a speed v. At this speed, determine symbolically: (a) the tension T in the cord, and (b) the reaction N that the cone exerts on the block. Neglect the size of the block. The relevant parameters are the cone's dimensions and the geometry as shown in the diagram.",
+                    "stem": "This problem involves the dynamics of a block in circular motion on a cone, where we need to analyze the forces at play due to the tension in the cord and the normal reaction from the cone.",
+                    "topic": "Dynamics",
+                    "tags": [
+                        "Dynamics",
+                        "Circular Motion",
+                        "Tension",
+                        "Normal Reaction",
+                        "Forces",
+                        "Kinematics"
+                    ],
+                    "prereqs": {
+                        "engineering": [
+                            "Dynamics"
+                        ],
+                        "math": [
+                            "Algebra",
+                            "Trigonometry"
+                        ]
+                    },
+                    "isAdaptive": "True"
+                }
+            },
+            "token_usage": [
+                {
+                    "step_name": "classify_question",
+                    "token_usage": {
+                        "completion_tokens": 199,
+                        "prompt_tokens": 671,
+                        "total_tokens": 870,
+                        "completion_tokens_details": {
+                            "accepted_prediction_tokens": 0,
+                            "audio_tokens": 0,
+                            "reasoning_tokens": 0,
+                            "rejected_prediction_tokens": 0
+                        },
+                        "prompt_tokens_details": {
+                            "audio_tokens": 0,
+                            "cached_tokens": 0
+                        }
+                    }
+                },
+                {
+                    "step_name": "generate_question_html",
+                    "token_usage": {
+                        "completion_tokens": 229,
+                        "prompt_tokens": 1526,
+                        "total_tokens": 1755,
+                        "completion_tokens_details": {
+                            "accepted_prediction_tokens": 0,
+                            "audio_tokens": 0,
+                            "reasoning_tokens": 0,
+                            "rejected_prediction_tokens": 0
+                        },
+                        "prompt_tokens_details": {
+                            "audio_tokens": 0,
+                            "cached_tokens": 0
+                        }
+                    }
+                },
+                {
+                    "step_name": "generate_server_js",
+                    "token_usage": {
+                        "completion_tokens": 806,
+                        "prompt_tokens": 2638,
+                        "total_tokens": 3444,
+                        "completion_tokens_details": {
+                            "accepted_prediction_tokens": 0,
+                            "audio_tokens": 0,
+                            "reasoning_tokens": 0,
+                            "rejected_prediction_tokens": 0
+                        },
+                        "prompt_tokens_details": {
+                            "audio_tokens": 0,
+                            "cached_tokens": 0
+                        }
+                    }
+                },
+                {
+                    "step_name": "generate_server_py",
+                    "token_usage": {
+                        "completion_tokens": 374,
+                        "prompt_tokens": 1429,
+                        "total_tokens": 1803,
+                        "completion_tokens_details": {
+                            "accepted_prediction_tokens": 0,
+                            "audio_tokens": 0,
+                            "reasoning_tokens": 0,
+                            "rejected_prediction_tokens": 0
+                        },
+                        "prompt_tokens_details": {
+                            "audio_tokens": 0,
+                            "cached_tokens": 0
+                        }
+                    }
+                },
+                {
+                    "step_name": "generate_solution_html",
+                    "token_usage": {
+                        "completion_tokens": 731,
+                        "prompt_tokens": 1434,
+                        "total_tokens": 2165,
+                        "completion_tokens_details": {
+                            "accepted_prediction_tokens": 0,
+                            "audio_tokens": 0,
+                            "reasoning_tokens": 0,
+                            "rejected_prediction_tokens": 0
+                        },
+                        "prompt_tokens_details": {
+                            "audio_tokens": 0,
+                            "cached_tokens": 0
+                        }
+                    }
+                },
+                {
+                    "step_name": "adaptive_combine",
+                    "token_usage": {
+                        "completion_tokens": 752,
+                        "prompt_tokens": 1468,
+                        "total_tokens": 2220,
+                        "completion_tokens_details": {
+                            "accepted_prediction_tokens": 0,
+                            "audio_tokens": 0,
+                            "reasoning_tokens": 0,
+                            "rejected_prediction_tokens": 0
+                        },
+                        "prompt_tokens_details": {
+                            "audio_tokens": 0,
+                            "cached_tokens": 0
+                        }
+                    }
+                }
+            ],
+            "isAdaptive": "True"
+        },
+        {
+            "question_payload": {
+                "question": "What is the significance of the radius r in determining the required tension and normal force, and how is it extracted from the geometry of the cone?",
+                "source": "Slide 8 (second image, geometric construction)",
+                "requires_external_data": false,
+                "requires_image": true,
+                "completeness": true,
+                "additiona_information": "r must be expressed symbolically using the cone dimensions via similar triangles or trigonometric functions.",
+                "solution": [
+                    {
+                        "section_title": "Geometric Analysis of the Cone",
+                        "description": "Construct a right triangle from the apex, slant height, and base radius, noting:\n- Slant height = L\n- Height = h\n- Base radius = b\n\nFrom similar triangles or trigonometry:\n\\[\n\\cos \\theta = \\frac{b}{L}\n\\]\n\\[\n\\sin \\theta = \\frac{h}{L}\n\\]\nLet the required radius of rotation be r.",
+                        "subsections": [
+                            {
+                                "subsection_title": "Similar Triangles or Trigonometric Relationship for r",
+                                "description": "If cord length from apex to block (slant height) is known (L), and projection to axis is proportionate to the base:\n\\[\nr = L \\cos \\theta\n\\]\nOr from similar triangles:\n\\[\n\\frac{r}{L} = \\frac{b}{\\text{slant height (total)}}\n\\]\nThe specific symbolic relation should reflect the geometry as depicted."
+                            }
+                        ]
+                    }
+                ]
+            },
+            "question_metadata": {
+                "title": "SignificanceOfRadiusInConeForces",
+                "question": "What is the significance of the radius r in determining the required tension and normal force, and how is it extracted from the geometry of the cone?",
+                "stem": "Understanding the relationship between the radius of the cone and the forces acting on an object within or connected to it is crucial for analyzing mechanical systems involving cones.",
+                "topic": "Physics",
+                "tags": [
+                    "Cone Geometry",
+                    "Tension",
+                    "Normal Force",
+                    "Radius",
+                    "Force Analysis"
+                ],
+                "prereqs": {
+                    "engineering": [
+                        "Statics",
+                        "Dynamics"
+                    ],
+                    "math": [
+                        "Trigonometry",
+                        "Geometry"
+                    ]
+                },
+                "isAdaptive": "False"
+            },
+            "files": {
+                "question_html": "<pl-question-panel>\n  <pl-figure file-name=\"ConeExample.JPG\"></pl-figure>\n  <p>\n   What is the significance of the radius <strong>r</strong> in determining the required tension and normal force, and how is it extracted from the geometry of the cone?\n  </p>\n</pl-question-panel>\n\n<p> The horizontal-component of the reaction at point A ($A_X$) is equal to: </p>\n<pl-number-input-fixed answers-name=\"A_X\" correct-answer-fixed=\"value_for_AX\" comparison=\"sigfig\" digits=\"4\" label=\"$A_{X}$ (N)\"></pl-number-input-fixed>\n\n<p> The vertical-component of the reaction at point A ($A_Y$) is equal to: </p>\n<pl-number-input-fixed answers-name=\"A_Y\" correct-answer-fixed=\"value_for_AY\" comparison=\"sigfig\" digits=\"4\" label=\"$A_{Y}$ (N)\"></pl-number-input-fixed>\n\n<p> The magnitude of the tension force through ($T_{BC}$) is equal to: </p>\n<pl-number-input-fixed answers-name=\"T_{BC}\" correct-answer-fixed=\"value_for_TBC\" comparison=\"sigfig\" digits=\"4\" label=\"$T_{BC}$ (N)\"></pl-number-input-fixed>",
+                "server_js": "",
+                "server_py": "",
+                "solution_html": "<h2>Geometric Analysis of the Cone</h2>\n\n<p>Construct a right triangle from the apex, slant height, and base radius, noting:</p>\n<ul>\n    <li>Slant height = L</li>\n    <li>Height = h</li>\n    <li>Base radius = b</li>\n</ul>\n\n<p>From similar triangles or trigonometry:</p>\n<pre>\n\\[\\cos \\theta = \\frac{b}{L}\\]\n\\[\\sin \\theta = \\frac{h}{L}\\]\n</pre>\n\n<p>Let the required radius of rotation be <strong>r</strong>.</p>\n\n<h3>Similar Triangles or Trigonometric Relationship for r</h3>\n\n<p>If the cord length from the apex to the block (slant height) is known (L), and the projection to the axis is proportionate to the base:</p>\n<pre>\n\\[r = L \\cos \\theta\\]\n</pre>\n\n<p>Or from similar triangles:</p>\n<pre>\n\\[\\frac{r}{L} = \\frac{b}{\\text{slant height (total)}}\\]\n</pre>\n\n<p>The specific symbolic relation should reflect the geometry as depicted. Use this guide to aid in your understanding of the radius and its significance in determining tension and normal forces.</p>",
+                "metadata": {
+                    "title": "SignificanceOfRadiusInConeForces",
+                    "question": "What is the significance of the radius r in determining the required tension and normal force, and how is it extracted from the geometry of the cone?",
+                    "stem": "Understanding the relationship between the radius of the cone and the forces acting on an object within or connected to it is crucial for analyzing mechanical systems involving cones.",
+                    "topic": "Physics",
+                    "tags": [
+                        "Cone Geometry",
+                        "Tension",
+                        "Normal Force",
+                        "Radius",
+                        "Force Analysis"
+                    ],
+                    "prereqs": {
+                        "engineering": [
+                            "Statics",
+                            "Dynamics"
+                        ],
+                        "math": [
+                            "Trigonometry",
+                            "Geometry"
+                        ]
+                    },
+                    "isAdaptive": "False"
+                }
+            },
+            "token_usage": [
+                {
+                    "step_name": "classify_question",
+                    "token_usage": {
+                        "completion_tokens": 123,
+                        "prompt_tokens": 601,
+                        "total_tokens": 724,
+                        "completion_tokens_details": {
+                            "accepted_prediction_tokens": 0,
+                            "audio_tokens": 0,
+                            "reasoning_tokens": 0,
+                            "rejected_prediction_tokens": 0
+                        },
+                        "prompt_tokens_details": {
+                            "audio_tokens": 0,
+                            "cached_tokens": 0
+                        }
+                    }
+                },
+                {
+                    "step_name": "generate_question_html",
+                    "token_usage": {
+                        "completion_tokens": 289,
+                        "prompt_tokens": 1372,
+                        "total_tokens": 1661,
+                        "completion_tokens_details": {
+                            "accepted_prediction_tokens": 0,
+                            "audio_tokens": 0,
+                            "reasoning_tokens": 0,
+                            "rejected_prediction_tokens": 0
+                        },
+                        "prompt_tokens_details": {
+                            "audio_tokens": 0,
+                            "cached_tokens": 0
+                        }
+                    }
+                },
+                {
+                    "step_name": "generate_solution_html",
+                    "token_usage": {
+                        "completion_tokens": 320,
+                        "prompt_tokens": 1085,
+                        "total_tokens": 1405,
+                        "completion_tokens_details": {
+                            "accepted_prediction_tokens": 0,
+                            "audio_tokens": 0,
+                            "reasoning_tokens": 0,
+                            "rejected_prediction_tokens": 0
+                        },
+                        "prompt_tokens_details": {
+                            "audio_tokens": 0,
+                            "cached_tokens": 0
+                        }
+                    }
+                }
+            ],
+            "isAdaptive": "False"
+        },
+        {
+            "question_payload": {
+                "question": "The 0.5-lb ball is guided along the vertical circular path $r = 2r_c \\cos\\theta$ using the arm $OA$. If the arm has an angular velocity $\\dot{\\theta} = 0.4\\ \\text{rad}/s$ and an angular acceleration $\\ddot{\\theta} = 0.8\\ \\text{rad}/s^2$ at the instant $\\theta = 30^\\circ$, determine the force of the arm on the ball. Neglect friction and the size of the ball. Set $r_c = 0.4\\ \\text{m}$.",
+                "source": "Image 1 (textbook and annotations, problem 13-100)",
+                "requires_external_data": false,
+                "requires_image": true,
+                "completeness": true,
+                "additiona_information": null,
+                "solution": [
+                    {
+                        "section_title": "General Symbolic Solution Steps",
+                        "description": "We will write a symbolic solution, using only variables: $m$, $\\theta$, $r_c$, $g$, etc. Numerical values will not be substituted.",
+                        "subsections": [
+                            {
+                                "subsection_title": "1. Express Ball's Radial Position as a Function of $\\theta$",
+                                "description": "$r = 2r_c \\cos \\theta$\n\nFirst derivatives:\n$$\n\\dot{r} = \\frac{dr}{dt} = \\frac{dr}{d\\theta}\\dot{\\theta} = 2r_c (-\\sin\\theta)\\dot{\\theta}\n$$\nSecond derivatives:\n$$\n\\ddot{r} = \\frac{d^2r}{dt^2} = 2r_c\\left(-\\cos\\theta\\ (\\dot{\\theta})^2 - \\sin\\theta\\ \\ddot{\\theta}\\right)\n$$"
+                            },
+                            {
+                                "subsection_title": "2. Write Out Radial and Transverse ($\\theta$) Equations of Motion",
+                                "description": "Radial direction ($r$):\n$$\n\\sum F_r = m a_r\n$$\nwhere \n$$a_r = \\ddot{r} - r (\\dot{\\theta})^2\n$$\n\nTransverse direction ($\\theta$):\n$$\n\\sum F_{\\theta} = m a_{\\theta}\n$$\nwhere\n$$\na_{\\theta} = r \\ddot{\\theta} + 2 \\dot{r} \\dot{\\theta}\n$$"
+                            },
+                            {
+                                "subsection_title": "3. Free-Body Diagram Forces and Equations",
+                                "description": "Radial direction:\n$$\n\\sum F_r = N \\cos\\theta - W \\sin\\theta\n$$\nTransverse (theta) direction:\n$$\n\\sum F_{\\theta} = F_{OA} + N \\sin\\theta - W \\cos\\theta\n$$\nwhere $N$ is the normal reaction and $F_{OA}$ is the force from the arm along the $\\theta$ direction."
+                            },
+                            {
+                                "subsection_title": "4. Final Symbolic Equations for Solving $N$ and $F_{OA}$",
+                                "description": "Radial equilibrium:\n$$\nN \\cos\\theta - m g \\sin\\theta = m(\\ddot{r} - r (\\dot{\\theta})^2)\n$$\nTransverse equilibrium:\n$$\nF_{OA} + N \\sin\\theta - m g \\cos\\theta = m(r \\ddot{\\theta} + 2 \\dot{r} \\dot{\\theta})\n$$\n\nYou would solve these equations, symbolically, for $N$ and $F_{OA}$ in terms of $m, r_c, \\theta, g, \\dot{\\theta}, \\ddot{\\theta}$. No numbers are substituted."
+                            }
+                        ]
+                    }
+                ]
+            },
+            "question_metadata": {
+                "title": "ForceOfArmOnBallInCircularMotion",
+                "question": "Determine the force of the arm on the ball given its weight, angular velocity, and acceleration at a specific angle.",
+                "stem": "A 0.5-lb ball moves along a vertical circular path defined by $r = 2r_c \\cos\\theta$, with $r_c = 0.4$ m. At $\\theta = 30^\\circ$, the arm guiding the ball has an angular velocity of $0.4$ rad/s and an angular acceleration of $0.8$ rad/s\u00b2. Your task is to find the force exerted by the arm on the ball, neglecting friction and the size of the ball.",
+                "topic": "Dynamics",
+                "tags": [
+                    "circular motion",
+                    "forces",
+                    "angular velocity",
+                    "angular acceleration",
+                    "mechanics"
+                ],
+                "prereqs": {
+                    "engineering": [
+                        "Dynamics"
+                    ],
+                    "math": [
+                        "Trigonometry",
+                        "Calculus"
+                    ]
+                },
+                "isAdaptive": "True"
+            },
+            "files": {
+                "question_html": "<pl-question-panel>\n    <pl-figure file-name=\"circularMotion.png\"></pl-figure>\n      <p>A 0.5-lb ball is guided along the vertical circular path $r = 2r_c \\cos\\theta$ using the arm $OA$. If the arm has an angular velocity $\\dot{\\theta} = {{params.angularVelocity}}$ ${{params.unitsVel}}$ and an angular acceleration $\\ddot{\\theta} = {{params.angularAcceleration}}$ ${{params.unitsAccel}}$ at the instant $\\theta = {{params.angle}}$, determine the force of the arm on the ball. Neglect friction and the size of the ball. Set $r_c = {{params.r_c}}$ ${{params.unitsDist}}$.</p>\n      \n      <p>Neglect friction and the size of the ball.</p>    \n</pl-question-panel>\n\n<pl-number-input answers-name=\"F\" comparison=\"sigfig\" digits=\"3\" label=\"Force of the arm on the ball =\"></pl-number-input>\n\n<pl-number-input answers-name=\"Theta\" comparison=\"sigfig\" digits=\"3\" label=\"Angle $\\theta = $ \"></pl-number-input>\n\n<pl-number-input answers-name=\"r_c\" comparison=\"sigfig\" digits=\"3\" label=\"Radius $r_c = $ \"></pl-number-input>\n\n<pl-number-input answers-name=\"angularVelocity\" comparison=\"sigfig\" digits=\"3\" label=\"Angular velocity $\\dot{\\theta} = $ \"></pl-number-input>\n\n<pl-number-input answers-name=\"angularAcceleration\" comparison=\"sigfig\" digits=\"3\" label=\"Angular acceleration $\\ddot{\\theta} = $ \"></pl-number-input>",
+                "server_js": "const math = require('mathjs');\n\nconst generate = () => {\n    const r_c = 0.4; // meters\n    const weight = 0.5 * 9.81; // weight of the ball in Newtons (0.5 lb to SI)\n    const theta = math.unit(30, 'degrees'); // theta in radians\n    const dot_theta = 0.4; // rad/s\n    const ddot_theta = 0.8; // rad/s^2\n\n    // Compute radial position from theta\n    const r = 2 * r_c * math.cos(theta);\n    const dr_dt = -2 * r_c * math.sin(theta) * dot_theta; // Derivative of r with respect to time\n    const d2r_dt2 = 2 * r_c * (-math.cos(theta) * dot_theta**2 - math.sin(theta) * ddot_theta); // Second derivative of r\n\n    // Forces acting on the ball\n    const m = weight / 9.81; // mass in kg\n    const N = math.symbolic('N'); // Normal force\n\n    // Radial motion equation\n    const radial_equation = N * math.cos(theta) - weight * math.sin(theta) - (m * (d2r_dt2 - r * dot_theta**2));\n    // Transverse motion equation\n    const F_OA = math.symbolic('F_OA'); // Force of the arm on the ball\n    const transverse_equation = F_OA + N * math.sin(theta) - weight * math.cos(theta) - (m * (r * ddot_theta + 2 * dr_dt * dot_theta));\n\n    // Solve for N and F_OA symbolically\n    // Using mathjs to solve the equations; Here we assume equalities hold at equilibrium points\n    const solutions = math.solve([radial_equation, transverse_equation], [N, F_OA]);\n\n    // Return parameters and answers\n    data = {\n        params: {\n            weight: weight,\n            theta: 30,\n            r_c: r_c,\n            unitForce: 'N'\n        },\n        correct_answers: {\n            Normal_Force: solutions[N],\n            Force_of_Arm: solutions[F_OA]\n        },\n        nDigits: 2,\n        sigfigs: 2\n    };\n\n    console.log(data);\n    return data;\n};\n\ngenerate();\nmodule.exports = {\n    generate\n};",
+                "server_py": "import numpy as np\nimport sympy as sp\nimport pandas as pd\n\n\ndef generate():\n    # Given Parameters\n    r_c = 0.4  # m\n    m = 0.5 * 0.453592  # Convert weight from lbs to kg (0.5 lbs)\n    g = 9.81  # m/s^2 (acceleration due to gravity)\n    theta_deg = 30  # degrees\n    theta = np.radians(theta_deg)  # Convert to radians\n    theta_dot = 0.4  # rad/s\n    theta_ddot = 0.8  # rad/s^2\n\n    # 1. Express Ball's Radial Position as a Function of theta\n    r = 2 * r_c * np.cos(theta)\n\n    # 2. First derivatives\n    r_dot = 2 * r_c * (-np.sin(theta)) * theta_dot\n\n    # 3. Second derivatives\n    r_ddot = 2 * r_c * (-np.cos(theta) * (theta_dot ** 2) - np.sin(theta) * theta_ddot)\n\n    # 4. Radial acceleration (a_r)\n    a_r = r_ddot - r * (theta_dot ** 2)\n\n    # 5. Forces in the radial direction\n    N = sp.Symbol('N')  # Normal force\n    force_radial_eq = sp.Eq(N * np.cos(theta) - m * g * np.sin(theta), m * a_r)\n    normal_force_solution = sp.solve(force_radial_eq, N)\n\n    # 6. Transverse forces\n    F_OA = sp.Symbol('F_OA')  # Force from the arm\n    force_transverse_eq = sp.Eq(F_OA + normal_force_solution[0] * np.sin(theta) - m * g * np.cos(theta), m * (r * theta_ddot + 2 * r_dot * theta_dot))\n    arm_force_solution = sp.solve(force_transverse_eq, F_OA)\n\n    # 7. Prepare parameters and correct answers\n    params = {\n        'm': m,   # kg\n        'r_c': r_c,  # m\n        'theta': theta_deg,  # degrees\n        'g': g,   # m/s^2\n        'N': normal_force_solution[0],  # Normal Force\n        'F_OA': arm_force_solution[0]  # Force from arm\n    }\n\n    correct_answers = {\n        'normal_force': normal_force_solution[0],\n        'force_arm': arm_force_solution[0]\n    }\n\n    return {\n        'params': params,\n        'correct_answers': correct_answers,\n        'nDigits': 3,\n        'sigfigs': 3\n    }\n\n# Example run of the function to test\nresult = generate()\nprint(result)",
+                "solution_html": "<pl-question-panel>\n    <pl-figure file-name=\"path_to_figure.png\"></pl-figure>\n    <p>The ball has a mass of ${{params.m}}$ kg and is guided along the vertical circular path at an angle of ${{params.theta}}^\\text{circ}$.</p>\n    <p>At this point, the arm has a linear (tangential) velocity of ${{params.v}}$ m/s and a linear acceleration of ${{params.a}}$ m/s\u00b2. Declare the radius of the circular path as $r = 2r_c \\times \\text{cos}({{params.theta}})$, where $r_c = 0.4 \\text{m}$.</p>\n    <p>To determine the normal force $N$ acting on the ball and the force $F_{OA}$ exerted by the arm on the ball, use the following equations:</p>\n    <ul>\n        <li>Radial motion: $$N \\cos({{params.theta}}) - mg \\sin({{params.theta}}) - m (d^2r/dt^2 - r \\dot{\\theta}^2) = 0$$</li>\n        <li>Transverse motion: $$F_{OA} + N \\sin({{params.theta}}) - mg \\cos({{params.theta}}) - m(r \\ddot{\\theta} + 2(dr/dt)\\dot{\\theta}) = 0$$</li>\n    </ul>\n</pl-question-panel>\n\n<pl-number-input answers-name=\"NormalForce\" comparison=\"sigfig\" digits=\"3\" label=\"Normal Force $N$ acting on the ball =\"></pl-number-input>\n<pl-number-input answers-name=\"ForceOA\" comparison=\"sigfig\" digits=\"3\" label=\"Force exerted by the arm on the ball $F_{OA} =\"></pl-number-input>",
+                "metadata": {
+                    "title": "ForceOfArmOnBallInCircularMotion",
+                    "question": "Determine the force of the arm on the ball given its weight, angular velocity, and acceleration at a specific angle.",
+                    "stem": "A 0.5-lb ball moves along a vertical circular path defined by $r = 2r_c \\cos\\theta$, with $r_c = 0.4$ m. At $\\theta = 30^\\circ$, the arm guiding the ball has an angular velocity of $0.4$ rad/s and an angular acceleration of $0.8$ rad/s\u00b2. Your task is to find the force exerted by the arm on the ball, neglecting friction and the size of the ball.",
+                    "topic": "Dynamics",
+                    "tags": [
+                        "circular motion",
+                        "forces",
+                        "angular velocity",
+                        "angular acceleration",
+                        "mechanics"
+                    ],
+                    "prereqs": {
+                        "engineering": [
+                            "Dynamics"
+                        ],
+                        "math": [
+                            "Trigonometry",
+                            "Calculus"
+                        ]
+                    },
+                    "isAdaptive": "True"
+                }
+            },
+            "token_usage": [
+                {
+                    "step_name": "classify_question",
+                    "token_usage": {
+                        "completion_tokens": 194,
+                        "prompt_tokens": 702,
+                        "total_tokens": 896,
+                        "completion_tokens_details": {
+                            "accepted_prediction_tokens": 0,
+                            "audio_tokens": 0,
+                            "reasoning_tokens": 0,
+                            "rejected_prediction_tokens": 0
+                        },
+                        "prompt_tokens_details": {
+                            "audio_tokens": 0,
+                            "cached_tokens": 0
+                        }
+                    }
+                },
+                {
+                    "step_name": "generate_question_html",
+                    "token_usage": {
+                        "completion_tokens": 385,
+                        "prompt_tokens": 1576,
+                        "total_tokens": 1961,
+                        "completion_tokens_details": {
+                            "accepted_prediction_tokens": 0,
+                            "audio_tokens": 0,
+                            "reasoning_tokens": 0,
+                            "rejected_prediction_tokens": 0
+                        },
+                        "prompt_tokens_details": {
+                            "audio_tokens": 0,
+                            "cached_tokens": 0
+                        }
+                    }
+                },
+                {
+                    "step_name": "generate_server_js",
+                    "token_usage": {
+                        "completion_tokens": 559,
+                        "prompt_tokens": 2258,
+                        "total_tokens": 2817,
+                        "completion_tokens_details": {
+                            "accepted_prediction_tokens": 0,
+                            "audio_tokens": 0,
+                            "reasoning_tokens": 0,
+                            "rejected_prediction_tokens": 0
+                        },
+                        "prompt_tokens_details": {
+                            "audio_tokens": 0,
+                            "cached_tokens": 0
+                        }
+                    }
+                },
+                {
+                    "step_name": "generate_server_py",
+                    "token_usage": {
+                        "completion_tokens": 647,
+                        "prompt_tokens": 1579,
+                        "total_tokens": 2226,
+                        "completion_tokens_details": {
+                            "accepted_prediction_tokens": 0,
+                            "audio_tokens": 0,
+                            "reasoning_tokens": 0,
+                            "rejected_prediction_tokens": 0
+                        },
+                        "prompt_tokens_details": {
+                            "audio_tokens": 0,
+                            "cached_tokens": 0
+                        }
+                    }
+                },
+                {
+                    "step_name": "generate_solution_html",
+                    "token_usage": {
+                        "completion_tokens": 284,
+                        "prompt_tokens": 1584,
+                        "total_tokens": 1868,
+                        "completion_tokens_details": {
+                            "accepted_prediction_tokens": 0,
+                            "audio_tokens": 0,
+                            "reasoning_tokens": 0,
+                            "rejected_prediction_tokens": 0
+                        },
+                        "prompt_tokens_details": {
+                            "audio_tokens": 0,
+                            "cached_tokens": 0
+                        }
+                    }
+                },
+                {
+                    "step_name": "adaptive_combine",
+                    "token_usage": {
+                        "completion_tokens": 421,
+                        "prompt_tokens": 893,
+                        "total_tokens": 1314,
+                        "completion_tokens_details": {
+                            "accepted_prediction_tokens": 0,
+                            "audio_tokens": 0,
+                            "reasoning_tokens": 0,
+                            "rejected_prediction_tokens": 0
+                        },
+                        "prompt_tokens_details": {
+                            "audio_tokens": 0,
+                            "cached_tokens": 0
+                        }
+                    }
+                }
+            ],
+            "isAdaptive": "True"
+        },
+        {
+            "question_payload": {
+                "question": "Given $r = 2r_c \\cos\\theta$, derive the first and second time derivatives $\\dot{r}$ and $\\ddot{r}$ in terms of $r_c$, $\\theta$, $\\dot{\\theta}$, and $\\ddot{\\theta}$, using the chain rule.",
+                "source": "Image 1 (boxed red equations); also required in Image 3 for equation of motion setup",
+                "requires_external_data": false,
+                "requires_image": false,
+                "completeness": true,
+                "additiona_information": null,
+                "solution": [
+                    {
+                        "section_title": "Derivatives of $r$ with respect to time",
+                        "description": "",
+                        "subsections": [
+                            {
+                                "subsection_title": "First Derivative $\\dot{r}$",
+                                "description": "$$\nr = 2r_c \\cos \\theta\n$$\n$$\n\\frac{dr}{dt} = \\frac{dr}{d\\theta} \\frac{d\\theta}{dt} = -2r_c \\sin\\theta\\ \\dot{\\theta}\n$$"
+                            },
+                            {
+                                "subsection_title": "Second Derivative $\\ddot{r}$",
+                                "description": "$$\n\\ddot{r} = \\frac{d}{dt}(\\dot{r}) = \\frac{d}{dt}(-2r_c \\sin\\theta\\ \\dot{\\theta})\n$$\nUsing product rule:\n$$\n\\ddot{r} = -2r_c (\\cos\\theta\\ \\dot{\\theta}) \\dot{\\theta} - 2r_c \\sin\\theta \\ddot{\\theta}\n$$\nSo\n$$\n\\ddot{r}= -2r_c \\cos\\theta\\ (\\dot{\\theta})^2 - 2r_c \\sin\\theta\\ \\ddot{\\theta}\n$$"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "question_metadata": {
+                "title": "TimeDerivativesOfPolarCoordinates",
+                "question": "Derive the first and second time derivatives $\\\\dot{r}$ and $\\\\ddot{r}$ in terms of $r_c$, $\\\\theta$, $\\\\dot{\\\\theta}$, and $\\\\ddot{\\\\theta}$, given that $r = 2r_c \\\\cos\\\\theta$.",
+                "stem": "This question explores the application of the chain rule to derive derivatives in polar coordinates, specifically starting from a radial function dependent on an angle.",
+                "topic": "Differential Equations",
+                "tags": [
+                    "Derivatives",
+                    "Chain Rule",
+                    "Polar Coordinates",
+                    "Differential Calculus"
+                ],
+                "prereqs": {
+                    "engineering": null,
+                    "math": [
+                        "Calculus"
+                    ]
+                },
+                "isAdaptive": "True"
+            },
+            "files": {
+                "question_html": "<pl-question-panel>\n  <p> Given the equation <strong>r = 2r_c \\\\cos\\theta</strong>, derive the first and second time derivatives <strong>\\dot{r}</strong> and <strong>\\ddot{r}</strong> in terms of <strong>r_c</strong>, <strong>\\theta</strong>, <strong>\\dot{\\theta}</strong>, and <strong>\\ddot{\\theta}</strong> using the chain rule. </p>\n  <p> Example Input: A cannon fires a cannon ball at an angle {{params.theta}} degrees at a muzzle velocity of {{params.v}} {{params.unitsSpeed}}. </p>\n  <p> What's the range (in {{params.unitsDist}}) that the cannon ball reaches? </p>\n</pl-question-panel>\n\n<pl-number-input answers-name=\"R\" comparison=\"sigfig\" digits=\"3\" label=\"R = (in {{params.unitsDist}})\"></pl-number-input>",
+                "server_js": "const math = require('mathjs');\n\nconst generate = () => {\n    // Ingested parameters based on a structured query from HTML\n    const r_c = 10; // Example radius, replace with dynamic input\n    const theta = math.randomInt(15, 76); // Random angle between 15 and 75\n    const dotTheta = math.random(0, 5); // Random angular velocity\n    const ddotTheta = math.random(0, 5); // Random angular acceleration\n\n    // Calculate r based on provided formula\n    const r = 2 * r_c * Math.cos(math.unit(theta, 'deg').toNumber('rad'));\n\n    // First derivative dot(r)\n    const dotR = -2 * r_c * Math.sin(math.unit(theta, 'deg').toNumber('rad')) * dotTheta;\n\n    // Second derivative (ddot(r)) using product and chain rule\n    const ddotR = -2 * r_c * (Math.cos(math.unit(theta, 'deg').toNumber('rad')) * dotTheta * dotTheta) \n                 - 2 * r_c * Math.sin(math.unit(theta, 'deg').toNumber('rad')) * ddotTheta;\n\n    return {\n        params: {\n            theta: theta,\n            r_c: r_c,\n            dotTheta: dotTheta,\n            ddotTheta: ddotTheta,\n        },\n        correct_answers: {\n            r: r,\n            dotR: dotR,\n            ddotR: ddotR\n        },\n        nDigits: 3,  // Decimal places.\n        sigfigs: 3   // Significant figures.\n    };\n};\n\nmodule.exports = { generate };",
+                "server_py": "import numpy as np\nimport sympy as sp\nimport pandas as pd\n\n\ndef generate():\n    # Define parameters\n    r_c = sp.symbols('r_c')\n    theta = sp.symbols('theta')\n    dot_theta = sp.symbols('dot_theta')\n    ddot_theta = sp.symbols('ddot_theta')\n\n    # Define r in terms of the parameters\n    r = 2 * r_c * sp.cos(theta)\n\n    # 1. First derivative (dot{r}) using chain rule\n    dr_dtheta = sp.diff(r, theta)\n    dot_r = dr_dtheta * dot_theta\n\n    # 2. Second derivative (ddot{r}) using the product rule\n    ddot_r = sp.diff(dot_r, theta) * dot_theta + dot_r * ddot_theta\n\n    # Prepare the returning structure\n    params = {\n        'r_c': r_c,\n        'theta': theta,\n        'dot_theta': dot_theta,\n        'ddot_theta': ddot_theta,\n        'dot_r': dot_r,\n        'ddot_r': ddot_r\n    }\n\n    # Example: Calculate with some values (this is just for demonstration)\n    # Uncomment lines below to define specific values \n    # r_c_value = 5\n    # theta_value = np.pi / 4  # 45 degrees in radians\n    # dot_theta_value = 2\n    # ddot_theta_value = 0.5\n\n    # Evaluate dot_r and ddot_r with specific values\n    # dot_r_evaluated = dot_r.evalf(subs={r_c: r_c_value, theta: theta_value, dot_theta: dot_theta_value})\n    # ddot_r_evaluated = ddot_r.evalf(subs={r_c: r_c_value, theta: theta_value, dot_theta: dot_theta_value, ddot_theta: ddot_theta_value})\n\n    return {\n        'params': params,\n        'correct_answers': {'dot_r': dot_r, 'ddot_r': ddot_r},\n        'nDigits': 3,  # Decimal places.\n        'sigfigs': 3   # Significant figures.\n    }",
+                "solution_html": "<pl-question-panel>  \n  <p> Given the relation between radial distance and angle, derive the first and second time derivatives of radial distance with respect to time. </p>  \n</pl-question-panel>  \n\n<pl-number-input answers-name=\"dot_r\" comparison=\"sigfig\" digits=\"3\" label=\"\\( \\dot{r} = \\frac{dr}{dt} = -2r_c \\sin(\\theta) \\dot{\\theta} \\)\"></pl-number-input>  \n<pl-number-input answers-name=\"ddot_r\" comparison=\"sigfig\" digits=\"3\" label=\"\\( \\ddot{r} = -2r_c \\cos(\\theta) (\\dot{\\theta})^2 - 2r_c \\sin(\\theta) \\ddot{\\theta} \\)\"></pl-number-input>",
+                "metadata": {
+                    "title": "TimeDerivativesOfPolarCoordinates",
+                    "question": "Derive the first and second time derivatives $\\\\dot{r}$ and $\\\\ddot{r}$ in terms of $r_c$, $\\\\theta$, $\\\\dot{\\\\theta}$, and $\\\\ddot{\\\\theta}$, given that $r = 2r_c \\\\cos\\\\theta$.",
+                    "stem": "This question explores the application of the chain rule to derive derivatives in polar coordinates, specifically starting from a radial function dependent on an angle.",
+                    "topic": "Differential Equations",
+                    "tags": [
+                        "Derivatives",
+                        "Chain Rule",
+                        "Polar Coordinates",
+                        "Differential Calculus"
+                    ],
+                    "prereqs": {
+                        "engineering": null,
+                        "math": [
+                            "Calculus"
+                        ]
+                    },
+                    "isAdaptive": "True"
+                }
+            },
+            "token_usage": [
+                {
+                    "step_name": "classify_question",
+                    "token_usage": {
+                        "completion_tokens": 154,
+                        "prompt_tokens": 633,
+                        "total_tokens": 787,
+                        "completion_tokens_details": {
+                            "accepted_prediction_tokens": 0,
+                            "audio_tokens": 0,
+                            "reasoning_tokens": 0,
+                            "rejected_prediction_tokens": 0
+                        },
+                        "prompt_tokens_details": {
+                            "audio_tokens": 0,
+                            "cached_tokens": 0
+                        }
+                    }
+                },
+                {
+                    "step_name": "generate_question_html",
+                    "token_usage": {
+                        "completion_tokens": 224,
+                        "prompt_tokens": 1016,
+                        "total_tokens": 1240,
+                        "completion_tokens_details": {
+                            "accepted_prediction_tokens": 0,
+                            "audio_tokens": 0,
+                            "reasoning_tokens": 0,
+                            "rejected_prediction_tokens": 0
+                        },
+                        "prompt_tokens_details": {
+                            "audio_tokens": 0,
+                            "cached_tokens": 0
+                        }
+                    }
+                },
+                {
+                    "step_name": "generate_server_js",
+                    "token_usage": {
+                        "completion_tokens": 388,
+                        "prompt_tokens": 1741,
+                        "total_tokens": 2129,
+                        "completion_tokens_details": {
+                            "accepted_prediction_tokens": 0,
+                            "audio_tokens": 0,
+                            "reasoning_tokens": 0,
+                            "rejected_prediction_tokens": 0
+                        },
+                        "prompt_tokens_details": {
+                            "audio_tokens": 0,
+                            "cached_tokens": 0
+                        }
+                    }
+                },
+                {
+                    "step_name": "generate_server_py",
+                    "token_usage": {
+                        "completion_tokens": 501,
+                        "prompt_tokens": 994,
+                        "total_tokens": 1495,
+                        "completion_tokens_details": {
+                            "accepted_prediction_tokens": 0,
+                            "audio_tokens": 0,
+                            "reasoning_tokens": 0,
+                            "rejected_prediction_tokens": 0
+                        },
+                        "prompt_tokens_details": {
+                            "audio_tokens": 0,
+                            "cached_tokens": 0
+                        }
+                    }
+                },
+                {
+                    "step_name": "generate_solution_html",
+                    "token_usage": {
+                        "completion_tokens": 186,
+                        "prompt_tokens": 999,
+                        "total_tokens": 1185,
+                        "completion_tokens_details": {
+                            "accepted_prediction_tokens": 0,
+                            "audio_tokens": 0,
+                            "reasoning_tokens": 0,
+                            "rejected_prediction_tokens": 0
+                        },
+                        "prompt_tokens_details": {
+                            "audio_tokens": 0,
+                            "cached_tokens": 0
+                        }
+                    }
+                },
+                {
+                    "step_name": "adaptive_combine",
+                    "token_usage": {
+                        "completion_tokens": 194,
+                        "prompt_tokens": 620,
+                        "total_tokens": 814,
+                        "completion_tokens_details": {
+                            "accepted_prediction_tokens": 0,
+                            "audio_tokens": 0,
+                            "reasoning_tokens": 0,
+                            "rejected_prediction_tokens": 0
+                        },
+                        "prompt_tokens_details": {
+                            "audio_tokens": 0,
+                            "cached_tokens": 0
+                        }
+                    }
+                }
+            ],
+            "isAdaptive": "True"
+        },
+        {
+            "question_payload": {
+                "question": "Write the general equations of motion for the $r$ and $\\theta$ directions for a particle moving in plane polar coordinates, expressing the acceleration components symbolically.",
+                "source": "Image 3 (yellow highlighted box and equations)",
+                "requires_external_data": false,
+                "requires_image": false,
+                "completeness": true,
+                "additiona_information": null,
+                "solution": [
+                    {
+                        "section_title": "Equations of Motion in Plane Polar Coordinates",
+                        "description": "",
+                        "subsections": [
+                            {
+                                "subsection_title": "Radial Direction",
+                                "description": "$$\n\\sum F_r = m a_r\n$$\nwhere \n$$a_r = \\ddot{r} - r (\\dot{\\theta})^2\n$$"
+                            },
+                            {
+                                "subsection_title": "Transverse $(\\theta)$ Direction",
+                                "description": "$$\\sum F_{\\theta} = m a_{\\theta}$$\nwhere\n$$\na_{\\theta} = r \\ddot{\\theta} + 2 \\dot{r} \\dot{\\theta}\n$$"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "question_metadata": {
+                "title": "EquationsOfMotionInPolarCoordinates",
+                "question": "Express the velocity and acceleration components for a particle in plane polar coordinates, including the radial and angular directions.",
+                "stem": "In the study of dynamics, particularly when dealing with motion in a two-dimensional plane using polar coordinates, it's essential to derive the equations of motion for both the radial (r) and angular (\u03b8) components. This involves defining the acceleration in terms of the radial acceleration (directed along the radius) and angular acceleration (directed along the angular direction).",
+                "topic": "Dynamics",
+                "tags": [
+                    "Polar Coordinates",
+                    "Motion",
+                    "Dynamics",
+                    "Acceleration",
+                    "Kinematics"
+                ],
+                "prereqs": {
+                    "engineering": [
+                        "Dynamics"
+                    ],
+                    "math": [
+                        "Calculus"
+                    ]
+                },
+                "isAdaptive": "False"
+            },
+            "files": {
+                "question_html": "<pl-question-panel>\n  <p>\n   Write the general equations of motion for the $r$ and $\\theta$ directions for a particle moving in plane polar coordinates, expressing the acceleration components symbolically.\n  </p>\n</pl-question-panel>\n\n<p> The radial acceleration component ($a_r$) is equal to: </p>\n<pl-number-input-fixed answers-name=\"a_r\" correct-answer-fixed=\"\\ddot{r} - r(\\dot{\\theta})^2\" comparison=\"sigfig\" digits=\"1\" label=\"$a_{r}$ (m/s\u00b2)\" ></pl-number-input-fixed>\n\n<p> The tangential acceleration component ($a_{\\theta}$) is equal to: </p>\n<pl-number-input-fixed answers-name=\"a_theta\" correct-answer-fixed=\"r \\ddot{\\theta} + 2 \\dot{r} \\dot{\\theta}\" comparison=\"sigfig\" digits=\"1\" label=\"$a_{\\theta}$ (m/s\u00b2)\" ></pl-number-input-fixed>",
+                "server_js": "",
+                "server_py": "",
+                "solution_html": "## Equations of Motion in Plane Polar Coordinates\n\n\n### Radial Direction\n\n$$\n\\sum F_r = m a_r\n$$\nwhere \n$$\na_r = \\ddot{r} - r (\\dot{\\theta})^2\n$$\n\n### Transverse $(\\theta)$ Direction\n\n$$\\sum F_{\\theta} = m a_{\\theta}$$\nwhere\n$$\na_{\\theta} = r \\ddot{\\theta} + 2 \\dot{r} \\dot{\\theta}\n$$\n",
+                "metadata": {
+                    "title": "EquationsOfMotionInPolarCoordinates",
+                    "question": "Express the velocity and acceleration components for a particle in plane polar coordinates, including the radial and angular directions.",
+                    "stem": "In the study of dynamics, particularly when dealing with motion in a two-dimensional plane using polar coordinates, it's essential to derive the equations of motion for both the radial (r) and angular (\u03b8) components. This involves defining the acceleration in terms of the radial acceleration (directed along the radius) and angular acceleration (directed along the angular direction).",
+                    "topic": "Dynamics",
+                    "tags": [
+                        "Polar Coordinates",
+                        "Motion",
+                        "Dynamics",
+                        "Acceleration",
+                        "Kinematics"
+                    ],
+                    "prereqs": {
+                        "engineering": [
+                            "Dynamics"
+                        ],
+                        "math": [
+                            "Calculus"
+                        ]
+                    },
+                    "isAdaptive": "False"
+                }
+            },
+            "token_usage": [
+                {
+                    "step_name": "classify_question",
+                    "token_usage": {
+                        "completion_tokens": 148,
+                        "prompt_tokens": 604,
+                        "total_tokens": 752,
+                        "completion_tokens_details": {
+                            "accepted_prediction_tokens": 0,
+                            "audio_tokens": 0,
+                            "reasoning_tokens": 0,
+                            "rejected_prediction_tokens": 0
+                        },
+                        "prompt_tokens_details": {
+                            "audio_tokens": 0,
+                            "cached_tokens": 0
+                        }
+                    }
+                },
+                {
+                    "step_name": "generate_question_html",
+                    "token_usage": {
+                        "completion_tokens": 231,
+                        "prompt_tokens": 2071,
+                        "total_tokens": 2302,
+                        "completion_tokens_details": {
+                            "accepted_prediction_tokens": 0,
+                            "audio_tokens": 0,
+                            "reasoning_tokens": 0,
+                            "rejected_prediction_tokens": 0
+                        },
+                        "prompt_tokens_details": {
+                            "audio_tokens": 0,
+                            "cached_tokens": 0
+                        }
+                    }
+                },
+                {
+                    "step_name": "generate_solution_html",
+                    "token_usage": {
+                        "completion_tokens": 132,
+                        "prompt_tokens": 1465,
+                        "total_tokens": 1597,
+                        "completion_tokens_details": {
+                            "accepted_prediction_tokens": 0,
+                            "audio_tokens": 0,
+                            "reasoning_tokens": 0,
+                            "rejected_prediction_tokens": 0
+                        },
+                        "prompt_tokens_details": {
+                            "audio_tokens": 0,
+                            "cached_tokens": 0
+                        }
+                    }
+                }
+            ],
+            "isAdaptive": "False"
+        },
+        {
+            "question_payload": {
+                "question": "Write the symbolic equilibrium equations (force balances) in both $r$ and $\\theta$ directions, showing how to include $N$, $W$, and $F_{OA}$, for the described problem.",
+                "source": "Image 3 and 4 (red equations lower right)",
+                "requires_external_data": false,
+                "requires_image": false,
+                "completeness": true,
+                "additiona_information": null,
+                "solution": [
+                    {
+                        "section_title": "Force Equilibrium Equations in $r$ and $\\theta$ Directions",
+                        "description": "",
+                        "subsections": [
+                            {
+                                "subsection_title": "Radial (r) Direction",
+                                "description": "$$\nN \\cos\\theta - W \\sin\\theta = m (\\ddot{r} - r \\dot{\\theta}^2)\n$$"
+                            },
+                            {
+                                "subsection_title": "Transverse $(\\theta)$ Direction",
+                                "description": "$$\nF_{OA} + N \\sin\\theta - W \\cos\\theta = m (r \\ddot{\\theta} + 2 \\dot{r} \\dot{\\theta})\n$$"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "question_metadata": {
+                "title": "SymbolicEquilibriumEquations",
+                "question": "Write the symbolic equilibrium equations (force balances) in both $r$ and $\\theta$ directions, showing how to include $N$, $W$, and $F_{OA}$, for the described problem.",
+                "stem": "The problem involves analyzing the forces acting on an object in a two-dimensional plane, where $N$ is the normal force, $W$ is the weight, and $F_{OA}$ is the applied force. The equilibrium conditions need to be resolved in both radial (r) and angular (\u03b8) components.",
+                "topic": "Statics",
+                "tags": [
+                    "Equilibrium",
+                    "Force Balance",
+                    "Statical Analysis",
+                    "Normal Force",
+                    "Weight",
+                    "Applied Force"
+                ],
+                "prereqs": {
+                    "engineering": [
+                        "Statics"
+                    ],
+                    "math": [
+                        "Algebra"
+                    ]
+                },
+                "isAdaptive": "False"
+            },
+            "files": {
+                "question_html": "<pl-question-panel>\n  <p>\n   Write the symbolic equilibrium equations (force balances) in both $r$ and $\\theta$ directions, showing how to include $N$, $W$, and $F_{OA}$ for the given problem.\n  </p>\n</pl-question-panel>\n\n<p> For the $r$ direction, the equilibrium equation considering the normal force $N$, weight $W$, and external force $F_{OA}$ is: </p>\n<p> $N - W - F_{OA,r} = 0$ </p>\n\n<p> For the $\\theta$ direction, the equilibrium equation is: </p>\n<p> $F_{OA,\\theta} = 0$ </p>\n\n<p> Where:\n - $N$ is the normal force acting \n - $W$ is the weight acting downwards \n - $F_{OA,r}$ is the radial component of the free body force \n - $F_{OA,\\theta}$ is the tangential component of the free body force \n</p>",
+                "server_js": "",
+                "server_py": "",
+                "solution_html": "<h2>Force Equilibrium Equations in <span style='math'>r</span> and <span style='math'>\\theta</span> Directions</h2>  \n\n<h3>Radial (<span style='math'>r</span>) Direction</h3>  \n<p>  \n    The radial force balance is given by the following equation:  \n</p>\n<p>  \n    $$  \n    N \\cos\\theta - W \\sin\\theta = m (\\ddot{r} - r \\dot{\\theta}^2)  \n    $$  \n</p>  \n\n<h3>Transverse (<span style='math'>\\theta</span>) Direction</h3>  \n<p>  \n    The transverse force balance can be expressed as:  \n</p>\n<p>  \n    $$  \n    F_{OA} + N \\sin\\theta - W \\cos\\theta = m (r \\ddot{\\theta} + 2 \\dot{r} \\dot{\\theta})  \n    $$  \n</p>",
+                "metadata": {
+                    "title": "SymbolicEquilibriumEquations",
+                    "question": "Write the symbolic equilibrium equations (force balances) in both $r$ and $\\theta$ directions, showing how to include $N$, $W$, and $F_{OA}$, for the described problem.",
+                    "stem": "The problem involves analyzing the forces acting on an object in a two-dimensional plane, where $N$ is the normal force, $W$ is the weight, and $F_{OA}$ is the applied force. The equilibrium conditions need to be resolved in both radial (r) and angular (\u03b8) components.",
+                    "topic": "Statics",
+                    "tags": [
+                        "Equilibrium",
+                        "Force Balance",
+                        "Statical Analysis",
+                        "Normal Force",
+                        "Weight",
+                        "Applied Force"
+                    ],
+                    "prereqs": {
+                        "engineering": [
+                            "Statics"
+                        ],
+                        "math": [
+                            "Algebra"
+                        ]
+                    },
+                    "isAdaptive": "False"
+                }
+            },
+            "token_usage": [
+                {
+                    "step_name": "classify_question",
+                    "token_usage": {
+                        "completion_tokens": 167,
+                        "prompt_tokens": 614,
+                        "total_tokens": 781,
+                        "completion_tokens_details": {
+                            "accepted_prediction_tokens": 0,
+                            "audio_tokens": 0,
+                            "reasoning_tokens": 0,
+                            "rejected_prediction_tokens": 0
+                        },
+                        "prompt_tokens_details": {
+                            "audio_tokens": 0,
+                            "cached_tokens": 0
+                        }
+                    }
+                },
+                {
+                    "step_name": "generate_question_html",
+                    "token_usage": {
+                        "completion_tokens": 238,
+                        "prompt_tokens": 1882,
+                        "total_tokens": 2120,
+                        "completion_tokens_details": {
+                            "accepted_prediction_tokens": 0,
+                            "audio_tokens": 0,
+                            "reasoning_tokens": 0,
+                            "rejected_prediction_tokens": 0
+                        },
+                        "prompt_tokens_details": {
+                            "audio_tokens": 0,
+                            "cached_tokens": 0
+                        }
+                    }
+                },
+                {
+                    "step_name": "generate_solution_html",
+                    "token_usage": {
+                        "completion_tokens": 259,
+                        "prompt_tokens": 1211,
+                        "total_tokens": 1470,
+                        "completion_tokens_details": {
+                            "accepted_prediction_tokens": 0,
+                            "audio_tokens": 0,
+                            "reasoning_tokens": 0,
+                            "rejected_prediction_tokens": 0
+                        },
+                        "prompt_tokens_details": {
+                            "audio_tokens": 0,
+                            "cached_tokens": 0
+                        }
+                    }
+                }
+            ],
+            "isAdaptive": "False"
+        }
+    ],
+    "total_token_usage": [
+        {
+            "step_name": "content_analysis",
+            "token_usage": {
+                "completion_tokens": 17,
+                "prompt_tokens": 21563,
+                "total_tokens": 21580,
+                "completion_tokens_details": {
+                    "accepted_prediction_tokens": 0,
+                    "audio_tokens": 0,
+                    "reasoning_tokens": 0,
+                    "rejected_prediction_tokens": 0
+                },
+                "prompt_tokens_details": {
+                    "audio_tokens": 0,
+                    "cached_tokens": 0
+                }
+            }
+        },
+        {
+            "step_name": "extract_derivations_ranges",
+            "token_usage": {
+                "completion_tokens": 40,
+                "prompt_tokens": 21734,
+                "total_tokens": 21774,
+                "completion_tokens_details": {
+                    "accepted_prediction_tokens": 0,
+                    "audio_tokens": 0,
+                    "reasoning_tokens": 0,
+                    "rejected_prediction_tokens": 0
+                },
+                "prompt_tokens_details": {
+                    "audio_tokens": 0,
+                    "cached_tokens": 0
+                }
+            }
+        },
+        {
+            "step_name": "extract_derivations",
+            "token_usage": {
+                "completion_tokens": 896,
+                "prompt_tokens": 2403,
+                "total_tokens": 3299,
+                "completion_tokens_details": {
+                    "accepted_prediction_tokens": 0,
+                    "audio_tokens": 0,
+                    "reasoning_tokens": 0,
+                    "rejected_prediction_tokens": 0
+                },
+                "prompt_tokens_details": {
+                    "audio_tokens": 0,
+                    "cached_tokens": 1024
+                }
+            }
+        },
+        {
+            "step_name": "extract_derivations",
+            "token_usage": {
+                "completion_tokens": 741,
+                "prompt_tokens": 2403,
+                "total_tokens": 3144,
+                "completion_tokens_details": {
+                    "accepted_prediction_tokens": 0,
+                    "audio_tokens": 0,
+                    "reasoning_tokens": 0,
+                    "rejected_prediction_tokens": 0
+                },
+                "prompt_tokens_details": {
+                    "audio_tokens": 0,
+                    "cached_tokens": 0
+                }
+            }
+        },
+        {
+            "step_name": "extract_derivations",
+            "token_usage": {
+                "completion_tokens": 680,
+                "prompt_tokens": 3933,
+                "total_tokens": 4613,
+                "completion_tokens_details": {
+                    "accepted_prediction_tokens": 0,
+                    "audio_tokens": 0,
+                    "reasoning_tokens": 0,
+                    "rejected_prediction_tokens": 0
+                },
+                "prompt_tokens_details": {
+                    "audio_tokens": 0,
+                    "cached_tokens": 0
+                }
+            }
+        },
+        {
+            "step_name": "extract_derivations",
+            "token_usage": {
+                "completion_tokens": 1068,
+                "prompt_tokens": 3168,
+                "total_tokens": 4236,
+                "completion_tokens_details": {
+                    "accepted_prediction_tokens": 0,
+                    "audio_tokens": 0,
+                    "reasoning_tokens": 0,
+                    "rejected_prediction_tokens": 0
+                },
+                "prompt_tokens_details": {
+                    "audio_tokens": 0,
+                    "cached_tokens": 0
+                }
+            }
+        },
+        {
+            "step_name": "extract_derivations",
+            "token_usage": {
+                "completion_tokens": 148,
+                "prompt_tokens": 2403,
+                "total_tokens": 2551,
+                "completion_tokens_details": {
+                    "accepted_prediction_tokens": 0,
+                    "audio_tokens": 0,
+                    "reasoning_tokens": 0,
+                    "rejected_prediction_tokens": 0
+                },
+                "prompt_tokens_details": {
+                    "audio_tokens": 0,
+                    "cached_tokens": 0
+                }
+            }
+        },
+        {
+            "step_name": "extract_questions",
+            "token_usage": {
+                "completion_tokens": 1015,
+                "prompt_tokens": 4014,
+                "total_tokens": 5029,
+                "completion_tokens_details": {
+                    "accepted_prediction_tokens": 0,
+                    "audio_tokens": 0,
+                    "reasoning_tokens": 0,
+                    "rejected_prediction_tokens": 0
+                },
+                "prompt_tokens_details": {
+                    "audio_tokens": 0,
+                    "cached_tokens": 0
+                }
+            }
+        },
+        {
+            "step_name": "extract_questions",
+            "token_usage": {
+                "completion_tokens": 1053,
+                "prompt_tokens": 2484,
+                "total_tokens": 3537,
+                "completion_tokens_details": {
+                    "accepted_prediction_tokens": 0,
+                    "audio_tokens": 0,
+                    "reasoning_tokens": 0,
+                    "rejected_prediction_tokens": 0
+                },
+                "prompt_tokens_details": {
+                    "audio_tokens": 0,
+                    "cached_tokens": 0
+                }
+            }
+        },
+        {
+            "step_name": "extract_questions",
+            "token_usage": {
+                "completion_tokens": 1669,
+                "prompt_tokens": 4014,
+                "total_tokens": 5683,
+                "completion_tokens_details": {
+                    "accepted_prediction_tokens": 0,
+                    "audio_tokens": 0,
+                    "reasoning_tokens": 0,
+                    "rejected_prediction_tokens": 0
+                },
+                "prompt_tokens_details": {
+                    "audio_tokens": 0,
+                    "cached_tokens": 0
+                }
+            }
+        },
+        {
+            "step_name": "extract_summary",
+            "token_usage": {
+                "completion_tokens": 751,
+                "prompt_tokens": 22243,
+                "total_tokens": 22994,
+                "completion_tokens_details": {
+                    "accepted_prediction_tokens": 0,
+                    "audio_tokens": 0,
+                    "reasoning_tokens": 0,
+                    "rejected_prediction_tokens": 0
+                },
+                "prompt_tokens_details": {
+                    "audio_tokens": 0,
+                    "cached_tokens": 0
+                }
+            }
+        },
+        {
+            "step_name": "finalize_lecture",
+            "token_usage": {
+                "completion_tokens": 3077,
+                "prompt_tokens": 4389,
+                "total_tokens": 7466,
+                "completion_tokens_details": {
+                    "accepted_prediction_tokens": 0,
+                    "audio_tokens": 0,
+                    "reasoning_tokens": 0,
+                    "rejected_prediction_tokens": 0
+                },
+                "prompt_tokens_details": {
+                    "audio_tokens": 0,
+                    "cached_tokens": 0
+                }
+            }
+        }
+    ]
+}
