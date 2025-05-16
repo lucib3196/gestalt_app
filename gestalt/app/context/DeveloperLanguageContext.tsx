@@ -1,12 +1,5 @@
-import { languages } from "monaco-editor";
 import React, { createContext, useContext, useState } from "react";
-
-type Language = "javascript" | "python";
-
-interface LanguageContextType {
-  selectedLanguage: Language;
-  setSelectedLanguage: (lang: Language) => void;
-}
+import { LanguageContextType, Language } from "@/.next/types/types";
 
 const LanguageContext = createContext<LanguageContextType | undefined>(
   undefined
@@ -15,9 +8,7 @@ const LanguageContext = createContext<LanguageContextType | undefined>(
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [selectedLanguage, setSelectedLanguage] =
-    useState<Language>("javascript");
-
+  const [selectedLanguage, setSelectedLanguage] = useState<Language>("python");
   return (
     <LanguageContext.Provider value={{ selectedLanguage, setSelectedLanguage }}>
       {children}
@@ -25,6 +16,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({
   );
 };
 
+// Using the context
 export const useLanguage = (): LanguageContextType => {
   const context = useContext(LanguageContext);
   if (!context) {

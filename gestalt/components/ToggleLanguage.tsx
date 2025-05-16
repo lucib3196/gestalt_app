@@ -1,5 +1,5 @@
 import TooltipExample from "./ToolTipComponent";
-import { useLanguage } from "@/app/hooks/LanguageContext";
+import { useLanguage } from "@/app/context/DeveloperLanguageContext";
 import React, { useEffect, useState } from "react";
 
 const ToggleLanguage: React.FC = () => {
@@ -26,22 +26,22 @@ const ToggleLanguage: React.FC = () => {
   );
 };
 
-interface ToggleOptionsProps {
-  initialVal: any;
-  options: string[];
-  onClick?: (option: string) => void;
+interface ToggleOptionsProps<T extends string> {
+  initialVal: T;
+  options: T[];
+  onClick?: (option: T) => void;
   tipMessage?: { text: string; message: string };
 }
 
-export const ToggleOptions: React.FC<ToggleOptionsProps> = ({
+export const ToggleOptions = <T extends string>({
   initialVal,
   options,
   onClick,
   tipMessage,
-}) => {
+}: ToggleOptionsProps<T>) => {
   const [selectedOption, setSelectedOption] = useState<any>(initialVal);
 
-  const handleClick = (option: string) => {
+  const handleClick = (option: T) => {
     setSelectedOption(option); // Update the selected option locally
     if (onClick) {
       onClick(option); // Call the parent-provided onClick handler

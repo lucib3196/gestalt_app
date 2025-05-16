@@ -1,4 +1,5 @@
 @import "tailwindcss";
+
 @theme {
   --color-lightShades: #faf8f7;
   --color-lightAccent: #eeaf48;
@@ -148,8 +149,8 @@ body {
 }
 
 /* Question & Solution Panels */
-#main{
-  margin:4rem;
+#main {
+  margin: 4rem;
 }
 .pl-question-panel,
 .pl-solution-panel {
@@ -162,7 +163,7 @@ body {
   color: var(--text-primary);
 }
 
-.pl-question-panel p{
+.pl-question-panel p {
   align-items: center;
 }
 /* Input Panel Layout */
@@ -206,7 +207,7 @@ body {
 }
 
 .pl-answer + label::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0.2rem;
   left: 0;
@@ -260,4 +261,21 @@ body {
   margin: 1rem auto;
   border-radius: 0.25rem;
   border: 1px solid var(--panel-border);
+}
+
+.solution-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.solution-panel :is(h1, h2, h3, h4) {
+  font-size: large;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+
+.fancy-h1 {
+  @apply text-4xl font-extrabold mt-8 mb-4 text-red-500;
+  margin-bottom: 1rem !important; /* Add !important to any property you need */
 }

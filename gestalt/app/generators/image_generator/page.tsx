@@ -50,6 +50,7 @@ const FileUploadForm: React.FC = () => {
 
     setLoading(true);
 
+
     try {
       const response = await api.post(
         "/code_generator_chains/v1/image_upload",
@@ -85,6 +86,7 @@ const FileUploadForm: React.FC = () => {
         type="file"
         name="files"
         multiple
+        
         onChange={handleFileChange}
         className="form-control mb-3"
       />

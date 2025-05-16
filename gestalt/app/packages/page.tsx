@@ -12,7 +12,7 @@ const Page: React.FC = () => {
 
   return (
     <>
-      <div className="m-5">
+      <div className="m-5 relative">
         <ToggleOptions
           initialVal={tableView}
           options={["AllPackages", "AllQuestions"]}

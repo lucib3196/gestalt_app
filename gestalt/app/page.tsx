@@ -1,7 +1,12 @@
 import React from "react";
+import { ToastContainer,toast } from "react-toastify";
 import Link from "next/link";
 import ModGeneratorsCard from "@/components/ModGeneratorsCard";
 import KeyFeatureCard, { FeatureProp } from "@/components/KeyFeatureCard";
+
+
+
+
 export const QuickQueryGeneratorInfo = {
   name: "Text Generator",
   description:
@@ -108,6 +113,7 @@ export default function Home() {
       <HeroSection />
       <GeneratorSection />
       <KeyFeatureSection />
+      <ToastContainer />
     </>
   );
 }

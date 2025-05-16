@@ -8,31 +8,35 @@ import ToggleLanguage from "./ToggleLanguage";
 import CodeReview from "./CodeReview";
 import { FaSave } from "react-icons/fa";
 import { RxUpdate } from "react-icons/rx";
-
+import { CodeFile } from "@/.next/types/QuestionFolder";
 // Types
 interface DeveloperModeProps {
-  question_id: number;
+  question_id: number | string;
 }
 
 // 🧩 Main Component
 const DeveloperMode: React.FC<DeveloperModeProps> = ({ question_id }) => {
-  const [files, setFiles] = useState<FileResponse[]>([]);
+  const [files, setFiles] = useState<CodeFile[]>([]);
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
   const [selectedFileContents, setSelectedFileContent] =
-    useState<FileResponse | null>(null);
+    useState<CodeFile | null>(null);
   const [editorContent, setEditorContent] = useState<string>("");
 
   const fetchFiles = async () => {
     try {
-      const response = await api.get(`/packages/simple/${question_id}/files`);
+      const response = await api.get(
+        `/packages/${question_id}/get_question_files`
+      );
       setFiles(response.data);
     } catch (error) {
       console.error("Error fetching files:", error);
     }
   };
 
+  console.log("These are the files,", files);
+
   const options: DropDownOption[] = files.map((file) => ({
-    displayName: FileNameMap[file.name].displayName || file.name,
+    displayName: FileNameMap[file.filename].displayName || file.filename,
   }));
 
   const handleDropDownChange = (value: string) => {
@@ -49,7 +53,7 @@ const DeveloperMode: React.FC<DeveloperModeProps> = ({ question_id }) => {
   }, [question_id]);
 
   useEffect(() => {
-    const file = files.find((file) => file.name === selectedFile);
+    const file = files.find((file) => file.filename === selectedFile);
     setSelectedFileContent(file ?? null);
     setEditorContent(file?.content ?? "");
   }, [files, selectedFile]);
@@ -73,7 +77,7 @@ const DeveloperMode: React.FC<DeveloperModeProps> = ({ question_id }) => {
         height="30vh"
         language={
           selectedFileContents
-            ? FileNameMap[selectedFileContents.name].language
+            ? FileNameMap[selectedFileContents.filename].language
             : "javascript"
         }
         value={editorContent}
@@ -86,10 +90,10 @@ const DeveloperMode: React.FC<DeveloperModeProps> = ({ question_id }) => {
           label="Save"
           icon={<FaSave />}
           onClick={async () => {
-            return await api.post("/packages/simple/update_code", {
+            return await api.post("/packages/update_code_file", {
               content: editorContent,
               question_folder_id: question_id,
-              question_file_name: selectedFileContents?.name,
+              question_file_name: selectedFileContents?.filename,
             });
           }}
         />
@@ -97,7 +101,7 @@ const DeveloperMode: React.FC<DeveloperModeProps> = ({ question_id }) => {
           label="Update"
           icon={<RxUpdate />}
           onClick={async () => {
-            //  update logic here
+            window.location.reload();
           }}
         />
       </div>

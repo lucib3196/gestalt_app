@@ -1,3 +1,6 @@
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 type ActionButtonProps = {
   onClick: () => Promise<any>;
   label?: string;
@@ -19,43 +22,69 @@ const ActionButton: React.FC<ActionButtonProps> = ({
     if (disabled || loading) return;
     try {
       await onClick();
-    } catch (error) {
+      toast.success("Saved successfully!");
+    } catch (error: any) {
       console.error("Action Error:", error);
+      toast.error(`Error: ${error?.message || "Something went wrong"}`);
     }
   };
 
   return (
-    <button
-      disabled={disabled || loading}
-      className={`inline-flex items-center justify-center px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-xl shadow-sm transition-colors duration-200 hover:bg-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 active:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed ${className}`}
-      onClick={handleClick}
-    >
-      {loading ? (
-        <svg
-          className="animate-spin mr-2 h-4 w-4 text-white"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-        >
-          <circle
-            className="opacity-25"
-            cx="12"
-            cy="12"
-            r="10"
-            stroke="currentColor"
-            strokeWidth="4"
-          ></circle>
-          <path
-            className="opacity-75"
-            fill="currentColor"
-            d="M4 12a8 8 0 018-8v8H4z"
-          ></path>
-        </svg>
-      ) : (
-        icon && <span className="mr-2">{icon}</span>
-      )}
-      {label}
-    </button>
+    <>
+      <button
+        disabled={disabled || loading}
+        className={`
+          inline-flex items-center justify-center
+          px-4 py-2
+          bg-indigo-600 text-white text-sm font-medium
+          rounded-xl shadow-sm
+          transition-colors duration-200
+          hover:bg-indigo-700 focus:outline-none
+          focus-visible:ring-2 focus-visible:ring-indigo-500
+          focus-visible:ring-offset-2 active:bg-indigo-700
+          disabled:opacity-50 disabled:cursor-not-allowed
+          ${className}
+        `}
+        onClick={handleClick}
+      >
+        {loading ? (
+          <svg
+            className="animate-spin mr-2 h-4 w-4 text-white"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              className="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              strokeWidth="4"
+            />
+            <path
+              className="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8v8H4z"
+            />
+          </svg>
+        ) : (
+          icon && <span className="mr-2">{icon}</span>
+        )}
+        {label}
+      </button>
+
+      {/* Toast container (you can move this to a higher-level component if preferred) */}
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        pauseOnHover
+        draggable
+      />
+    </>
   );
 };
 

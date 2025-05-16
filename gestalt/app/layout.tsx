@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
 import NavBar from "@/components/NavBar";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./globals.css";
 import type { AppProps } from "next/app";
 import Footer from "@/components/Footer";
+import Script from "next/script";
+import { MathJaxContext } from "better-react-mathjax";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,12 +32,12 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <NavBar app_name="My App" links={links} />
-        {children}
-        <Footer />
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <MathJaxContext>
+          <NavBar app_name="My App" links={links} />
+          {children}
+          <Footer />
+        </MathJaxContext>
       </body>
     </html>
   );

@@ -59,7 +59,7 @@ const InputForm: React.FC = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await api.post("/code_generator_chains/v1", FormData);
+      const response = await api.post("/codegen_v2/text", FormData);
       console.log(response.data);
       <AlertLink />
     } catch (error) {

@@ -3,13 +3,17 @@ import { useParams } from "next/navigation";
 import { QuestionFiles } from "@/components/QuestionTables";
 import { ToggleOptions } from "@/components/ToggleLanguage";
 import { useState, useEffect } from "react";
-import { LanguageProvider } from "@/app/hooks/LanguageContext";
+import { LanguageProvider } from "@/app/context/DeveloperLanguageContext";
+import { QuizModeProvider } from "@/app/context/QuizModeContext";
 import QuizPage from "@/components/QuizView";
+import { MathJax } from "better-react-mathjax";
 const Page: React.FC = () => {
   const [pageView, setPageView] = useState<string>("allFiles");
 
   const params = useParams();
   const id = params.folder_id as string;
+
+ 
 
   return (
     <>
@@ -22,9 +26,11 @@ const Page: React.FC = () => {
       </div>
       {pageView === "allFiles" && <QuestionFiles question_id={id} />}
       {pageView === "quizView" && (
-        <LanguageProvider>
-          <QuizPage question_id={id} />;
-        </LanguageProvider>
+        <QuizModeProvider>
+          <LanguageProvider>
+            <QuizPage question_id={id} />;
+          </LanguageProvider>
+        </QuizModeProvider>
       )}
     </>
   );
