@@ -3,3 +3,5 @@
 venv
 *.pyc
 backend\data\database.db
+Lectures
+lecture_images

@@ -1,0 +1,631 @@
+<h1
+  id="kinetics-of-particles-rigid-bodies-equations-of-motion-tensions-and-dynamics"
+>
+  Kinetics of Particles &amp; Rigid Bodies: Equations of Motion, Tensions, and
+  Dynamics
+</h1>
+<h2 id="metadata">Metadata</h2>
+<ul>
+  <li><strong>Course Title</strong>: Dynamics-103</li>
+  <li><strong>Instructor</strong>: Thomas Stahovich</li>
+  <li><strong>Term</strong>: Spring 2025</li>
+  <li><strong>Institution</strong>: [Institution not specified]</li>
+</ul>
+<p>
+  <em
+    >This lecture is part of the foundational module on particle and rigid body
+    dynamics. It emphasizes Newton’s second law, equations of motion, and
+    free-body diagrams for modeling mechanical systems, forming a basis for
+    advanced studies in analytical dynamics and mechanical engineering.</em
+  >
+</p>
+<hr />
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol type="1">
+  <li><a href="#introduction">Introduction</a></li>
+  <li>
+    <a href="#core-concepts">Core Concepts</a>
+    <ol type="1">
+      <li><a href="#newtons-second-law">Newton’s Second Law</a></li>
+      <li>
+        <a href="#equations-of-motion-for-rigid-bodies"
+          >Equations of Motion for Rigid Bodies</a
+        >
+      </li>
+      <li>
+        <a href="#moment-of-inertia-and-parallel-axis-theorem"
+          >Moment of Inertia and Parallel Axis Theorem</a
+        >
+      </li>
+      <li>
+        <a href="#tangential-and-normal-directions"
+          >Tangential and Normal Directions</a
+        >
+      </li>
+      <li>
+        <a href="#free-body-and-kinetic-diagrams"
+          >Free-Body and Kinetic Diagrams</a
+        >
+      </li>
+    </ol>
+  </li>
+  <li>
+    <a href="#mathematical-derivations">Mathematical Derivations</a>
+    <ol type="1">
+      <li>
+        <a href="#moment-equations-for-a-rigid-body"
+          >Moment Equations for a Rigid Body</a
+        >
+      </li>
+    </ol>
+  </li>
+  <li>
+    <a href="#example-problems--solutions">Example Problems &amp; Solutions</a>
+    <ol type="1">
+      <li>
+        <a href="#pendulum-tension-analysis">Pendulum Tension Analysis</a>
+      </li>
+      <li>
+        <a href="#tension-and-normal-force-on-a-block-in-a-rotating-cone"
+          >Tension and Normal Force on a Block in a Rotating Cone</a
+        >
+      </li>
+      <li>
+        <a href="#forces-on-a-ball-on-a-guided-arm"
+          >Forces on a Ball on a Guided Arm</a
+        >
+      </li>
+      <li>
+        <a href="#symbolic-derivatives-in-polar-coordinates"
+          >Symbolic Derivatives in Polar Coordinates</a
+        >
+      </li>
+      <li>
+        <a href="#polar-acceleration-components"
+          >Polar Acceleration Components</a
+        >
+      </li>
+      <li>
+        <a href="#equilibrium-in-polar-components"
+          >Equilibrium in Polar Components</a
+        >
+      </li>
+    </ol>
+  </li>
+  <li><a href="#conclusion">Conclusion</a></li>
+</ol>
+<hr />
+<h2 id="introduction">Introduction</h2>
+<p>
+  Kinetics, a branch of classical mechanics, studies the relationship between
+  forces acting on a system and the resulting motion. In engineering and
+  physics, understanding the equations of motion for both particles and rigid
+  bodies is crucial. This lecture explores Newton’s second law, applies it to
+  both particles and rigid bodies, and demonstrates systematic approaches using
+  free-body diagrams and mathematical modeling. Special focus is given to the
+  analysis of forces (tensions, normal reactions) in mechanical systems
+  including pendulums, rotating conical surfaces, and guided tracks, alongside
+  the computation and application of moment of inertia using the parallel axis
+  theorem. Mastery of these topics underpins advanced modules in mechanical
+  system dynamics and design.
+</p>
+<hr />
+<h2 id="core-concepts">Core Concepts</h2>
+<h3 id="newtons-second-law">Newton’s Second Law</h3>
+<p>
+  Newton’s second law is fundamental to all of dynamics, relating force, mass,
+  and acceleration. For a particle,
+</p>
+<p>
+  <span class="math display"><em>F⃗</em> = <em>m</em><em>a⃗</em></span>
+</p>
+<p>
+  where <span class="math inline"><em>F⃗</em></span> is the net external force,
+  <span class="math inline"><em>m</em></span> is the mass, and
+  <span class="math inline"><em>a⃗</em></span> is the acceleration. In analyzing
+  rigid bodies, the principle extends to include rotational effects:
+</p>
+<ul>
+  <li>
+    <p>
+      <strong
+        >Translational motion of the mass center
+        <span class="math inline"><em>G</em></span
+        >:</strong
+      >
+      <span class="math display"
+        >∑<em>F⃗</em> = <em>m</em><em>a⃗</em><sub><em>G</em></sub></span
+      >
+    </p>
+  </li>
+  <li>
+    <p>
+      <strong
+        >Rotational motion about <span class="math inline"><em>G</em></span
+        >:</strong
+      >
+      <span class="math display"
+        >∑<em>M⃗</em><sub><em>G</em></sub
+        > = <em>I</em><sub><em>G</em></sub
+        ><em>α</em></span
+      >
+    </p>
+  </li>
+</ul>
+<p>
+  where
+  <span class="math inline"
+    ><em>I</em><sub><em>G</em></sub></span
+  >
+  is the moment of inertia about the center of mass and
+  <span class="math inline"><em>α</em></span> the angular acceleration.
+</p>
+<h3 id="equations-of-motion-for-rigid-bodies">
+  Equations of Motion for Rigid Bodies
+</h3>
+<p>
+  Rigid body planar motion can be categorized as: -
+  <strong>Translation:</strong> No rotation; all points move with the same
+  velocity and acceleration. -
+  <strong>Rotation about a fixed axis:</strong> Every point moves in a circle
+  about the axis. - <strong>General planar motion:</strong> A combination of
+  translation and rotation.
+</p>
+<p>
+  Key equations: - For translation:
+  <span class="math display"
+    >∑<em>F⃗</em> = <em>m</em><em>a⃗</em><sub><em>G</em></sub></span
+  >
+  - For rotation about mass center <span class="math inline"><em>G</em></span
+  >:
+  <span class="math display"
+    >∑<em>M⃗</em><sub><em>G</em></sub
+    > = <em>I</em><sub><em>G</em></sub
+    ><em>α</em></span
+  >
+</p>
+<h3 id="moment-of-inertia-and-parallel-axis-theorem">
+  Moment of Inertia and Parallel Axis Theorem
+</h3>
+<p>
+  The <strong>moment of inertia</strong> quantifies the distribution of mass in
+  a body with respect to a chosen axis. It is defined as
+  <span class="math display"
+    ><em>I</em><sub><em>P</em></sub
+    > = ∫<em>r</em><sup>2</sup><em>d</em><em>m</em></span
+  >
+  where <span class="math inline"><em>r</em></span> is the perpendicular
+  distance from the axis <span class="math inline"><em>P</em></span> to the mass
+  element <span class="math inline"><em>d</em><em>m</em></span
+  >.
+</p>
+<p>
+  When the axis is not through the center of mass, use the
+  <strong>parallel axis theorem</strong>:
+  <span class="math display"
+    ><em>I</em><sub><em>P</em></sub
+    > = <em>I</em><sub><em>G</em></sub
+    > + <em>m</em><em>d</em><sup>2</sup></span
+  >
+  where <span class="math inline"><em>d</em></span> is the distance from
+  <span class="math inline"><em>G</em></span> to
+  <span class="math inline"><em>P</em></span
+  >.
+</p>
+<h3 id="tangential-and-normal-directions">Tangential and Normal Directions</h3>
+<p>
+  Motion along a curved path is analyzed by decomposing acceleration into
+  tangential and normal (radial) components:
+</p>
+<ul>
+  <li>
+    <strong>Tangential acceleration:</strong>
+    <span class="math inline"
+      ><em>a</em><sub><em>t</em></sub
+      > = <em>g</em>cos <em>θ</em></span
+    >
+    (e.g., for a pendulum)
+  </li>
+  <li>
+    <strong>Normal (radial) acceleration:</strong>
+    <span class="math inline">$a_n = \frac{v^2}{r}$</span>
+  </li>
+</ul>
+<p>
+  For angle <span class="math inline"><em>ψ</em></span> between the radius and
+  the tangent:
+  <span class="math display"
+    >$$ \tan\psi = \frac{r}{\frac{dr}{d\theta}} $$</span
+  >
+</p>
+<h3 id="free-body-and-kinetic-diagrams">Free-Body and Kinetic Diagrams</h3>
+<p>
+  <strong>Free-body diagrams (FBDs)</strong> illustrate all external forces on a
+  body. <strong>Kinetic diagrams</strong> complement these, showing inertial
+  (ma) terms. These tools allow systematic setup of equations of motion for
+  unknown forces, tensions, and accelerations in dynamic problems.
+</p>
+<hr />
+<h2 id="mathematical-derivations">Mathematical Derivations</h2>
+<h3 id="moment-equations-for-a-rigid-body">
+  Moment Equations for a Rigid Body
+</h3>
+<p>
+  <strong>Purpose:</strong> To extend Newton’s second law to include not only
+  translation (<span class="math inline"
+    ><em>F⃗</em> = <em>m</em><em>a⃗</em></span
+  >) but also rotation for rigid bodies, leading to
+  <span class="math inline"
+    >∑<em>M⃗</em><sub><em>G</em></sub
+    > = <em>I</em><sub><em>G</em></sub
+    ><em>α</em></span
+  >.
+</p>
+<p>
+  The derivation employs vector calculus and reference point selection: -
+  Summing moments about a point
+  <span class="math inline"><em>G</em></span> (usually center of mass) - Using
+  kinematic relations for planar or three-dimensional motion
+</p>
+<p>
+  <em
+    >Note: The supplied slides do not present explicit questions, but the
+    diagrams clarify the definitions and role of terms such as the moment arm,
+    angular acceleration, and mass center. These form the foundation for all
+    subsequent analysis of rigid body kinetics.</em
+  >
+</p>
+<hr />
+<h2 id="example-problems-solutions">Example Problems &amp; Solutions</h2>
+<h3 id="pendulum-tension-analysis">1. Pendulum Tension Analysis</h3>
+<blockquote>
+  <p>
+    <strong>Problem:</strong> The 5 kg pendulum bob is released from rest at
+    <span class="math inline"><em>θ</em> = 0</span>. Determine the initial
+    tension in the cord, and the tension at
+    <span class="math inline"><em>θ</em> = 45<sup>∘</sup></span
+    >. Cord length <span class="math inline"><em>r</em> = 2</span> m; neglect
+    the size of the bob.
+  </p>
+</blockquote>
+<p><strong>Solution:</strong></p>
+<p>
+  <strong
+    >At <span class="math inline"><em>θ</em> = 0</span> (rest, start
+    position):</strong
+  >
+  - The only forces on the bob are tension (<span class="math inline"
+    ><em>T</em></span
+  >) upward along the cord and weight (<span class="math inline"
+    ><em>m</em><em>g</em></span
+  >) downward. - Since there is no motion yet, net force is zero (<span
+    class="math inline"
+    ><em>T</em> − <em>m</em><em>g</em> = 0</span
+  >), so
+  <span class="math display"
+    ><em>T</em> = <em>m</em><em>g</em> = 5 × 9.81 = 49.05 N</span
+  >
+  - <em>Key concept</em>: At rest, the cord simply supports the full weight.
+</p>
+<p>
+  <strong
+    >At <span class="math inline"><em>θ</em> = 45<sup>∘</sup></span> (in
+    motion):</strong
+  >
+  - The bob has picked up speed, so the tension must also supply centripetal
+  force in addition to balancing a component of the weight. - Radial (normal)
+  equation of motion:
+  <span class="math display">$$T - mg \sin \theta = m \frac{v^2}{r}$$</span>
+  <span class="math display">$$T = mg \sin \theta + m \frac{v^2}{r}$$</span>
+</p>
+<ul>
+  <li>
+    <p>
+      To find <span class="math inline"><em>v</em></span> as a function of
+      <span class="math inline"><em>θ</em></span> (since initial velocity is
+      zero):
+    </p>
+    <ul>
+      <li>
+        Tangential acceleration:
+        <span class="math inline"
+          ><em>a</em><sub><em>t</em></sub
+          > = <em>g</em>cos <em>θ</em></span
+        >
+      </li>
+      <li>
+        Use
+        <span class="math inline"
+          ><em>a</em><sub><em>t</em></sub
+          ><em>d</em><em>s</em> = <em>v</em><em>d</em><em>v</em></span
+        >
+        (work-energy principle)
+      </li>
+      <li>
+        Since
+        <span class="math inline"
+          ><em>d</em><em>s</em> = <em>r</em><em>d</em><em>θ</em></span
+        >,
+        <span class="math inline"
+          ><em>a</em><sub><em>t</em></sub
+          ><em>d</em><em>s</em> = <em>r</em><em>g</em>cos <em>θ</em><em>d</em
+          ><em>θ</em> = <em>v</em><em>d</em><em>v</em></span
+        >.
+      </li>
+      <li>
+        Integrating:
+        <span class="math display"
+          >∫<sub>0</sub><sup><em>θ</em></sup
+          ><em>r</em><em>g</em>cos <em>θ</em><sup>′</sup><em>d</em><em>θ</em
+          ><sup>′</sup> = ∫<sub>0</sub><sup><em>v</em></sup
+          ><em>v</em><em>d</em><em>v</em></span
+        >
+        <span class="math display">$$ rg \sin \theta = \frac{v^2}{2} $$</span>
+        <span class="math display">$$v = \sqrt{2r g \sin \theta}$$</span>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p>Substitute back:</p>
+    <p>
+      <span class="math display"
+        >$$T = mg \sin \theta + m \frac{2r g \sin \theta}{r} = mg \sin \theta +
+        2mg \sin \theta = 3 m g \sin \theta$$</span
+      >
+    </p>
+    <p>
+      For <span class="math inline"><em>θ</em> = 45<sup>∘</sup></span
+      >,
+      <span class="math display"
+        >$$T = 3 \times 5 \times 9.81 \times \sin 45^\circ = 3 \times 5 \times
+        9.81 \times \frac{1}{\sqrt{2}} \approx 104\ \text{N}$$</span
+      >
+    </p>
+  </li>
+  <li>
+    <p>
+      <em>Educational Note</em>: This problem illustrates the use of dynamic
+      force analysis and the energy principle to find velocity at any angle.
+    </p>
+  </li>
+</ul>
+<hr />
+<h3 id="tension-and-normal-force-on-a-block-in-a-rotating-cone">
+  2. Tension and Normal Force on a Block in a Rotating Cone
+</h3>
+<blockquote>
+  <p>
+    <strong>Problem:</strong> A smooth block (<span class="math inline"
+      ><em>m</em></span
+    >) attached by a cord to vertex
+    <span class="math inline"><em>A</em></span> of a right circular cone rotates
+    at constant speed <span class="math inline"><em>v</em></span> at radius
+    <span class="math inline"><em>r</em></span> from the axis (<span
+      class="math inline"
+      ><em>z</em></span
+    >), with cone half-angle <span class="math inline"><em>θ</em></span
+    >. Determine (a) the tension <span class="math inline"><em>T</em></span> in
+    the cord, and (b) the normal force
+    <span class="math inline"><em>N</em></span> from the cone.
+  </p>
+</blockquote>
+<p>
+  <strong>Solution:</strong> - Draw FBD: Tension
+  <span class="math inline"><em>T</em></span> (along cord at angle
+  <span class="math inline"><em>θ</em></span
+  >), Normal force <span class="math inline"><em>N</em></span> (normal to cone),
+  Weight <span class="math inline"><em>m</em><em>g</em></span> (downward).
+</p>
+<p>
+  <strong
+    >Force equilibrium, vertical (<span class="math inline"><em>y</em>’</span
+    >):</strong
+  >
+  <span class="math display"
+    >−<em>m</em
+    ><em>g</em> + <em>N</em>cos <em>θ</em> + <em>T</em>sin <em>θ</em> = 0</span
+  >
+</p>
+<p>
+  <strong
+    >Centripetal force, horizontal (<span class="math inline"><em>x</em>’</span
+    >):</strong
+  >
+  <span class="math display"
+    >$$ T \cos \theta - N \sin \theta = m \frac{v^2}{r} $$</span
+  >
+</p>
+<p>
+  <strong
+    >Solving for <span class="math inline"><em>T</em></span> and
+    <span class="math inline"><em>N</em></span
+    >:</strong
+  >
+</p>
+<ol type="1">
+  <li>
+    <span class="math inline"
+      >$T = \frac{m \frac{v^2}{r} + N \sin \theta}{\cos \theta}$</span
+    >
+  </li>
+  <li>
+    Substitute into the vertical equilibrium and solve for
+    <span class="math inline"><em>N</em></span
+    >:
+    <ul>
+      <li>Plug values from (1) into the vertical equation.</li>
+      <li>
+        Solve the resulting equation for
+        <span class="math inline"><em>N</em></span
+        >, then substitute back to get
+        <span class="math inline"><em>T</em></span
+        >.
+      </li>
+    </ul>
+  </li>
+</ol>
+<ul>
+  <li>
+    <em>Educational Note</em>: This symbolic solution requires simultaneous
+    equations, highlights the interplay between vertical and horizontal force
+    balances, and is common in rotating systems.
+  </li>
+</ul>
+<hr />
+<h3 id="forces-on-a-ball-on-a-guided-arm-polar-coordinates">
+  3. Forces on a Ball on a Guided Arm (Polar Coordinates)
+</h3>
+<blockquote>
+  <p>
+    <strong>Problem:</strong> 0.5-lb ball follows
+    <span class="math inline"
+      ><em>r</em> = 2<em>r</em><sub><em>c</em></sub
+      >cos <em>θ</em></span
+    >
+    on arm <span class="math inline"><em>O</em><em>A</em></span
+    >. At <span class="math inline"><em>θ</em></span
+    >, arm angular velocity <span class="math inline"><em>θ̇</em></span
+    >, acceleration <span class="math inline">$\ddot{\theta}$</span>; find the
+    force of the arm on ball symbolically.
+  </p>
+</blockquote>
+<p><strong>Solution:</strong></p>
+<p>Given:</p>
+<p></p>
+<p>
+  <strong>Acceleration Components (Polar):</strong> - Radial:
+  <span class="math inline">$a_r = \ddot{r} - r \dot{\theta}^2$</span> -
+  Transverse:
+  <span class="math inline"
+    >$a_{\theta} = r \ddot{\theta} + 2 \dot{r} \dot{\theta}$</span
+  >
+</p>
+<p>
+  <strong>Force Equilibrium:</strong> -
+  <span class="math inline"
+    ><em>N</em>cos <em>θ</em> − <em>W</em>sin <em>θ</em> = <em>m</em><em>a</em
+    ><sub><em>r</em></sub></span
+  >
+  -
+  <span class="math inline"
+    ><em>F</em><sub><em>O</em><em>A</em></sub
+    > + <em>N</em>sin <em>θ</em> − <em>W</em>cos <em>θ</em> = <em>m</em
+    ><em>a</em><sub><em>θ</em></sub></span
+  >
+</p>
+<p>
+  Solve these simultaneously for
+  <span class="math inline"
+    ><em>F</em><sub><em>O</em><em>A</em></sub></span
+  >
+  and <span class="math inline"><em>N</em></span
+  >. All expressions remain symbolic for generality.
+</p>
+<ul>
+  <li>
+    <em>Educational Note</em>: This problem demonstrates the systematic
+    procedure for expressing dynamics in non-Cartesian coordinates and builds
+    proficiency in handling variable-radius motion.
+  </li>
+</ul>
+<hr />
+<h3 id="symbolic-derivatives-in-polar-coordinates">
+  4. Symbolic Derivatives in Polar Coordinates
+</h3>
+<blockquote>
+  <p>
+    <strong>Problem:</strong> For
+    <span class="math inline"
+      ><em>r</em> = 2<em>r</em><sub><em>c</em></sub
+      >cos <em>θ</em></span
+    >, with
+    <span class="math inline"><em>θ</em> = <em>θ</em>(<em>t</em>)</span>,
+    express <span class="math inline"><em>ṙ</em></span> and
+    <span class="math inline">$\ddot{r}$</span>.
+  </p>
+</blockquote>
+<p>
+  <strong>Solution:</strong>
+  <span class="math display"
+    ><em>ṙ</em> = −2<em>r</em><sub><em>c</em></sub
+    >sin <em>θ</em><em>θ̇</em></span
+  >
+  <span class="math display"
+    >$$ \ddot{r} = -2 r_c \cos \theta \dot{\theta}^2 - 2 r_c \sin \theta
+    \ddot{\theta} $$</span
+  >
+</p>
+<ul>
+  <li>
+    <em>Educational Note</em>: This reinforces applications of the
+    <a href="#core-concepts">chain rule</a> in implicit variable scenarios,
+    fundamental to advanced coordinate transformations.
+  </li>
+</ul>
+<hr />
+<h3 id="polar-acceleration-components">5. Polar Acceleration Components</h3>
+<blockquote>
+  <p>
+    <strong>Problem:</strong> Write symbolic expressions for
+    <span class="math inline"
+      ><em>a</em><sub><em>r</em></sub></span
+    >
+    and
+    <span class="math inline"
+      ><em>a</em><sub><em>θ</em></sub></span
+    >
+    for any
+    <span class="math inline"
+      ><em>r</em> = <em>r</em>(<em>θ</em>(<em>t</em>))</span
+    >.
+  </p>
+</blockquote>
+<p><strong>Solution:</strong></p>
+<p></p>
+<ul>
+  <li>
+    <em>Educational Note</em>: Familiarity with these forms is essential for
+    analyzing rotational and oscillatory systems, as encountered in advanced
+    mechanics.
+  </li>
+</ul>
+<hr />
+<h3 id="equilibrium-in-polar-components">6. Equilibrium in Polar Components</h3>
+<blockquote>
+  <p>
+    <strong>Problem:</strong> Write the symbolic system of equations for a
+    particle in equilibrium under <span class="math inline"><em>N</em></span
+    >,
+    <span class="math inline"
+      ><em>f</em><sub><em>O</em><em>A</em></sub></span
+    >, and <span class="math inline"><em>W</em></span> in polar coordinates.
+  </p>
+</blockquote>
+<p><strong>Solution:</strong></p>
+<p></p>
+<ul>
+  <li>
+    <em>Educational Note</em>: Articulating multi-component force balances in
+    symbolic form aids in generalizing solutions for a wide range of kinematics
+    problems.
+  </li>
+</ul>
+<hr />
+<h2 id="conclusion">Conclusion</h2>
+<p>
+  This lecture introduced the core principles and mathematical models of
+  particle and rigid body kinetics. Students should now be able to: - Apply
+  Newton’s second law to both particles and rigid bodies - Systematically
+  construct and interpret free-body and kinetic diagrams - Solve dynamic
+  problems involving force, tension, and acceleration in linear and rotational
+  contexts - Compute moment of inertia and use the parallel axis theorem -
+  Express accelerations and forces in generalized coordinates (e.g., polar form)
+</p>
+<p>
+  <strong>Further Reading:</strong> - Analytical Dynamics (Greenwood) -
+  Engineering Mechanics: Dynamics (Meriam &amp; Kraige)
+</p>
+<p>
+  These techniques are foundational for advanced study in vibration analysis,
+  multibody dynamics, and machine design.
+</p>
