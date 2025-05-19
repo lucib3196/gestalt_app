@@ -20,7 +20,7 @@ from .routes.codegen import (
     codegen_v2
 )
 from .routes import question_models
-from .ai_workspace.agents.simple_chat.simple_chat import graph
+from ai_workspace.agents.simple_chat.simple_chat import graph
 
 app = FastAPI(debug=True)
 

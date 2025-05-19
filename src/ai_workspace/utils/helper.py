@@ -3,7 +3,8 @@ import tempfile
 from typing import Optional, List
 import json
 import fitz  # PyMuPDF
-from fitz import Page
+print(fitz.__doc__)
+
 from IPython.display import Image, display
 from langgraph.graph import StateGraph
 from pydantic import BaseModel
