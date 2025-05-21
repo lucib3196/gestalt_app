@@ -1,95 +1,141 @@
 
-# 🚀 Setup Instructions for `gestalt_app`
+---
 
-> 🧠 **Note**: This project has been tested with:
+# 🚀 `gestalt_app` Setup Instructions
+
+> **Tested With:**
 >
-> - **Python 3.13.1**
-> - **Node.js v22.14.0**
+> * Python **3.13.1**
+> * Node.js **v22.14.0**
 >
-> These are very recent versions. While they should work fine, be aware that **some dependencies may not yet fully support these versions**. If you run into issues, consider switching to:
-> - Python 3.10–3.11
-> - Node.js 18–20
+
+> ⚠️ *Note*: These are bleeding-edge versions. Some dependencies may not be fully compatible. If you encounter issues, try:
+>
+> * Python **3.10–3.11**
+> * Node.js **18–20**
+>
+> 🛠️ If you run into build tool issues on Windows, refer to:
+> [Visual Studio Build Tools Guide](https://devblogs.microsoft.com/cppblog/introducing-the-visual-studio-build-tools/)
 
 ---
 
-## 📦 Backend Setup
+## 🗂️ Project Structure (inside `/src`)
 
-1. **Navigate to the root directory**:
-   ```
-   cd gestalt_app
-   ```
-
-2. **Create and activate a virtual environment**:
-   ```bash
-   python -m venv .venv
-   ```
-
-   - **On Windows**:
-     ```
-     .venv\Scripts\activate
-     ```
-   - **On macOS/Linux**:
-     ```
-     source .venv/bin/activate
-     ```
-
-3. **Install required Python packages**:
-   ```
-   pip install -r requirements.txt
-   ```
-
-4. **Run the backend server** from the root directory:
-   ```bash
-   python -m backend.main
-   ```
-
-5. **Access the API documentation**:
-   ```
-   http://127.0.0.1:8000/docs
-   ```
+| Folder         | Description                                                                       |
+| -------------- | --------------------------------------------------------------------------------- |
+| `ai_workspace` | AI tools and components used in the platform                                      |
+| `backend`      | FastAPI-based backend server                                                      |
+| `gestalt`      | Frontend React application                                                        |
+| `htmltool`     | HTML processing tools *(currently being refactored)*                              |
+| `schemas`      | Pydantic models for FastAPI and the code generator *(currently being refactored)* |
 
 ---
 
-## 🔐 Create `.env` File
+## 🐍 Backend Setup
 
-1. **In the root directory**, create a `.env` file:
-   ```bash
-   echo. > .env
-   ```
+### 1. **Create and activate a virtual environment**:
 
-2. **Paste the following into `.env`**:
-   ```
-   OPENAI_API_KEY=your_api_key_here
-   LANGCHAIN_TRACING_V2=true
-   LANGCHAIN_API_KEY=your_api_key_here
-   LANGCHAIN_PROJECT="Engineering_Tutor"
-   ```
+```bash
+python -m venv .venv
+```
+
+* **Windows**:
+
+  ```
+  .venv\Scripts\activate
+  ```
+* **macOS/Linux**:
+
+  ```
+  source .venv/bin/activate
+  ```
+
+### 2. **Install required Python packages**:
+
+```bash
+pip install -r requirements.txt
+```
+
+### 3. **Run the backend server**:
+
+```bash
+python -m backend.main
+```
+
+### 4. **Open the API documentation**:
+
+[http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+
+---
+
+## 🔐 Environment Configuration
+
+### 1. **Create a `.env` file** in the root directory:
+
+```bash
+echo. > .env
+```
+
+### 2. **Add the following to `.env`**:
+
+```
+OPENAI_API_KEY=your_api_key_here
+LANGCHAIN_TRACING_V2=true
+LANGCHAIN_API_KEY=your_api_key_here
+LANGCHAIN_PROJECT="Engineering_Tutor"
+```
 
 ---
 
 ## 💻 Frontend Setup
 
-1. **Navigate to the frontend folder**:
-   ```bash
-   cd gestalt
-   ```
+### 1. **Navigate to the frontend folder**:
 
-2. **Install dependencies**:
-   ```bash
-   npm install
-   ```
+```bash
+cd src/gestalt
+```
 
-3. **Run the development server**:
-   ```bash
-   npm run dev
-   ```
+### 2. **Install dependencies**:
+
+```bash
+npm install
+```
+
+### 3. **Start the frontend development server**:
+
+```bash
+npm run dev
+```
 
 ---
 
 ## 🔄 Running Everything Together
 
-- Open **two terminal windows**:
-  - One for the backend (`python -m backend.main`)
-  - One for the frontend (`npm run dev` inside `gestalt/`)
+* Open **two terminal windows**:
 
-- On first startup, a **database file will be created** automatically in the at `backend\data\database.db` this will store all the generated data. There are other databases present however these have different uses. 
+  * **Terminal 1 (Backend)**:
+
+    ```bash
+    python -m backend.main
+    ```
+  * **Terminal 2 (Frontend)**:
+
+    ```bash
+    cd src/gestalt
+    npm run dev
+    ```
+
+> On first run, a database will be created at `src/backend/data/database.db`.
+> Other database files may exist for separate features or testing purposes.
+
+---
+
+## 📚 Resources
+
+* [FastAPI Documentation](https://fastapi.tiangolo.com/)
+* [OpenAI Cookbook](https://cookbook.openai.com/)
+* [LangGraph (LangChain)](https://www.langchain.com/langgraph)
+* [React Documentation](https://react.dev/)
+
+---
+
