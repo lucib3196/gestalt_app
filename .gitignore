@@ -6,3 +6,4 @@ backend\data\database.db
 Lectures
 lecture_images
 Lectures
+/module_vectorstore
