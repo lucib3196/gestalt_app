@@ -16,9 +16,6 @@ from typing import Iterator
 from langchain_core.document_loaders import BaseLoader
 from langchain_core.documents import Document
 
-# Define the CSV path relative to this file
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-file_path = os.path.abspath(os.path.join(BASE_DIR, '..', 'data', 'Question_Embedding_20241230.csv'))
 
 class ModuleDocumentLoaderCSV(BaseLoader):
     """
@@ -52,33 +49,36 @@ class ModuleDocumentLoaderCSV(BaseLoader):
                 continue
 
             yield Document(
-                page_content=content,
-                metadata={"source": self.file_path, "index": index, "isAdaptive":self.df.loc[index, "is_adaptive"]}
+                page_content=content,  # type: ignore
+                metadata={
+                    "source": self.file_path,
+                    "index": index,
+                    "isAdaptive": self.df.loc[index, "is_adaptive"],
+                },
             )
+
     def prepare_data(self):
         """
         Loads the CSV data and sets the 'is_adaptive' column on a row-by-row basis.
-        
+
         For each row, if both the 'server.js' and 'server.py' columns are either NaN or empty,
         then 'is_adaptive' is set to False; otherwise, it is set to True.
-        
+
         This method assumes that the 'load_csv' method has been defined to load data into self.df.
         """
         self.load_csv()
-        
+
         # Create a boolean mask where both 'server.js' and 'server.py' are either NaN or empty.
-        mask = (
-            (self.df["server.js"].isna() | (self.df["server.js"] == "")) &
-            (self.df["server.py"].isna() | (self.df["server.py"] == ""))
+        mask = (self.df["server.js"].isna() | (self.df["server.js"] == "")) & (
+            self.df["server.py"].isna() | (self.df["server.py"] == "")
         )
-        
+
         # If the mask is True (both columns are empty/NaN), set 'is_adaptive' to False, else True.
         self.df["is_adaptive"] = (~mask).astype(str)
 
 
-
 if __name__ == "__main__":
-    loader = ModuleDocumentLoaderCSV(file_path)
+    loader = ModuleDocumentLoaderCSV(r"src\data\Question_Embedding_20241230.csv")
     loader.prepare_data()
     docs = list(loader.lazy_load())
     print(f"Loaded {len(docs)} documents.\n")
