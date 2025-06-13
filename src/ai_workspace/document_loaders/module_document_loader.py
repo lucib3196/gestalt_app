@@ -12,6 +12,7 @@ Useful for embedding pipelines, vector store generation, or LLM-powered content 
 
 import os
 import pandas as pd
+import numpy as np
 from typing import Iterator
 from langchain_core.document_loaders import BaseLoader
 from langchain_core.documents import Document
@@ -53,7 +54,6 @@ class ModuleDocumentLoaderCSV(BaseLoader):
                 metadata={
                     "source": self.file_path,
                     "index": index,
-                    "isAdaptive": self.df.loc[index, "is_adaptive"],
                     "relevant_courses": self.df.loc[index, "relevant_courses"],
                     "topics": self.df.loc[index, "topics"],
                 },
