@@ -54,7 +54,6 @@ class ModuleDocumentLoaderCSV(BaseLoader):
                 metadata={
                     "source": self.file_path,
                     "index": index,
-                    "isAdaptive": self.df.loc[index, "is_adaptive"],
                     "relevant_courses": self.df.loc[index, "relevant_courses"],
                     "topics": self.df.loc[index, "topics"],
                 },
