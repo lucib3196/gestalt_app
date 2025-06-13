@@ -54,6 +54,7 @@ class ModuleDocumentLoaderCSV(BaseLoader):
                 metadata={
                     "source": self.file_path,
                     "index": index,
+                    "isAdaptive": self.df.loc[index, "is_adaptive"],
                     "relevant_courses": self.df.loc[index, "relevant_courses"],
                     "topics": self.df.loc[index, "topics"],
                 },
@@ -79,6 +80,7 @@ class ModuleDocumentLoaderCSV(BaseLoader):
 
 
 if __name__ == "__main__":
+    loader = ModuleDocumentLoaderCSV(r"src\data\QuestionDataV2_06122025_classified.csv")
     loader = ModuleDocumentLoaderCSV(r"src\data\QuestionDataV2_06122025_classified.csv")
     loader.prepare_data()
     docs = list(loader.lazy_load())
