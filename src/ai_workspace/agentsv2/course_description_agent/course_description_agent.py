@@ -70,6 +70,8 @@ Each query should:
 - Be to the point
 - Avoid redundancy
 - Target a different aspect or interpretation of the user's intent (if applicable)
+
+Additionally also analyze wether they give a specific course code this is a valid search query
 """,
         ),
         ("human", "{question}"),
@@ -106,10 +108,9 @@ retrieval_grader = grade_prompt | structured_llm_grader
 ## Generate
 system = """You are an assistant for academic question-answering tasks. Use the provided context to answer the user's question.
 
-Your goal is to help students understand which courses they can take at UCR. When answering:
+Your goal is to help students understand which courses are available at UCR. When answering:
 - Only reference courses that are included in the context.
 - Provide a detailed explanation of each relevant course.
-- Include the **recommended order** in which the student may take the courses (if implied or logical).
 - Describe what each course covers and what students can expect to learn or gain from it.
 
 If the answer is not in the context, say: "I don't know based on the provided information."
@@ -197,7 +198,7 @@ def generate_queries(state: State):
 def retrieve(state: State):
     queries = state.queries
     all_documents = []
-    for q in queries: # type: ignore
+    for q in queries:  # type: ignore
         document = retriever.invoke(q)
         all_documents.extend(document)
     return {"documents": all_documents}
@@ -216,7 +217,7 @@ def grade_documents(state: State):
 
     # Score each doc
     filtered_docs = []
-    for d in documents: # type: ignore
+    for d in documents:  # type: ignore
         score = retrieval_grader.invoke(
             {"question": question, "document": d.page_content}
         )
@@ -265,14 +266,24 @@ workflow.add_edge("generate", END)
 
 
 app = workflow.compile()
-save_graph_visualization(app) # type: ignore
+save_graph_visualization(app)  # type: ignore
 
 if __name__ == "__main__":
-    print("Running")
-    inputs = {
-        "question": "I am interested in the following courses being i like thermodynamics  what classes would i take."
-    }
-    results = app.invoke(inputs)
-    print(results)
-
-    print(f"\n\n\n Generated answer: {results.get("generation")} ")
+    inputs = [
+        {
+            "question": "I am interested in the following courses being i like thermodynamics  what classes would i take."
+        },
+        {
+            "question": "What classes at UCR offer robotics based courses, additionally I am also interested in fluid dynamics courses what courses can I take"
+        },
+        {"question": "What does the course ME118A cover in UCR"},
+    ]
+    all_text = ""
+    for i in inputs:
+        all_text += f"Input: {i['question']}\n"
+        results = app.invoke(i)
+        all_text += f"Generated answer: {results.get('generation')} \n"
+    print(all_text)
+    filepath = "src/ai_workspace/agentsv2/course_description_agent/example_output.txt"
+    with open(filepath, "w") as f:
+        f.write(all_text)

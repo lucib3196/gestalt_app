@@ -4,7 +4,7 @@ from src.ai_workspace.document_loaders import ModuleDocumentLoaderCSV
 
 
 def main(path_to_save: str):
-    filepath = r"src\data\Question_Embedding_20241230.csv"
+    filepath = r"src\data\QuestionDataV2_06122025_classified.csv"
     loader = ModuleDocumentLoaderCSV(filepath)
     docs = loader.load()
     embeddings = OpenAIEmbeddings(model="text-embedding-3-large")

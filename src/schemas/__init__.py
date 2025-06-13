@@ -1,1 +1,2 @@
-from .course_descriptions import *
+from .classifier_schemas import *
+from .generic import *
