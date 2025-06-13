@@ -25,7 +25,7 @@ def save_graph_visualization(
         base_path (str, optional): The directory path to save the image. If None, saves in the script's directory.
     """
     try:
-        image_bytes = graph.get_graph().draw_mermaid_png()
+        image_bytes = graph.get_graph().draw_mermaid_png() # type: ignore
         display(Image(image_bytes))
 
         save_dir = base_path or os.path.dirname(os.path.abspath(__file__))

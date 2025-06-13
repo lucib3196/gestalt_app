@@ -1,11 +1,3 @@
-"""
-course_classify_modules.py
-
-This script classifies questions by associating them with relevant engineering course codes.
-It reads questions from a CSV file, uses an AI classification agent to determine the relevant courses,
-and writes the results to a new CSV file with an added column for the course codes.
-"""
-
 import pandas as pd
 import asyncio
 from src.ai_workspace.agentsv2.course_classification_agent.course_classification_agent import (
@@ -27,8 +19,8 @@ async def main():
     mask = (~df["question"].isna()) & (~df["isAdaptive"].isna())
     filtered_df = df[mask].copy()
     questions = filtered_df["question"].tolist()
-    # print(filtered_df.head())
-    # print(questions)
+    print(filtered_df.head())
+    print(questions)
 
     results = await run_classifications(questions)
 
@@ -47,7 +39,3 @@ async def main():
 
     print(filtered_df)
     filtered_df.to_csv(output_path, index=False)
-
-
-if __name__ == "__main__":
-    asyncio.run(main())

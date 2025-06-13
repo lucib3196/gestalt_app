@@ -12,6 +12,7 @@ Useful for embedding pipelines, vector store generation, or LLM-powered content 
 
 import os
 import pandas as pd
+import numpy as np
 from typing import Iterator
 from langchain_core.document_loaders import BaseLoader
 from langchain_core.documents import Document
@@ -53,7 +54,8 @@ class ModuleDocumentLoaderCSV(BaseLoader):
                 metadata={
                     "source": self.file_path,
                     "index": index,
-                    "isAdaptive": self.df.loc[index, "is_adaptive"],
+                    "relevant_courses": self.df.loc[index, "relevant_courses"],
+                    "topics": self.df.loc[index, "topics"],
                 },
             )
 
@@ -72,13 +74,13 @@ class ModuleDocumentLoaderCSV(BaseLoader):
         mask = (self.df["server.js"].isna() | (self.df["server.js"] == "")) & (
             self.df["server.py"].isna() | (self.df["server.py"] == "")
         )
-
         # If the mask is True (both columns are empty/NaN), set 'is_adaptive' to False, else True.
         self.df["is_adaptive"] = (~mask).astype(str)
 
 
 if __name__ == "__main__":
-    loader = ModuleDocumentLoaderCSV(r"src\data\Question_Embedding_20241230.csv")
+    loader = ModuleDocumentLoaderCSV(r"src\data\QuestionDataV2_06122025_classified.csv")
+    loader = ModuleDocumentLoaderCSV(r"src\data\QuestionDataV2_06122025_classified.csv")
     loader.prepare_data()
     docs = list(loader.lazy_load())
     print(f"Loaded {len(docs)} documents.\n")

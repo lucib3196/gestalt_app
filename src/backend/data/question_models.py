@@ -185,7 +185,7 @@ from ast import literal_eval
 # Internal App Imports
 # ─────────────────────────────────────────────────────────────
 from backend.model.question_models import QuestionFolder, File, Package, PackageContents
-from ai_workspace.code_generator.v2.code_generator import CodeGenState
+from backend.ai_workspace.code_generator.v2.code_generator import CodeGenState
 
 
 # Mapping of file names to defaults for downloads.
