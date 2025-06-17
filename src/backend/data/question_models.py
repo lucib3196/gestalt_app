@@ -170,8 +170,9 @@ import json
 import tempfile
 import zipfile
 from io import BytesIO
-from typing import List, Tuple, Dict, Any, Optional, Union
+from typing import List, Tuple, Dict, Any, Optional, Union, Sequence
 from pydantic import BaseModel
+from sqlalchemy import or_
 
 # ─────────────────────────────────────────────────────────────
 # Third-Party Imports
@@ -185,7 +186,7 @@ from ast import literal_eval
 # Internal App Imports
 # ─────────────────────────────────────────────────────────────
 from backend.model.question_models import QuestionFolder, File, Package, PackageContents
-from backend.ai_workspace.code_generator.v2.code_generator import CodeGenState
+from ai_workspace.code_generator.v2.code_generator import CodeGenState
 
 
 # Mapping of file names to defaults for downloads.
@@ -223,7 +224,9 @@ def get_package(package_id: int, session: Session = None) -> Package:
 
 
 def get_packages(
-    skip: int = 0, limit: int = 10, session: Session = None
+    session: Session,
+    skip: int = 0,
+    limit: int = 10,
 ) -> List[Package]:
     """
     Retrieve a list of packages with pagination.
@@ -236,16 +239,38 @@ def get_packages(
     Returns:
         List[Package]: A list of packages.
     """
-    return session.exec(select(Package).offset(skip).limit(limit)).all()
+    return list(session.exec(select(Package).offset(skip).limit(limit)).all())
 
 
-def get_question_folder(folder_id: int, session: Session = None) -> QuestionFolder:
+def get_question_folder(folder_id: int, session: Session) -> QuestionFolder:
     statement = select(QuestionFolder).where((QuestionFolder.id == folder_id))
     results = session.exec(statement)
     question_folder = results.first()
     if not question_folder:
         raise HTTPException(status_code=404, detail="Question folder not found")
     return question_folder
+
+
+def get_questions_by_course(
+    relevant_courses: List[str], session: Session
+) -> Sequence[QuestionFolder]:
+    relevant_courses_col = getattr(QuestionFolder, "relevant_courses")
+    statement = select(QuestionFolder).where(
+        or_(
+            *[
+                relevant_courses_col.contains(course)  # type: ignore
+                for course in relevant_courses
+            ]
+        )
+    )
+    results = session.exec(statement).all()
+
+    if not results:
+        raise HTTPException(
+            status_code=404,
+            detail=f"No question folders found for: {relevant_courses}",
+        )
+    return results
 
 
 def get_package_questions(
@@ -284,18 +309,22 @@ def get_question_files(folder_id: int, session: Session = None) -> List[File]:
     return question.files
 
 
-def get_question_file(folder_id: int, filename: str, session=None) -> File:
+def get_question_file(
+    folder_id: int, filename: str, session
+) -> Union[File, HTTPException]:
     statement = select(File).where(
         File.question_folder_id == folder_id,
         File.filename == filename,
     )
     file = session.exec(statement).first()
     if not file:
-        return HTTPException(404, detail="File not found ")
+        return HTTPException(404, detail=f"File not found {filename}")
     return file
 
 
-def get_package_file(package_id: int, filename: str, session=None) -> File:
+def get_package_file(
+    package_id: int, filename: str, session
+) -> Union[File, HTTPException]:
     statement = select(File).where(
         File.package_id == package_id,
         File.filename == filename,
@@ -403,8 +432,6 @@ def create_question_folder(
     # 2) Ensure we have a plain dict
     if not isinstance(data, dict) and hasattr(data, "dict"):
         data = data.dict()
-
-    print(f"This is the data ", data)
 
     # 3) Create each File
     for filename, contents in data.items():

@@ -22,15 +22,15 @@ from backend.model.question_models import (
 from backend.data.module import get_session
 
 # Modesl for AI gen
-from backend.ai_workspace.models.questionModels import InitialMetadata, Question
+from ai_workspace.models.questionModels import InitialMetadata, Question
 
 # Code Generator Input
-from backend.ai_workspace.code_generator.v2.code_generator import (
+from ai_workspace.code_generator.v2.code_generator import (
     CodeGenInput,
     CodeGenState,
     compiled_graph as codegen_graph,
 )
-from backend.ai_workspace.lecture_processor.v2.lecture_processing_v2 import (
+from ai_workspace.lecture_processor.v2.lecture_processing_v2 import (
     LectureInputState,
     LectureOutputState,
     to_serializable,

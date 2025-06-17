@@ -1,5 +1,5 @@
 import TooltipExample from "./ToolTipComponent";
-import { useLanguage } from "@/app/context/DeveloperLanguageContext";
+import { useLanguage } from "@/context/DeveloperLanguageContext";
 import React, { useEffect, useState } from "react";
 
 const ToggleLanguage: React.FC = () => {

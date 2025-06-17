@@ -5,13 +5,13 @@ from sqlalchemy import pool
 from sqlmodel import SQLModel
 from alembic import context
 
-from backend.model import question_models
+from model import question_models
 from pathlib import Path
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
 
-DB_PATH =str((Path().parent /'backend/data/database.db').resolve())
+DB_PATH =str((Path().parent /'data/database.db').resolve())
 config.set_main_option('sqlalchemy.url',f"sqlite:///{DB_PATH}")
 
 # Interpret the config file for Python logging.

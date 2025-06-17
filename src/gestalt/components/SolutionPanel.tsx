@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLanguage } from "@/app/context/DeveloperLanguageContext";
+import { useLanguage } from "@/context/DeveloperLanguageContext";
 import api from "@/api";
 import { MathJax } from "better-react-mathjax";
 

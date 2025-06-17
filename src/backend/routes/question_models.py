@@ -16,6 +16,7 @@ from pydantic import BaseModel
 from sqlmodel import Session
 from fastapi import FastAPI, Request, HTTPException
 from typing import Union
+from fastapi import Depends, APIRouter, Query
 
 # ─────────────────────────────────────────────────────────────
 # Internal App Imports
@@ -70,6 +71,16 @@ def get_package(
 )
 def get_package_questions(package_id: int, session=Depends(get_session)):
     return service.get_package_questions(package_id=package_id, session=session)
+
+
+@router.get("/get_questions_by_course/", response_model=List[QuestionFolder])
+def get_question_folder_by_course(
+    relevant_courses: List[str] = Query(...),
+    session: Session = Depends(get_session),
+):
+    return service.get_questions_by_course(
+        relevant_courses=relevant_courses, session=session
+    )
 
 
 @router.get("/get_question_folder/{question_id}", response_model=QuestionFolder)

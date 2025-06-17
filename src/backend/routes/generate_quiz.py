@@ -32,7 +32,11 @@ async def get_adaptive_quiz(
     )
     if response.success:
         quiz_data = response.result.quiz_data
-        request.session["quiz_data"] = response.result.quiz_data.model_dump() if isinstance(quiz_data,BaseModel) else quiz_data
+        request.session["quiz_data"] = (
+            response.result.quiz_data.model_dump()
+            if isinstance(quiz_data, BaseModel)
+            else quiz_data
+        )
         request.session["solution_html"] = response.result.solution_html
         return JSONResponse(
             status_code=status.HTTP_200_OK,

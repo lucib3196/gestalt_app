@@ -4,6 +4,8 @@ from starlette.middleware.sessions import SessionMiddleware
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List
+from fastapi.security import HTTPBasic, HTTPBasicCredentials
+
 # from .routes import (
 #     chains,
 #     generate_quiz,
@@ -12,13 +14,8 @@ from typing import List
 #     image_chain,
 #     code_generator_chains,
 # )
-from .routes import (
-    question_models,
-    generate_quiz
-)
-from .routes.codegen import (
-    codegen_v2
-)
+from .routes import question_models, generate_quiz
+from .routes.codegen import codegen_v2
 from .routes import question_models
 from ai_workspace.agents.simple_chat.simple_chat import graph
 
@@ -35,7 +32,6 @@ app.include_router(codegen_v2.router)
 
 # Allow CORS for your React frontend
 origins = [
-    "http://localhost:5173",  # Update with your frontend's origin as needed
     "http://localhost:3000",
 ]
 
@@ -53,42 +49,43 @@ app.add_middleware(
     https_only=True,  # <-- for local dev only, set to True in prod!
 )
 
-# Define the input for chat
-class ChatInput(BaseModel):
-    messages: List[str]
-    thread_id: str
+
+# # Define the input for chat
+# class ChatInput(BaseModel):
+#     messages: List[str]
+#     thread_id: str
 
 
-# Testing
-class FormData(BaseModel):
-    name: str
-    email: str
+# # Testing
+# class FormData(BaseModel):
+#     name: str
+#     email: str
 
 
-@app.post("/submit")
-async def submit_form(data: FormData):
-    return {"message": f"Received data for {data.name} with email {data.email}"}
+# @app.post("/submit")
+# async def submit_form(data: FormData):
+#     return {"message": f"Received data for {data.name} with email {data.email}"}
 
 
-# REST endpoint for chat requests
-@app.post("/chat")
-async def chat(input: ChatInput):
-    config = {"configurable": {"thread_id": input.thread_id}}
-    response = await graph.ainvoke({"messages": input.messages}, config=config)
-    return response["messages"][-1].content
+# # REST endpoint for chat requests
+# @app.post("/chat")
+# async def chat(input: ChatInput):
+#     config = {"configurable": {"thread_id": input.thread_id}}
+#     response = await graph.ainvoke({"messages": input.messages}, config=config)
+#     return response["messages"][-1].content
 
 
-# WebSocket endpoint for streaming chat messages
-@app.websocket("/ws/{thread_id}")
-async def websocket_endpoint(websocket: WebSocket, thread_id: str):
-    config = {"configurable": {"thread_id": thread_id}}
-    await websocket.accept()
-    while True:
-        data = await websocket.receive_text()
-        async for event in graph.astream(
-            {"messages": [data]}, config=config, stream_mode="messages"
-        ):
-            await websocket.send_text(event[0].content)
+# # WebSocket endpoint for streaming chat messages
+# @app.websocket("/ws/{thread_id}")
+# async def websocket_endpoint(websocket: WebSocket, thread_id: str):
+#     config = {"configurable": {"thread_id": thread_id}}
+#     await websocket.accept()
+#     while True:
+#         data = await websocket.receive_text()
+#         async for event in graph.astream(
+#             {"messages": [data]}, config=config, stream_mode="messages"
+#         ):
+#             await websocket.send_text(event[0].content)
 
 
 if __name__ == "__main__":

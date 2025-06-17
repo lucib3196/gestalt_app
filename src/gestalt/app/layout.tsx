@@ -1,12 +1,26 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import NavBar from "@/components/NavBar";
-import "bootstrap/dist/css/bootstrap.min.css";
 import "./globals.css";
-import type { AppProps } from "next/app";
 import Footer from "@/components/Footer";
-import Script from "next/script";
 import { MathJaxContext } from "better-react-mathjax";
+import "../styles/QuestionStyles.css";
+
+
+const config = {
+  loader: { load: ["[tex]/html"] },
+  tex: {
+    packages: { "[+]": ["html"] },
+    inlineMath: [
+      ["$", "$"],
+    ],
+    displayMath: [
+      ["$$", "$$"],
+    ]
+  },
+  startup: { typeset: true }
+};
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,13 +42,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const links = [{ name: "Packages", path: "/packages" }];
-
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <MathJaxContext>
-          <NavBar app_name="My App" links={links} />
+        <MathJaxContext version={3} config={config}>
+          <NavBar />
           {children}
           <Footer />
         </MathJaxContext>

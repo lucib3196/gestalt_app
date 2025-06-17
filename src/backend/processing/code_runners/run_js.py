@@ -27,7 +27,7 @@ def run_js(path: str) -> CodeRunResponse:
                 success=False,
                 error=result.stderr.strip() or "JavaScript script returned an error.",
                 result=None,
-                status_code=500,
+                http_status_code=500,
             )
 
         # Handle empty stdout
@@ -36,28 +36,25 @@ def run_js(path: str) -> CodeRunResponse:
                 success=False,
                 error="No output returned from JavaScript script.",
                 result=None,
-                status_code=500,
+                http_status_code=500,
             )
 
         # Attempt to parse stdout as JSON
         try:
             parsed = json5.loads(result.stdout)
-            print(parsed)
         except Exception as parse_err:
             return CodeRunResponse(
                 success=False,
                 error=f"Failed to parse JSON5: {parse_err}",
                 result=result.stdout.strip(),
-                status_code=500,
+                http_status_code=500,
             )
 
         return CodeRunResponse(
             success=True,
             error=None,
-            result=QuizData(
-                **parsed
-            ),
-            status_code=200,
+            result=QuizData(**parsed),
+            http_status_code=200,
         )
 
     except subprocess.TimeoutExpired:
@@ -65,7 +62,7 @@ def run_js(path: str) -> CodeRunResponse:
             success=False,
             error="JavaScript execution timed out.",
             result=None,
-            status_code=500,
+            http_status_code=500,
         )
 
     except Exception as e:
@@ -73,7 +70,7 @@ def run_js(path: str) -> CodeRunResponse:
             success=False,
             error=f"Unexpected error running JS file '{path}': {e}",
             result=None,
-            status_code=500,
+            http_status_code=500,
         )
 
 

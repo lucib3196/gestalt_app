@@ -1,4 +1,4 @@
-import { useQuizMode } from "@/app/context/QuizModeContext";
+import { useQuizMode } from "@/context/QuizModeContext";
 import { ToggleOptions } from "./ToggleLanguage";
 import { QuizMode } from "@/.next/types/types";
 

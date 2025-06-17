@@ -1,7 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { AllPackages, AllQuestions } from "@/components/QuestionTables";
+import { AllPackages } from "@/components/QuestionTables";
 import { ToggleOptions } from "@/components/ToggleLanguage";
+import { AllQuestions } from "@/components/AllQuestionsTable";
+
 
 const Page: React.FC = () => {
   const [tableView, setTableView] = useState("AllPackages");

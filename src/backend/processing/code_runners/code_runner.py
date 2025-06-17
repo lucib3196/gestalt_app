@@ -1,6 +1,6 @@
 import os
 from .utils import CodeRunResponse
-from typing import Callable
+from typing import Callable, Union
 from .run_js import run_js
 from .run_py import run_generate_py
 
@@ -15,33 +15,34 @@ def run_generate(path: str) -> CodeRunResponse:
     Returns:
         dict | tuple: The output from the generator or an error tuple.
     """
-    generators: dict[str, Callable[[str], dict]] = {
+    generators: dict[str, Callable[[str], Union[dict, CodeRunResponse]]] = {
         "server.js": run_js,
         "server.py": run_generate_py,
     }
+    print("This is the path", path)
     if not os.path.isfile(path):
         return CodeRunResponse(
-            success=False, error="File not Found", result=None, status_code=404
+            success=False, error="File not Found {path.}", result=None, http_status_code=404
         )
 
     base_name = os.path.basename(path)
 
     try:
         if base_name in generators:
-            return generators[base_name](
-                path
-            )  # This returns a CodeRun response already for us.
+            result = generators[base_name](path)
+            if isinstance(result, CodeRunResponse):
+                return result
         else:
             return CodeRunResponse(
                 success=False,
                 error=f"Unsupported file type: {base_name}",
                 result=None,
-                status_code=404,
+                http_status_code=404,
             )
 
     except Exception as e:
         return CodeRunResponse(
-            success=False, error=f"Error E: {e}", result=None, status_code=404
+            success=False, error=f"Error E: {e}", result=None, http_status_code=404
         )
 
 

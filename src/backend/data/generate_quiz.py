@@ -15,6 +15,18 @@ from ..processing.code_runners.utils import (
 import json
 import ast
 
+    # Mapping from file type keys to file names.
+    # question_name_map = {
+    #     "question_txt": "question.txt",
+    #     "question_html": "question.html",
+    #     "server_js": "server.js",
+    #     "server_py": "server.py",
+    #     "solution_html": "solution.html",
+    #     "metadata": "info.json",
+    # } should be fixed 
+
+
+
 
 async def generate_quiz(
     question_folder_id: int,
@@ -38,15 +50,7 @@ async def generate_quiz(
     Raises:
         ValueError: If the required question file is missing.
     """
-    # Mapping from file type keys to file names.
-    question_name_map = {
-        "question_txt": "question.txt",
-        "question_html": "question.html",
-        "server_js": "server.js",
-        "server_py": "server.py",
-        "solution_html": "solution.html",
-        "metadata": "info.json",
-    }
+
     # Retrieve files associated with the module in a thread to avoid blocking.
     files = await asyncio.to_thread(
         get_question_files, question_folder_id, session=session
@@ -56,7 +60,9 @@ async def generate_quiz(
     with tempfile.TemporaryDirectory() as tmpdir:
         # Write file contents to the temporary directory asynchronously.
         for f in files:
-            save_name = question_name_map.get(f.filename)
+            # save_name = question_name_map.get(f.filename)
+            save_name = f.filename
+            print(save_name)
             filepath = os.path.join(tmpdir, save_name)
 
             if isinstance(f.content, bytes):
@@ -73,13 +79,14 @@ async def generate_quiz(
 
         # Conver to bool
         if isinstance(isAdaptive, str):
-            isAdaptive = ast.literal_eval(isAdaptive)
-        elif not isinstance(isAdaptive, bool):
-            isAdaptive = False
+            try:
+                isAdaptive = str(isAdaptive).strip().lower() == "true"
+            except Exception:
+                raise ValueError(f"Invalid literal: {isAdaptive}")
 
         # Define data
         data = {}
-        generated_data={}
+        generated_data = {}
         if isAdaptive == True:
             if server_type == "javascript":
                 server_file = os.path.join(tmpdir, "server.js")

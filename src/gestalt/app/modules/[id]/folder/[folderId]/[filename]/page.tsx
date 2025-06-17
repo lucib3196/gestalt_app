@@ -42,7 +42,7 @@ export default function FileViewPage() {
       <h2>
         Module: {moduleId}, File: {folderID}
       </h2>
-      <CodeEditor content={data.content}/>
+      <CodeEditor content={data.content} />
     </Container>
   );
 }

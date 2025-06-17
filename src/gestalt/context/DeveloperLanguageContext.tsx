@@ -8,7 +8,7 @@ const LanguageContext = createContext<LanguageContextType | undefined>(
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [selectedLanguage, setSelectedLanguage] = useState<Language>("python");
+  const [selectedLanguage, setSelectedLanguage] = useState<Language>("javascript");
   return (
     <LanguageContext.Provider value={{ selectedLanguage, setSelectedLanguage }}>
       {children}

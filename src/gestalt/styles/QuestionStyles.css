@@ -1,0 +1,94 @@
+:root {
+  --panel-bg: #ffffff;
+  --panel-border: #e2e8f0;
+  --panel-shadow: rgba(0, 0, 0, 0.05);
+  --text-primary: #1a202c;
+  --hint-bg: #ebf8ff;
+  --hint-border: #3182ce;
+  --input-focus: rgba(49, 130, 206, 0.3);
+}
+
+.pl-question-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 8px var(--panel-shadow);
+  padding: 2rem 1.5rem;
+  margin: 2rem 0;
+  color: var(--text-primary);
+  text-align: center;
+  white-space: normal;
+  font-size: 1.15rem;
+  line-height: 1.7;
+  transition: box-shadow 0.2s;
+}
+.pl-question-panel p {
+  align-items: center;
+}
+
+div.pl-number-input {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    justify-content: center;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+label.pl-number-input {
+    display: flex;
+    align-items: center;
+    flex: 1 1 180px;
+    min-width: 180px;
+    max-width: 100%;
+    background-color: var(--panel-bg);
+    flex-direction: row;
+    margin-bottom: 0;
+    padding: 0.6rem 1rem;
+    font-size: 1.05rem;
+    color: var(--text-primary);
+    border: 1px solid var(--panel-border);
+    border-radius: 0.75rem;
+    box-shadow: 0 2px 8px var(--panel-shadow);
+    font-weight: 600;
+    gap: 1rem;
+    box-sizing: border-box;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+label.pl-number-input:focus-within {
+    border-color: var(--hint-border);
+    box-shadow: 0 0 0 2px var(--input-focus);
+}
+
+label.pl-number-input span {
+    flex: 1;
+    color: var(--text-primary);
+    font-weight: 600;
+    white-space: normal;
+    word-break: break-word;
+}
+
+input.pl-number-input {
+    background-color: #f7fafc;
+    border: 1.5px solid var(--panel-border);
+    border-radius: 0.5rem;
+    padding: 0.45rem 0.85rem;
+    font-size: 1rem;
+    color: var(--text-primary);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-shadow: none;
+    min-width: 90px;
+    max-width: 120px;
+}
+
+input.pl-number-input:focus {
+    border-color: var(--hint-border);
+    box-shadow: 0 0 0 2px var(--input-focus);
+    background-color: #fff;
+}

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import api from "@/api";
 import Table, { TableHeader, TableCell } from "@/components/Table";
-
+import Loading from "./Loading";
 // ==============================
 // Types & Interfaces
 // ==============================
@@ -20,6 +20,7 @@ interface Question {
   title: string;
   topic: string[];
   tags: string[];
+  relevant_courses: string[]
   pre_reqs: string[];
   is_adaptive: boolean;
   ai_generated: boolean;
@@ -40,7 +41,7 @@ interface TableClasses {
   row?: string;
 }
 
-interface ColumnConfig<T> {
+export interface ColumnConfig<T> {
   key: keyof T;
   header: string;
   classes?: TableClasses;
@@ -80,9 +81,10 @@ const questionColumns: ColumnConfig<Question>[] = [
       row: "underline text-blue-600 hover:text-blue-800 cursor-pointer",
     },
   },
-  { key: "topic", header: "Topic" },
+  { key: "topic", header: "Topics" },
   { key: "tags", header: "Tags" },
-  { key: "pre_reqs", header: "Pre-Reqs" },
+  { key: "relevant_courses", header: "Relevant Courses" },
+  // { key: "pre_reqs", header: "Pre-Reqs" }, // Deprecated for now
   { key: "created_by", header: "Created By" },
   { key: "is_adaptive", header: "Adaptive" },
   { key: "ai_generated", header: "AI Generated" },
@@ -125,7 +127,7 @@ const formatCellValue = (val: any): React.ReactNode => {
   return val.toString();
 };
 
-function createTableData<T>(
+export function createTableData<T>(
   columns: ColumnConfig<T>[],
   data: T[],
   onClick?: (key: keyof T, row: T) => void
@@ -141,7 +143,7 @@ function createTableData<T>(
   return { headers, rows };
 }
 
-function useFetch<T>(endpoint: string, initialData: T) {
+export function useFetch<T>(endpoint: string, initialData: T) {
   const [data, setData] = useState<T>(initialData);
   const [loading, setLoading] = useState(true);
 
@@ -156,11 +158,7 @@ function useFetch<T>(endpoint: string, initialData: T) {
   return { data, loading };
 }
 
-const Loading: React.FC = () => (
-  <div className="flex items-center justify-center h-32">
-    <p className="text-gray-500">Loading…</p>
-  </div>
-);
+
 
 // ==============================
 // Components
@@ -271,31 +269,11 @@ export const AllPackages: React.FC = () => {
   );
 };
 
-export const AllQuestions: React.FC<{ skip?: number; limit?: number }> = ({
-  skip = 0,
-  limit = 100,
-}) => {
-  const endpoint = `/packages/get_allquestions/${skip}/${limit}`;
-  const { data: questions, loading } = useFetch<Question[]>(endpoint, []);
-  const router = useRouter();
 
-  if (loading) return <Loading />;
 
-  const { headers, rows } = createTableData<Question>(
-    questionColumns,
-    questions,
-    (key, q) => {
-      if (key === "title") router.push(`/packages/folder/${q.id}`);
-    }
-  );
 
-  return (
-    <section className="p-6 bg-white rounded-lg shadow">
-      <h2 className="text-2xl font-semibold mb-4">All Questions</h2>
-      <Table caption="All Questions" header={headers} data={rows} />
-    </section>
-  );
-};
+
+
 
 export const PackageQuestions: React.FC = () => {
   const { package_id } = useParams() as { package_id: string };
@@ -415,3 +393,5 @@ export const PackageContents: React.FC = () => {
     </section>
   );
 };
+
+

@@ -81,6 +81,9 @@ class TagReplacer:
         Returns:
             BeautifulSoup: Modified soup with tags replaced.
         """
+
+        container = self.soup.new_tag(name="div")
+        container["class"] = self.target_tag
         for tag in self.soup.find_all(self.target_tag):
             mapped_attrs = self.map_attributes(tag.attrs, self.mapping)
             merged_attrs = {**self.attributes, **mapped_attrs}
@@ -91,10 +94,13 @@ class TagReplacer:
                 new_tag.append(child)
 
             tag.replace_with(new_tag)
-            
-            self.handle_labels(
+
+            new_tag = self.handle_labels(
                 new_tag, merged_attrs, className=f"form-label {tag.name}"
             )
+            print(f"This is the new tag {new_tag}")
+            container.append(new_tag)
+        self.soup.append(container)
 
         return self.soup
 
@@ -140,12 +146,12 @@ class TagReplacer:
             BeautifulSoup: The updated soup object.
         """
         label = merged_attrs.get("label", "")
-        print(label)
         if label:
             label_tag = self.soup.new_tag("label", attrs={"class": className})
             label_tag.string = label
             new_tag.wrap(label_tag)
-        return self.soup
+            return label_tag
+        return ""
 
     def run(self) -> BeautifulSoup:
         """

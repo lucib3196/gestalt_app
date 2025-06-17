@@ -78,7 +78,6 @@ const FilePage: React.FC = () => {
       const response = await api.get(
         `/packages/simple/${module_id}/${folder_id}/get_all_files`
       );
-      console.log(response.data);
       setFiles(response.data);
     } catch (error) {
       console.log("There was an error getting the folder contents", error);

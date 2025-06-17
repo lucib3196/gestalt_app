@@ -1,8 +1,9 @@
 # module.py (main entry point for local testing)
 from contextlib import contextmanager
 from .database import get_session
-# from .question_models import update_metadata
+from .question_models import *
 import asyncio
+
 
 @contextmanager
 def sync_session():
@@ -13,7 +14,8 @@ def sync_session():
     finally:
         gen.close()
 
+
 if __name__ == "__main__":
     with sync_session() as session:
-        content = {"ai_generated":True}
-        print(update_metadata(1,content,session))
+        content = {"ai_generated": True}
+        get_questions_by_course(["ME 100A"], session=session)

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "@/api";
-import { useLanguage } from "@/app/context/DeveloperLanguageContext";
+import { useLanguage } from "@/context/DeveloperLanguageContext";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import DeveloperMode from "@/components/DeveloperMode";
 import QuizOverviewHeader from "./QuizOverviewHeader";
@@ -10,7 +10,7 @@ import { IoBugOutline } from "react-icons/io5";
 
 import QuizPanel from "./QuizPanel";
 import SolutionPanel from "./SolutionPanel";
-import { useQuizMode } from "@/app/context/QuizModeContext";
+import { useQuizMode } from "@/context/QuizModeContext";
 
 const panelStyles = `
 relative

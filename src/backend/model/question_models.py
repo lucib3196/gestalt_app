@@ -6,7 +6,7 @@ from pydantic import BaseModel
 
 
 class Package(SQLModel, table=True):
-    __tablename__ = "package"
+    __tablename__ = "package"  # type: ignore
 
     id: Optional[int] = Field(default=None, primary_key=True)
     name: str
@@ -17,8 +17,7 @@ class Package(SQLModel, table=True):
 
 
 class QuestionFolder(SQLModel, table=True):
-    __tablename__ = "question_folder"
-
+    __tablename__ = "question_folder"  # type: ignore
     id: Optional[int] = Field(default=None, primary_key=True)
     title: str
 
@@ -26,6 +25,9 @@ class QuestionFolder(SQLModel, table=True):
     topic: List[str] = Field(default_factory=list, sa_column=Column(JSON))
     tags: List[str] = Field(default_factory=list, sa_column=Column(JSON))
     pre_reqs: List[str] = Field(default_factory=list, sa_column=Column(JSON))
+    relevant_courses: Optional[List[str]] = Field(
+        default_factory=list, sa_column=Column(JSON)
+    )
 
     is_adaptive: Optional[bool] = Field(default=None)
     ai_generated: bool = Field(default=True)
@@ -42,8 +44,7 @@ class QuestionFolder(SQLModel, table=True):
 
 
 class File(SQLModel, table=True):
-    __tablename__ = "file"
-
+    __tablename__ = "file"  # type: ignore
     id: Optional[int] = Field(default=None, primary_key=True)
     filename: str
     content: str

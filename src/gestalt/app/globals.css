@@ -136,8 +136,9 @@ body {
   color: var(--dark-shades);
 }
 
-/* Question CSS */
-/* Theme Variables */
+/* 
+Question CSS 
+Theme Variables 
 :root {
   --panel-bg: #ffffff;
   --panel-border: #e2e8f0;
@@ -148,25 +149,16 @@ body {
   --input-focus: rgba(49, 130, 206, 0.3);
 }
 
-/* Question & Solution Panels */
+Question & Solution Panels 
 #main {
   margin: 4rem;
 }
-.pl-question-panel,
-.pl-solution-panel {
-  background-color: var(--panel-bg);
-  border: 1px solid var(--panel-border);
-  border-radius: 0.5rem;
-  box-shadow: 0 1px 4px var(--panel-shadow);
-  padding: 1.25rem;
-  margin: 1.5rem 0;
-  color: var(--text-primary);
-}
+
 
 .pl-question-panel p {
   align-items: center;
 }
-/* Input Panel Layout */
+Input Panel Layout 
 .pl-input-panel {
   display: flex;
   flex-wrap: wrap;
@@ -174,7 +166,7 @@ body {
   margin-bottom: 1.5rem;
 }
 
-/* Checkbox & Multiple Choice Fieldsets */
+Checkbox & Multiple Choice Fieldsets 
 .pl-checkbox,
 .pl-multiple-choice {
   border: 1px solid var(--panel-border);
@@ -191,7 +183,7 @@ body {
   color: var(--text-primary);
 }
 
-/* Answer Checkbox (Hidden)
+Answer Checkbox (Hidden)
 .pl-answer {
   position: absolute;
   opacity: 0;
@@ -221,9 +213,9 @@ Custom Checkbox Styling
 .pl-answer:checked + label::before {
   background-color: var(--hint-border);
   border-color: var(--hint-border);
-} */
+} 
 
-/* General Number & Text Inputs */
+General Number & Text Inputs
 .pl-number-input,
 .pl-text-input,
 .pl-input-field {
@@ -243,7 +235,7 @@ Custom Checkbox Styling
   box-shadow: 0 0 0 3px var(--input-focus);
 }
 
-/* Hint Styling */
+Hint Styling 
 .pl-hint {
   border-left: 4px solid var(--hint-border);
   background-color: var(--hint-bg);
@@ -253,7 +245,7 @@ Custom Checkbox Styling
   font-size: 0.95rem;
 }
 
-/* Image Figure */
+Image Figure 
 .pl-figure {
   display: block;
   max-width: 100%;
@@ -278,12 +270,13 @@ Custom Checkbox Styling
 .fancy-h1 {
   @apply text-4xl font-extrabold mt-8 mb-4 text-red-500;
   margin-bottom: 1rem !important; /* Add !important to any property you need */
-}
 
-.pl-answer {
-  font-size: 2.25rem !important; /* text-4xl */
-  font-weight: 800 !important;   /* font-extrabold */
-  margin-top: 2rem !important;   /* mt-8 */
-  margin-bottom: 1rem !important; /* mb-4 + !important */
-  color: #ef4444 !important;     /* text-red-500 */
-}
+
+/* .pl-answer {
+  font-size: 2.25rem !important; 
+  font-weight: 800 !important;   
+  margin-top: 2rem !important;   
+  margin-bottom: 1rem !important; 
+  color: #ef4444 !important;     
+} 
+*/ 

@@ -20,7 +20,6 @@ export type TableProps = {
 };
 
 const Table: React.FC<TableProps> = ({ caption, header, data }) => {
-  console.log("This is the  data", data);
   const handleCaption = () => {
     if (caption) {
       return <caption className="caption-top">{caption}</caption>;
@@ -74,7 +73,7 @@ const Table: React.FC<TableProps> = ({ caption, header, data }) => {
       <table
         className={clsx(
           "w-full table-auto",
-          "border-separate border border-gray-400 border-spacing-2"
+          "border border-gray-400 border-spacing-2"
         )}
       >
         {handleCaption()}
