@@ -27,6 +27,7 @@
   line-height: 1.7;
   transition: box-shadow 0.2s;
 }
+
 .pl-question-panel p {
   align-items: center;
 }
@@ -42,12 +43,13 @@ div.pl-number-input {
 
 label.pl-number-input {
   display: flex;
-  align-items: center;
-  flex: 1 1 180px;
-  min-width: 180px;
-  max-width: 100%;
-  background-color: var(--panel-bg);
   flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  flex: 1 1 50%;
+  min-width: 25%; /* Start wrapping when label is less than 250px wide */
+  max-width: 75%;
+  background-color: var(--panel-bg);
   margin-bottom: 0;
   padding: 0.6rem 1rem;
   font-size: 1.05rem;
@@ -59,6 +61,14 @@ label.pl-number-input {
   gap: 1rem;
   box-sizing: border-box;
   transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* Optional: Use a media query for more control */
+@media (max-width: 600px) {
+  label.pl-number-input {
+    min-width: 100%;
+    max-width: 100%;
+  }
 }
 
 label.pl-number-input:focus-within {
@@ -96,19 +106,29 @@ input.pl-number-input:focus {
 
 /* Solution Steps */
 .hidden-step {
-  display: none;
+  display: none !important;
 }
 .solution-step {
   background-color: #f9f9fb;
+  flex: 1 1 100%;
+  min-width: 100%;
+  max-width: 100%;
   border-left: 4px solid #4a90e2; /* soft blue marker */
   padding: 1rem 1.5rem;
   margin-bottom: 1rem;
+  margin-top: 1rem;
   border-radius: 0.5rem;
   font-size: 1rem;
   line-height: 1.6;
   position: relative;
   transition: all 0.3s ease;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  height: 25%; /* fixed height for uniformity */
 }
 .solution-step::before {
   content: attr(data-level);

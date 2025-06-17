@@ -13,19 +13,16 @@ from ..processing.code_runners.utils import (
     GenerateQuizResponse,
 )
 import json
-import ast
 
-    # Mapping from file type keys to file names.
-    # question_name_map = {
-    #     "question_txt": "question.txt",
-    #     "question_html": "question.html",
-    #     "server_js": "server.js",
-    #     "server_py": "server.py",
-    #     "solution_html": "solution.html",
-    #     "metadata": "info.json",
-    # } should be fixed 
-
-
+# Mapping from file type keys to file names.
+# question_name_map = {
+#     "question_txt": "question.txt",
+#     "question_html": "question.html",
+#     "server_js": "server.js",
+#     "server_py": "server.py",
+#     "solution_html": "solution.html",
+#     "metadata": "info.json",
+# } should be fixed
 
 
 async def generate_quiz(
@@ -62,7 +59,6 @@ async def generate_quiz(
         for f in files:
             # save_name = question_name_map.get(f.filename)
             save_name = f.filename
-            print(save_name)
             filepath = os.path.join(tmpdir, save_name)
 
             if isinstance(f.content, bytes):
@@ -86,7 +82,7 @@ async def generate_quiz(
 
         # Define data
         data = {}
-        generated_data = {}
+        generated_data = {}  # type: ignore
         if isAdaptive == True:
             if server_type == "javascript":
                 server_file = os.path.join(tmpdir, "server.js")
@@ -100,7 +96,7 @@ async def generate_quiz(
             if not results.success:
                 return results  # This returns an object with the error code
 
-            generated_data: QuizData = results.result
+            generated_data: QuizData = results.result  # type: ignore
             params = generated_data.params
             correct_answers = generated_data.correct_answers
             data = {"params": params, "correct_answers": correct_answers}
@@ -115,8 +111,9 @@ async def generate_quiz(
 
         # Render the solution html
         solution_html_path = os.path.join(tmpdir, "solution.html")
-        solution_content = await asyncio.to_thread(read_file, solution_html_path)
-        if solution_content:
+        rendered_solution = None
+        if os.path.exists(solution_html_path):
+            solution_content = await asyncio.to_thread(read_file, solution_html_path)
             rendered_solution = await asyncio.to_thread(
                 format_question, html=solution_content, data=data
             )
@@ -124,6 +121,6 @@ async def generate_quiz(
         data = GenerateQuizResponse(
             question_html=rendered_question_html,
             quiz_data=generated_data,
-            solution_html=rendered_solution if solution_content else None,
+            solution_html=rendered_solution,
         )
         return CodeRunResponse(success=True, error=None, result=data)

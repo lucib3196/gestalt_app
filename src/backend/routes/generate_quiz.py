@@ -30,13 +30,14 @@ async def get_adaptive_quiz(
     response: CodeRunResponse = await quiz_service.generate_quiz(
         question_folder_id, server_type=data.server_type, session=session
     )
-    if response.success:
+    if response.success and isinstance(response.result, GenerateQuizResponse):
         quiz_data = response.result.quiz_data
-        request.session["quiz_data"] = (
-            response.result.quiz_data.model_dump()
-            if isinstance(quiz_data, BaseModel)
-            else quiz_data
-        )
+        
+        if isinstance(quiz_data, BaseModel):
+            request.session["quiz_data"] = quiz_data.model_dump()
+        else:
+            request.session["quiz_data"] = quiz_data
+        
         request.session["solution_html"] = response.result.solution_html
         return JSONResponse(
             status_code=status.HTTP_200_OK,

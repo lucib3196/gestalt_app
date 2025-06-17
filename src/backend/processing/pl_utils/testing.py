@@ -1,15 +1,9 @@
 from .create_tag_replacer import create_tag_replacer
 from .tag_replacer_config import tag_replacer_configs
 
-def main():
-    html = r""""<pl-question-panel>
-<p>
-A {{params.m}} {{params.unitsMass}} block of iron at temperature {{params.Ti}} {{params.unitsTemperature}} is supplied heat of {{params.Q}} {{params.unitsHeat}} so that the final temperature is {{params.Tf}} {{params.unitsTemperature}}.
-</p>
-</pl-question-panel>
 
-<p> Determine its final temperature. </p>
-<pl-number-input answers-name="Tf" comparison="sigfig" digits="3" label="Tf  (in {{params.unitsTemperature}})"></pl-number-input>"""
+def main():
+    html = r""""<pl-solution-panel>\r\n    <pl-figure file-name=\"3dMoment1.png\"></pl-figure>\r\n    <pl-hint level=\"1\" data-type=\"text\">First, you must identify the force vector. The red vector in the picture is just there to show the location and direction of the force, but it is not the actual force vector. In order to obtain the force vector you must multiply the force $\\mathbf{F} = {{params.force}} $ to the unit vector of the red vector. </pl-hint>\r\n    <pl-hint level=\"2\" data-type=\"text\">To obtain the unit vector of the red vector, you must identify the location of the head and tail of the red vector. In our case, the tail of the red vector is equal to $ L_2 \\hat{i} + L_1 \\hat{j} + L_3 \\hat{k}$ and the head of the red vector is equal to $ V_2 \\hat{i} + V_1 \\hat{j} + V_3 \\hat{k}$. Now we can find the direction of the red vector by moving from the tail to the head. \r\n        Moving from the tail to the head $ \\implies (V_2 - L_2 ) \\hat{i} + (V_1 - L_1 ) \\hat{j} + (V_3 - L_3) \\hat{k} $. Now that we have the direction we can divide the length of the vector by itself to obtain the unit vector. $ \\frac {(V_2 - L_2 ) \\hat{i} + (V_1 - L_1 ) \\hat{j} + (V_3 - L_3) \\hat{k}}{\\sqrt{(V_2 - L_2 )^2 + (V_1 - L_1 )^2 + (V_3 - L_3)^2}} $\r\n        </pl-hint>\r\n    <pl-hint level=\"3\" data-type=\"text\">\r\n        <ul> \r\n            Now all we have to do is multiply the force by the unit vetcor.\r\n        <li> $\\mathbf{\\vec{F}} =   \\mathbf(F) \\frac {(V_2 - L_2 ) \\hat{i} + (V_1 - L_1 ) \\hat{j} + (V_3 - L_3) \\hat{k}}{\\sqrt{(V_2 - L_2 )^2 + (V_1 - L_1 )^2 + (V_3 - L_3)^2}} $ </li>\r\n        Now that we have the true force vector we can now take the moment about point O using the cross product $M_o = \\vec{d} X \\vec{F} $\r\n        </ul>\r\n    </pl-hint>\r\n\r\n\r\n\r\n    <pl-hint level=\"4\" data-type=\"text\"> \r\n        <ul>\r\n            When computing the moment about point O using the cross product we must chose any distance ($\\vec{d}$) starting from the point O and ending anywhere along the line of action of the force vector.\r\n            In our case we can just use the blue beam since it starts at point o and ends at the tail of the force vector.  \r\n        <li>$\\vec{d} = L_2 \\hat{i} +L_1 \\hat{j} + L_3 \\hat{k}$</li>\r\n        <li>$M_o = \\vec{d} X \\vec{F} $ $\\implies $ $M_o = (L_2, L_1,L_3) X (F_x,F_y,F_z)$ $\\implies $  $M_o = ({{correct_answers.momenti}}) \\hat{i} + ({{correct_answers.momentj}}) \\hat{j} + ({{correct_answers.momentk}}) \\hat{k} $   </li>\r\n        \r\n        </ul>\r\n    </pl-hint>\r\n\r\n\r\n"""
 
     replacers = create_tag_replacer(html_string=html, config=tag_replacer_configs)
     print(replacers)

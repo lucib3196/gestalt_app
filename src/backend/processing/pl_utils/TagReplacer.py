@@ -1,5 +1,7 @@
 from typing import Dict, Optional
 from bs4 import BeautifulSoup, Tag
+from bs4.element import NavigableString
+from copy import copy
 
 
 class TagReplacer:
@@ -41,7 +43,9 @@ class TagReplacer:
         self.replacement_tag = replacement_tag
         self.attributes: Dict[str, str] = attributes or {}
         self.mapping: Dict[str, str] = mapping or {}
-        self.soup: BeautifulSoup = BeautifulSoup(self.html, "html.parser")
+        # Clean the html for better parsing
+        cleaned_html = self.html.replace('\\"', '"')
+        self.soup: BeautifulSoup = BeautifulSoup(cleaned_html, "html.parser")
 
     def map_attributes(
         self, old_attrs: Dict[str, str], mapping: Dict[str, str]
@@ -65,13 +69,6 @@ class TagReplacer:
         unmapped_keys = set(old_attrs.keys()) - set(mapping.keys())
         if unmapped_keys:
             print(f"[Warning] Unmapped attributes: {unmapped_keys}")
-
-        # # Handle the case where there is a label attribute
-        # label = new_attrs.get('label',{})
-        # if (label):
-        #     print(label)
-        # print(new_attrs)
-
         return new_attrs
 
     def replace_tag(self) -> BeautifulSoup:
@@ -90,15 +87,18 @@ class TagReplacer:
 
             new_tag = self.soup.new_tag(name=self.replacement_tag, attrs=merged_attrs)
 
+            print(tag.contents)
             for child in tag.contents:
-                new_tag.append(child)
+                if isinstance(child, NavigableString) and not child.strip():
+                    continue  # skip whitespace
+                new_tag.append(copy(child))
 
             tag.replace_with(new_tag)
 
             new_tag = self.handle_labels(
                 new_tag, merged_attrs, className=f"form-label {tag.name}"
             )
-            print(f"This is the new tag {new_tag}")
+            # print(f"This is the new tag {new_tag}")
             container.append(new_tag)
         self.soup.append(container)
 
@@ -163,16 +163,16 @@ class TagReplacer:
         try:
             tags = self.soup.find_all(self.target_tag)
             if not tags:
-                print(f"[Info] No tags found for <{self.target_tag}>.")
+                # print(f"[Info] No tags found for <{self.target_tag}>.")
                 return self.soup
             elif len(tags) == 1:
 
                 return self.replace_tag_unique()
             else:
-                print(f"Handling Multiple {tags}")
+                # print(f"Handling Multiple {tags}")
                 return self.replace_tag()
         except Exception as e:
-            print(f"[Error] Could not process <{self.target_tag}>: {e}")
+            # print(f"[Error] Could not process <{self.target_tag}>: {e}")
             return self.soup
 
     def update_soup(self, html: str) -> None:
@@ -212,6 +212,7 @@ A {{params.m}} {{params.unitsMass}} block of iron at temperature {{params.Ti}} {
 <p> Determine its final temperature. </p>
 <pl-number-input answers-name="Tf" comparison="sigfig" digits="3" label="Tf  (in {{params.unitsTemperature}})"></pl-number-input>"""
 
+    html_string3 = r"""<pl-solution-panel>\r\n    <pl-figure file-name=\"3dMoment1.png\"></pl-figure>\r\n    <pl-hint level=\"1\" data-type=\"text\">First, you must identify the force vector. The red vector in the picture is just there to show the location and direction of the force, but it is not the actual force vector. In order to obtain the force vector you must multiply the force $\\mathbf{F} = {{params.force}} $ to the unit vector of the red vector. </pl-hint>\r\n    <pl-hint level=\"2\" data-type=\"text\">To obtain the unit vector of the red vector, you must identify the location of the head and tail of the red vector. In our case, the tail of the red vector is equal to $ L_2 \\hat{i} + L_1 \\hat{j} + L_3 \\hat{k}$ and the head of the red vector is equal to $ V_2 \\hat{i} + V_1 \\hat{j} + V_3 \\hat{k}$. Now we can find the direction of the red vector by moving from the tail to the head. \r\n        Moving from the tail to the head $ \\implies (V_2 - L_2 ) \\hat{i} + (V_1 - L_1 ) \\hat{j} + (V_3 - L_3) \\hat{k} $. Now that we have the direction we can divide the length of the vector by itself to obtain the unit vector. $ \\frac {(V_2 - L_2 ) \\hat{i} + (V_1 - L_1 ) \\hat{j} + (V_3 - L_3) \\hat{k}}{\\sqrt{(V_2 - L_2 )^2 + (V_1 - L_1 )^2 + (V_3 - L_3)^2}} $\r\n        </pl-hint>\r\n    <pl-hint level=\"3\" data-type=\"text\">\r\n        <ul> \r\n            Now all we have to do is multiply the force by the unit vetcor.\r\n        <li> $\\mathbf{\\vec{F}} =   \\mathbf(F) \\frac {(V_2 - L_2 ) \\hat{i} + (V_1 - L_1 ) \\hat{j} + (V_3 - L_3) \\hat{k}}{\\sqrt{(V_2 - L_2 )^2 + (V_1 - L_1 )^2 + (V_3 - L_3)^2}} $ </li>\r\n        Now that we have the true force vector we can now take the moment about point O using the cross product $M_o = \\vec{d} X \\vec{F} $\r\n        </ul>\r\n    </pl-hint>\r\n\r\n\r\n\r\n    <pl-hint level=\"4\" data-type=\"text\"> \r\n        <ul>\r\n            When computing the moment about point O using the cross product we must chose any distance ($\\vec{d}$) starting from the point O and ending anywhere along the line of action of the force vector.\r\n            In our case we can just use the blue beam since it starts at point o and ends at the tail of the force vector.  \r\n        <li>$\\vec{d} = L_2 \\hat{i} +L_1 \\hat{j} + L_3 \\hat{k}$</li>\r\n        <li>$M_o = \\vec{d} X \\vec{F} $ $\\implies $ $M_o = (L_2, L_1,L_3) X (F_x,F_y,F_z)$ $\\implies $  $M_o = ({{correct_answers.momenti}}) \\hat{i} + ({{correct_answers.momentj}}) \\hat{j} + ({{correct_answers.momentk}}) \\hat{k} $   </li>\r\n        \r\n        </ul>\r\n    </pl-hint>\r\n\r\n\r\n"""
     # Step 1: Replace <pl-question-panel> → <div>
     print("\n[1] Replacing <pl-question-panel> with <div>...")
     pl_panel_replacer = TagReplacer(
@@ -275,6 +276,19 @@ A {{params.m}} {{params.unitsMass}} block of iron at temperature {{params.Ti}} {
         attributes=pl_number_input_data.get("attributes"),
         mapping=pl_number_input_data.get("mapping"),
     )
+    new_soup = pl_number_input_replacer.run()
+    print(new_soup.prettify())
+
+    pl_solution_step_data = tag_replacer_configs.get("pl_hint")
+    print("Before :", {html_string3})
+    pl_number_input_replacer = TagReplacer(
+        html=str(html_string3),
+        target_tag=pl_solution_step_data.get("target_tag"),
+        replacement_tag=pl_solution_step_data.get("replacement_tag"),
+        attributes=pl_solution_step_data.get("attributes"),
+        mapping=pl_solution_step_data.get("mapping"),
+    )
+
     new_soup = pl_number_input_replacer.run()
     print(new_soup.prettify())
 

@@ -111,8 +111,7 @@ const QuizContainer: React.FC<QuizContainerProps> = ({ folder_id }) => {
     const revealNextStep = () => {
         setRevealedSteps((prev) => {
             const current = prev ?? [];
-            console.log(current)
-            const nextStep = current.length+1;
+            const nextStep = current.length + 1;
             console.log("next step", nextStep)
             return [...current, nextStep];
         });
@@ -157,6 +156,13 @@ const QuizContainer: React.FC<QuizContainerProps> = ({ folder_id }) => {
                         >
                             Show Answer
                         </button>
+                        <button
+                            type="button"
+                            className="px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-xl shadow-sm transition hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                            onClick={revealNextStep}
+                        >
+                            Hint?
+                        </button>
                     </div>
                 </form>
 
@@ -177,16 +183,11 @@ const QuizContainer: React.FC<QuizContainerProps> = ({ folder_id }) => {
                 </div>
 
                 {/* Show Solution Step Button */}
-                <button
-                    className="mt-8 px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-semibold rounded-lg shadow-lg transition hover:from-indigo-600 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2"
-                    onClick={revealNextStep}
-                >
-                    Show Solution Step
-                </button>
+
 
                 {/* Solution Steps */}
-                {solutionHtml && revealedSteps.length > 0 && (
-                    <div className="mt-8 w-full max-w-2xl bg-gray-50 rounded-lg p-6 shadow">
+                {solutionHtml && (revealedSteps?.length ?? 0) > 0 && (
+                    <div className="mt-8 w-full  bg-gray-50 rounded-lg p-6 shadow">
                         <h3 className="text-lg font-semibold mb-2 text-indigo-700">Solution</h3>
                         <div dangerouslySetInnerHTML={{ __html: solutionHtml }} />
                     </div>

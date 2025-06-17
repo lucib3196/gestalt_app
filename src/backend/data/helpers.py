@@ -35,7 +35,7 @@ def format_question(html: str, data: dict) -> str:
     # Apply any preprocessing if needed.
     processed_html = process(html)
     template = Template(processed_html)
-    rendered = template.render(params=data.get("params", {}))
+    rendered = template.render(**data)
     return rendered
 
 
