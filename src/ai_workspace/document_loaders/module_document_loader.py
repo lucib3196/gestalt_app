@@ -16,6 +16,7 @@ import numpy as np
 from typing import Iterator
 from langchain_core.document_loaders import BaseLoader
 from langchain_core.documents import Document
+from ai_workspace.utils import validate_column
 
 
 class ModuleDocumentLoaderCSV(BaseLoader):
@@ -31,12 +32,9 @@ class ModuleDocumentLoaderCSV(BaseLoader):
         lazy_load(): Lazily yields Documents from the CSV rows.
     """
 
-    def __init__(self, file_path: str) -> None:
+    def __init__(self, file_path: str, column_name: str) -> None:
         self.file_path = file_path
-
-    def load_csv(self) -> None:
-        """Loads the CSV file into a pandas DataFrame."""
-        self.df = pd.read_csv(self.file_path)
+        self.column_name = column_name
 
     def lazy_load(self) -> Iterator[Document]:
         """
@@ -45,7 +43,7 @@ class ModuleDocumentLoaderCSV(BaseLoader):
         """
         self.prepare_data()
         for index in self.df.index:
-            content = self.df.loc[index, "question"]
+            content = self.df.loc[index, self.column_name]
             if pd.isna(content):
                 continue
 
@@ -56,6 +54,7 @@ class ModuleDocumentLoaderCSV(BaseLoader):
                     "index": index,
                     "relevant_courses": self.df.loc[index, "relevant_courses"],
                     "topics": self.df.loc[index, "topics"],
+                    "isAdaptive": bool(self.df.loc[index, "isAdaptive"]),
                 },
             )
 
@@ -69,7 +68,6 @@ class ModuleDocumentLoaderCSV(BaseLoader):
         This method assumes that the 'load_csv' method has been defined to load data into self.df.
         """
         self.load_csv()
-
         # Create a boolean mask where both 'server.js' and 'server.py' are either NaN or empty.
         mask = (self.df["server.js"].isna() | (self.df["server.js"] == "")) & (
             self.df["server.py"].isna() | (self.df["server.py"] == "")
@@ -77,10 +75,19 @@ class ModuleDocumentLoaderCSV(BaseLoader):
         # If the mask is True (both columns are empty/NaN), set 'is_adaptive' to False, else True.
         self.df["is_adaptive"] = (~mask).astype(str)
 
+    def load_csv(self) -> None:
+        """Loads the CSV file into a pandas DataFrame."""
+        self.df = pd.read_csv(self.file_path)
+
+    def validate_csv(self) -> None:
+        if not validate_column(self.df, self.column_name):
+            raise ValueError(f"Column Name {self.column_name} is not valid")
+
 
 if __name__ == "__main__":
-    loader = ModuleDocumentLoaderCSV(r"src\data\QuestionDataV2_06122025_classified.csv")
-    loader = ModuleDocumentLoaderCSV(r"src\data\QuestionDataV2_06122025_classified.csv")
+    loader = ModuleDocumentLoaderCSV(
+        r"data\QuestionDataV2_06122025_classified.csv", "question"
+    )
     loader.prepare_data()
     docs = list(loader.lazy_load())
     print(f"Loaded {len(docs)} documents.\n")

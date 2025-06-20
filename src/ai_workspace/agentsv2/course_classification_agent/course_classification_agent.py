@@ -1,12 +1,11 @@
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
 from langchain_community.vectorstores import FAISS
-from langgraph.graph import MessagesState
 from pydantic import BaseModel, Field
 from typing import List, Literal
 from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
-from src.ai_workspace.utils.helper import save_graph_visualization
+from ai_workspace.utils.helper import save_graph_visualization
 from typing import Optional
 
 # Constants
@@ -15,7 +14,7 @@ LONGCONTEXTLLM = "o3-mini-2025-01-31"
 
 # Define the vector store
 # Load the vector Store and set up retriever
-vector_store_path = r"src\ai_workspace\vectorstores\ME_course_catalog_index"
+vector_store_path = r"ai_workspace\vectorstores\COURSECATALOG_VS"
 embeddings = OpenAIEmbeddings(model="text-embedding-3-large")
 vectorstore = FAISS.load_local(
     vector_store_path, embeddings, allow_dangerous_deserialization=True
@@ -162,7 +161,7 @@ class CourseClassification(BaseModel):
 
 
 rag_chain = (
-    rag_prompt | llm.with_structured_output(CourseClassification) | StrOutputParser()
+    rag_prompt | llm.with_structured_output(CourseClassification) 
 )
 
 

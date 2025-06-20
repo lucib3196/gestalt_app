@@ -3,7 +3,7 @@ from typing import AsyncIterator, Iterator
 from langchain_core.document_loaders import BaseLoader
 from langchain_core.documents import Document
 import aiofiles # type: ignore
-from src.schemas import FullCourseDescriptionList
+from schemas import FullCourseDescriptionList
 
 
 class CourseDocumentLoader(BaseLoader):

@@ -24,9 +24,8 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langgraph.graph import START, END, StateGraph
 
-from src.ai_workspace.utils.helper import save_graph_visualization, to_serializable
-from src.ai_workspace.utils.reducers import keep_first
-from src.schemas import TopicDescription
+from ai_workspace.utils import save_graph_visualization, to_serializable, keep_first
+from schemas import TopicDescription
 
 # ────────────────────────────────────────────────────────────────────────────────
 # Constants
@@ -34,9 +33,9 @@ from src.schemas import TopicDescription
 FASTLLM = "gpt-4o-mini"
 LONGCONTEXTLLM = "o3-mini-2025-01-31"
 
-VECTOR_STORE_PATH = r"src\ai_workspace\vectorstores\topic_index"
-TOPIC_JSON_PATH = r"src\data\topic_data_description.json"
-SAVED_INDEX_DIR = "src/ai_workspace/vectorstores/topic_index"
+VECTOR_STORE_PATH = r"ai_workspace\vectorstores\QTOPIC_VS"
+TOPIC_JSON_PATH = r"./data\topic_data_description.json"
+SAVED_INDEX_DIR = "ai_workspace/vectorstores/QTOPIC_VS"
 N_SEARCH_QUERIES = 3
 
 # ────────────────────────────────────────────────────────────────────────────────
@@ -73,7 +72,7 @@ class Response(BaseModel):
 
 
 # ────────────────────────────────────────────────────────────────────────────────
-# Prompts & chains  
+# Prompts & chains
 # ────────────────────────────────────────────────────────────────────────────────
 llm_fast = ChatOpenAI(model=FASTLLM)
 
@@ -190,7 +189,6 @@ Context:
 rag_chain = (
     rag_prompt
     | llm_fast.with_structured_output(TopicClassification)
-    | StrOutputParser()
 )
 
 # 4️⃣  Answer grader (unchanged prompt text)
@@ -342,12 +340,13 @@ def generate_new_topics(state: PipelineState):
 
 
 def grade_and_store_topics(state: PipelineState):
+    print("Insidfe here")
     valid, new_docs = [], []
     for topic in state.candidate_topics or []:
         score = topic_uniqueness_grader.invoke(
             {
                 "question": state.question,
-                "generation": topic,
+                "generation": f"{topic.name}{topic.description}",
                 "context": (
                     "\n".join(d.page_content for d in state.retrieved_documents)
                     if state.retrieved_documents

@@ -3,11 +3,11 @@ import tempfile
 from typing import Optional, List
 import json
 import fitz  # PyMuPDF
-print(fitz.__doc__)
 
 from IPython.display import Image, display
 from langgraph.graph import StateGraph
 from pydantic import BaseModel
+import pandas as pd
 from ..models.tokenCounter import TokenUsage, StepTokenUsage
 
 
@@ -165,3 +165,12 @@ def extract_token_usage(ai_message, step_name: str) -> StepTokenUsage:
 
 def parse_structured(model_class, ai_message):
     return model_class(**json.loads(ai_message.content))
+
+
+def validate_column(df:pd.DataFrame, column:str):
+    return column in df.columns
+def validate_columns(df: pd.DataFrame, columns: list[str]):
+    invalid_columns = [c for c in columns if not validate_column(df, c)]
+    if invalid_columns:
+        return False
+    return True

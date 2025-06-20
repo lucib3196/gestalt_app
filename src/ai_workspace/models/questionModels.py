@@ -118,7 +118,7 @@ class Question(BaseModel):
         return (
             "\n\n".join(solution.as_str for solution in self.solution)
             if self.solution
-            else None
+            else ""
         )
 
 

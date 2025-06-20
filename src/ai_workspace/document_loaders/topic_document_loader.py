@@ -2,7 +2,7 @@ import json
 from typing import AsyncIterator, Iterator
 from langchain_core.document_loaders import BaseLoader
 from langchain_core.documents import Document
-from src.schemas import FullTopicDescriptionList
+from schemas import FullTopicDescriptionList
 import aiofiles  # type: ignore
 
 

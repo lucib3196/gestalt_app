@@ -5,7 +5,7 @@ from .utils import CodeRunResponse, QuizData
 
 def run_js(path: str) -> CodeRunResponse:
     """
-    Runs a Node.js script and parses the result as JSON.
+    Runs a Node.js script (with mathjs available) and parses the result as JSON.
 
     Args:
         path (str): Path to the JavaScript file.
@@ -14,6 +14,8 @@ def run_js(path: str) -> CodeRunResponse:
         Response: success status, result or error message.
     """
     try:
+        # You can require mathjs in your JS file, or pass NODE_PATH if needed.
+        # Here, we assume mathjs is installed in the same directory or globally.
         result = subprocess.run(
             ["node", path, "generate"],
             capture_output=True,
