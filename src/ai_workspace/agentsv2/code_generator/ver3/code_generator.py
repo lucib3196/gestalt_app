@@ -1,6 +1,6 @@
 from typing import Optional, Annotated, List, Dict, Literal
 from pydantic import BaseModel, Field
-from ai_workspace.utils import save_graph_visualization, keep_first, merge_files_data
+from ai_workspace.utils import save_graph_visualization, keep_first, merge_files_data,keep_new
 from langchain_openai import ChatOpenAI
 from langgraph.graph import END, START, StateGraph
 from langgraph.pregel import RetryPolicy  # type: ignore
@@ -22,11 +22,27 @@ LONGCONTEXTLLM = "o3-mini-2025-01-31"
 fast_llm = ChatOpenAI(model=FASTLLM)
 long_context = ChatOpenAI(model=LONGCONTEXTLLM)
 
-MAX_ITERATIONS = 6
+MAX_ITERATIONS = 3
 # ────────────────────────────────────────────────────────────────────────────────
 # Chains
 # ────────────────────────────────────────────────────────────────────────────────
 
+
+
+# Reducers
+
+# def merge_metadata(
+#     exisiting: MetadataState, new: MetadataState
+# ):
+#     return MetadataState(
+#         question=new.question or exisiting.question,
+#         title=new.title or exisiting.title,
+#         topic = new.topic or exisiting.topic
+#         relevant_courses=new.relevant_courses= or exisiting.relevant_courses=,
+#         tags=new.tags or exisiting.tags,
+#         prereqs=new.prereqs or exisiting.prereqs,
+#         isAdaptive=new.isAdaptive or exisiting.isAdaptive
+#     )
 # Code fix
 code_grader_prompt = ChatPromptTemplate.from_messages(
     [
@@ -126,7 +142,7 @@ class CodeGenState(BaseModel):
     initial_metadata: Annotated[Optional[InitialMetadata], keep_first] = Field(
         None, description="Metadata about who is running the generators."
     )
-    question_metadata: Annotated[MetadataState, keep_first] = Field(
+    question_metadata: Annotated[MetadataState, keep_new] = Field(
         Field(default_factory=MetadataState),
         description="Metadata related to the question.",
     )
@@ -245,7 +261,7 @@ def adaptive_code_review(state: CodeGenState) -> CodeGenState:
     solution.html: {state.files.solution_html} \n
     server.js: {state.files.server_js} \n
     server.py {state.files.server_py} \n
-    """
+    """  # type: ignore
 
     result = code_review.invoke({"input": code_blocks})
     iterations = state.iterations + 1

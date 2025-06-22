@@ -7,7 +7,9 @@ from ai_workspace.retrievers import SemanticExamplesCSV
 from langgraph.graph import END, StateGraph, START
 from langchain import hub
 from schemas import CodeResponse
+from langsmith import Client
 
+client = Client()
 # ────────────────────────────────────────────────────────────────────────────────
 # Constants
 # ────────────────────────────────────────────────────────────────────────────────
@@ -52,7 +54,7 @@ class State(BaseModel):
 
 def generate_server_js(state: State):
     # Retrieve the base prompt template from the hub
-    base_prompt = hub.pull("server_js_template_base")
+    base_prompt = client.pull_prompt("server_js_template_base")
 
     if state.solution_guide:
         base_prompt += (
@@ -67,6 +69,7 @@ def generate_server_js(state: State):
     prompt = q_retriever_js.format_template(
         query=state.question_html, k=1, base_template=base_prompt
     )
+    # print("This is the prompt inside server ", prompt)
 
     # Generate the code response
     chain = fast_llm.with_structured_output(CodeResponse, include_raw=True)
@@ -79,7 +82,7 @@ def generate_server_js(state: State):
 
 def generate_server_py(state: State):
     # Retrieve the base prompt template from the hub
-    base_prompt = hub.pull("server_py_template_base1")
+    base_prompt = client.pull_prompt("server_py_template_base1")
 
     if state.solution_guide:
         base_prompt += (
@@ -94,7 +97,8 @@ def generate_server_py(state: State):
     prompt = q_retriever_py.format_template(
         query=state.question_html, k=1, base_template=base_prompt
     )
-
+    
+    # print("This is the prompt inside server ", prompt)
     # Generate the code response
     chain = fast_llm.with_structured_output(CodeResponse, include_raw=True)
     messages = prompt.format_messages(question=state.question_html)  # type: ignore

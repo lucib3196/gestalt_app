@@ -152,6 +152,9 @@ class SemanticExamplesCSV:
         Returns:
             str: The formatted string containing the base template and examples.
         """
+
+        # Replacement is meant to escape code like latex or braces in js code etc probably
+        # needs a better implemenation this is always an issue and needs to be worked on
         examples = self.extract_examples(query, k)
         formatted_examples = "\n".join(
             [
@@ -159,13 +162,17 @@ class SemanticExamplesCSV:
                 for i, ex in enumerate(examples)
             ]
         )
-
-        return (
+        template = (
             base_template
             + "\n"
-            + formatted_examples.replace("{", "{{").replace("}", "}}")
-            + f"\n: The new input: {query}"
+            + formatted_examples.replace(r"{", r"{{").replace(r"}", r"}}")
+            + f"\n: The new input: {query.replace(r"{", r"{{").replace(r"}", r"}}")}"
         )
+
+        return template
+
+    def remove_empty_values(self):
+        self.df = self.df.dropna(subset=self.column_names)
 
 
 if __name__ == "__main__":

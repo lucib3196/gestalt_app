@@ -14,7 +14,10 @@ from ai_workspace.utils.helper import parse_structured, save_graph_visualization
 from langgraph.graph import END, START, StateGraph
 
 from schemas import CodeResponse
+from langsmith import Client
+from langchain_core.messages import SystemMessage
 
+client = Client()
 # ────────────────────────────────────────────────────────────────────────────────
 # Constants
 # ────────────────────────────────────────────────────────────────────────────────
@@ -170,8 +173,23 @@ def retrieve_tag_info(state: State):
 
 
 def generate_question_file(state: State):
+    """
+    The function `generate_question_file` prepares a question file by pulling a base prompt template,
+    formatting tag documentation, inserting tag info as a system message, and generating a code
+    response.
+
+    :param state: The `state` parameter in the `generate_question_file` function represents the current
+    state of the system or application. It likely contains information such as the question being asked,
+    any filtered documents or tag information, and whether the question is adaptive. This function seems
+    to be generating a question file based on the
+    :type state: State
+    :return: The function `generate_question_file` takes a `State` object as input and generates a
+    question file. It retrieves a base prompt template, prepares tag documentation, formats the prompt,
+    and inserts tag information as a system message. Finally, it generates a code response and returns
+    the structured code for the question file.
+    """
     # Retrieve the base prompt template from the hub
-    base_prompt = hub.pull("question_html_template")
+    base_prompt = client.pull_prompt("question_html_template")
 
     # Prepare tag documentation string
     tag_docs = "\n\n".join(
@@ -183,16 +201,29 @@ def generate_question_file(state: State):
         else ""
     )
 
-    full_prompt = f"{base_prompt}{tag_info_section}"
+    prompt = q_retriever.format_template(
+        query=state.question, k=2, base_template=base_prompt
+    )
+    messages = prompt.format_messages(question=state.question)  # type: ignore
+
+    # Insert tag info as a new SystemMessage at the end of the system messages
+
+    # Find the last system message index
+    last_sys_idx = max(
+        (i for i, m in enumerate(messages) if isinstance(m, SystemMessage)), default=-1
+    )
+    if tag_info_section:
+        tag_msg = SystemMessage(content=tag_info_section)
+        # Insert after the last system message, or at the start if none
+        insert_idx = last_sys_idx + 1
+        messages = messages[:insert_idx] + [tag_msg] + messages[insert_idx:]
 
     q_retriever.set_filter({"isAdaptive": state.isAdaptive})
-    prompt = q_retriever.format_template(
-        query=state.question, k=2, base_template=full_prompt
-    )
 
     # Generate the code response
     chain = fast_llm.with_structured_output(CodeResponse, include_raw=True)
-    result = chain.invoke([prompt])
+
+    result = chain.invoke(messages)
     ai_message = result["raw"]
     structured = parse_structured(CodeResponse, ai_message)
     return {"qfile": structured.code}

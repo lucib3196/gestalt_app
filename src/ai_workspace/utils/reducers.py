@@ -27,6 +27,8 @@ def merge_files_data(
 def keep_first(existing: Any, new: Any) -> Any:
     return existing or new
 
+def keep_new(existing: Any, new:Any)-> Any:
+    return new or existing
 
 def reduce_token_usage(
     existing: List[StepTokenUsage], new: List[StepTokenUsage]

@@ -1,11 +1,9 @@
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
 from langchain_community.vectorstores import FAISS
-from langgraph.graph import MessagesState
 from pydantic import BaseModel, Field
 from typing import List, Literal
 from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_core.output_parsers import StrOutputParser
 from ai_workspace.utils.helper import save_graph_visualization, parse_structured
 from typing import Optional
 from ai_workspace.retrievers import SemanticExamplesCSV
@@ -14,7 +12,10 @@ from itertools import chain
 from collections.abc import Iterable
 from langchain import hub
 from schemas import CodeResponse
+from langsmith import Client
+from langchain_core.messages import SystemMessage
 
+client = Client()
 # ────────────────────────────────────────────────────────────────────────────────
 # Constants
 # ────────────────────────────────────────────────────────────────────────────────
@@ -173,7 +174,7 @@ def retrieve_tag_info(state: State):
 
 def generate_question_file(state: State):
     # Retrieve the base prompt template from the hub
-    base_prompt = hub.pull("solution_html_template")
+    base_prompt = client.pull_prompt("solution_html_template")
 
     # Prepare tag documentation string
     tag_docs = "\n\n".join(
@@ -185,26 +186,46 @@ def generate_question_file(state: State):
         else ""
     )
 
-    full_prompt = f"{base_prompt}{tag_info_section}"
+    # Format the prompt with the question and base template
+    prompt = q_retriever.format_template(
+        query=state.question, k=2, base_template=base_prompt
+    )
+    messages = prompt.format_messages(question=state.question)  # type: ignore
 
+    # Insert tag info section after the last SystemMessage
+    last_sys_idx = max(
+        (i for i, m in enumerate(messages) if isinstance(m, SystemMessage)), default=-1
+    )
+    if tag_info_section:
+        tag_msg = SystemMessage(content=tag_info_section)
+        insert_idx = last_sys_idx + 1
+        messages = messages[:insert_idx] + [tag_msg] + messages[insert_idx:]
+
+    # Set retriever filter
+    q_retriever.set_filter({"isAdaptive": state.isAdaptive})
+
+    # If a solution is provided, add it as a SystemMessage
     if state.solution:
-        full_prompt += (
+        solution_prompt = (
             "\n\nAdditionally, you are provided with the following solution guide. "
             "This solution guide outlines the intended approach and logic for solving the question. "
             "You must use the reasoning, steps, and methodology from this guide as the primary reference for how the question should be implemented and transformed into the HTML file. "
             "Expand on the steps where necessary for clarity, but ensure that the structure and logic of the HTML output closely follow the solution guide's approach."
             f"\n\nSolution Guide:\n{state.solution}\n"
         )
-        
-
-    q_retriever.set_filter({"isAdaptive": state.isAdaptive})
-    prompt = q_retriever.format_template(
-        query=state.question, k=2, base_template=full_prompt
-    )
+        solution_msg = SystemMessage(content=solution_prompt)
+        insert_idx = (
+            max(
+                (i for i, m in enumerate(messages) if isinstance(m, SystemMessage)),
+                default=-1,
+            )
+            + 1
+        )
+        messages = messages[:insert_idx] + [solution_msg] + messages[insert_idx:]
 
     # Generate the code response
     chain = fast_llm.with_structured_output(CodeResponse, include_raw=True)
-    result = chain.invoke([prompt])
+    result = chain.invoke(messages)
     ai_message = result["raw"]
     structured = parse_structured(CodeResponse, ai_message)
     return {"qfile": structured.code}
