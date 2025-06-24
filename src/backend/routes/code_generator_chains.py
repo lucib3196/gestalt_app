@@ -1,17 +1,11 @@
 from fastapi import APIRouter, Depends, UploadFile, File, Form
 from pydantic import BaseModel
 from sqlmodel import Session
-from typing import List, Tuple
+from typing import List, Optional
 import os
 import shutil
 import tempfile
 from ast import literal_eval
-from fastapi import Request
-from typing import Optional
-import json
-from fastapi import FastAPI, HTTPException
-import fitz  # PyMuPDF
-from fitz import Page
 from ..data.module import get_session
 from ..data import question_models as service
 from ..model.question_models import Package, QuestionFolder
@@ -23,17 +17,23 @@ from ..ai_workspace.agents.engineering_codegen.code_generator import (
     QuestionMetadata,
     compiled_graph as graph,
 )
-from ..ai_workspace.agents.engineering_codegen.code_generator_image import (
+from ai_workspace.agents.engineering_codegen.code_generator_image import (
     ImageInputState,
     ImageExtractionOutputState,
     InitialMetadata as ImageInitialMetadata,
     graph as image_graph,
 )
-
 import asyncio
 from .utils import save_generated_module
 
+router = APIRouter(prefix="/code_generator_chains")
 
+
+class QuestionData(BaseModel):
+    """
+    Input model for the V1 text-based generator.
+    Accepts a question and the name of the module to be created.
+    """
 router = APIRouter(prefix="/code_generator_chains")
 
 

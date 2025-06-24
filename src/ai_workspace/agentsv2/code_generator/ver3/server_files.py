@@ -8,6 +8,7 @@ from langgraph.graph import END, StateGraph, START
 from langchain import hub
 from schemas import CodeResponse
 from langsmith import Client
+from langchain_core.messages import SystemMessage
 
 client = Client()
 # ────────────────────────────────────────────────────────────────────────────────
@@ -19,6 +20,7 @@ QUESTION_VECTOR_STORE_PATH = r"ai_workspace\vectorstores\QUESTIONMOD_VS"
 N_SEARCH_QUERIES = 3
 CSV_PATH = r"data\QuestionDataV2_06122025_classified.csv"
 
+# Initialize LLMs
 fast_llm = ChatOpenAI(model=FASTLLM)
 long_context_llm = ChatOpenAI(model=LONGCONTEXTLLM)
 
@@ -38,13 +40,15 @@ q_retriever_js = SemanticExamplesCSV(
     vector_store=q_vectorstore,
 )
 q_retriever_py = SemanticExamplesCSV(
-    column_names=["question.html", "server.js"],
+    column_names=["question.html", "server.py"],
     csv_path=CSV_PATH,
     vector_store=q_vectorstore,
 )
 
 
-# Define the state
+# ────────────────────────────────────────────────────────────────────────────────
+# State and Function Definitions
+# ────────────────────────────────────────────────────────────────────────────────
 class State(BaseModel):
     question_html: str
     solution_guide: Optional[str] = None
@@ -53,7 +57,9 @@ class State(BaseModel):
 
 
 def generate_server_js(state: State):
-    # Retrieve the base prompt template from the hub
+    """
+    Generate server.js based on the provided question and solution guide.
+    """
     base_prompt = client.pull_prompt("server_js_template_base")
 
     if state.solution_guide:
@@ -62,18 +68,32 @@ def generate_server_js(state: State):
             "This solution guide outlines the intended approach and logic for solving the question. "
             "You must use the reasoning, steps, and methodology from this guide as the primary reference for how the question should be implemented and transformed into the JavaScript (server.js) file. "
             "Expand on the steps where necessary for clarity, but ensure that the structure and logic of the JavaScript output closely follow the solution guide's approach."
-            f"\n\nSolution Guide:\n{state.solution_guide}\n"
+            f"\n\nSolution Guide:\n{state.solution_guide.replace('{', '{{').replace('}', '}}')}\n"
         )
 
     q_retriever_js.set_filter({"isAdaptive": state.isAdaptive})
     prompt = q_retriever_js.format_template(
         query=state.question_html, k=1, base_template=base_prompt
     )
-    # print("This is the prompt inside server ", prompt)
-
-    # Generate the code response
-    chain = fast_llm.with_structured_output(CodeResponse, include_raw=True)
     messages = prompt.format_messages(question=state.question_html)  # type: ignore
+
+    # Add solution guide to the messages if provided
+    last_sys_idx = max(
+        (i for i, m in enumerate(messages) if isinstance(m, SystemMessage)), default=-1
+    )
+    if state.solution_guide:
+        solution_prompt = f"""
+            "\n\nAdditionally, you are provided with the following solution guide. "
+            "This solution guide outlines the intended approach and logic for solving the question. "
+            "You must use the reasoning, steps, and methodology from this guide as the primary reference for how the question should be implemented and transformed into the JavaScript (server.js) file. "
+            "Expand on the steps where necessary for clarity, but ensure that the structure and logic of the Python output closely follow the solution guide's approach."
+            f"\n\nSolution Guide:\n{state.solution_guide}\n"""
+        solution_msg = SystemMessage(content=solution_prompt)
+        insert_idx = last_sys_idx + 1
+        messages = messages[:insert_idx] + [solution_msg] + messages[insert_idx:]
+
+    # Generate the server.js code
+    chain = fast_llm.with_structured_output(CodeResponse, include_raw=True)
     result = chain.invoke(messages)
     ai_message = result["raw"]
     structured = parse_structured(CodeResponse, ai_message)
@@ -81,37 +101,46 @@ def generate_server_js(state: State):
 
 
 def generate_server_py(state: State):
-    # Retrieve the base prompt template from the hub
+    """
+    Generate server.py based on the provided question and solution guide.
+    """
     base_prompt = client.pull_prompt("server_py_template_base1")
 
-    if state.solution_guide:
-        base_prompt += (
-            "\n\nAdditionally, you are provided with the following solution guide. "
-            "This solution guide outlines the intended approach and logic for solving the question. "
-            "You must use the reasoning, steps, and methodology from this guide as the primary reference for how the question should be implemented and transformed into the JavaScript (server.js) file. "
-            "Expand on the steps where necessary for clarity, but ensure that the structure and logic of the Python output closely follow the solution guide's approach."
-            f"\n\nSolution Guide:\n{state.solution_guide}\n"
-        )
-
-    q_retriever_js.set_filter({"isAdaptive": state.isAdaptive})
+    q_retriever_py.set_filter({"isAdaptive": state.isAdaptive})
     prompt = q_retriever_py.format_template(
         query=state.question_html, k=1, base_template=base_prompt
     )
-    
-    # print("This is the prompt inside server ", prompt)
-    # Generate the code response
-    chain = fast_llm.with_structured_output(CodeResponse, include_raw=True)
     messages = prompt.format_messages(question=state.question_html)  # type: ignore
+
+    # Add solution guide to the messages if provided
+    last_sys_idx = max(
+        (i for i, m in enumerate(messages) if isinstance(m, SystemMessage)), default=-1
+    )
+    if state.solution_guide:
+        solution_prompt = f"""
+            "\n\nAdditionally, you are provided with the following solution guide. "
+            "This solution guide outlines the intended approach and logic for solving the question. "
+            "You must use the reasoning, steps, and methodology from this guide as the primary reference for how the question should be implemented and transformed into the Python (server.py) file. "
+            "Expand on the steps where necessary for clarity, but ensure that the structure and logic of the Python output closely follow the solution guide's approach."
+            f"\n\nSolution Guide:\n{state.solution_guide.replace('{', '{{').replace('}', '}}')}\n"""
+        solution_msg = SystemMessage(content=solution_prompt)
+        insert_idx = last_sys_idx + 1
+        messages = messages[:insert_idx] + [solution_msg] + messages[insert_idx:]
+
+    # Generate the server.py code
+    chain = fast_llm.with_structured_output(CodeResponse, include_raw=True)
     result = chain.invoke(messages)
     ai_message = result["raw"]
     structured = parse_structured(CodeResponse, ai_message)
     return {"server_file": structured.code}
 
 
+# ────────────────────────────────────────────────────────────────────────────────
+# Workflow Setup
+# ────────────────────────────────────────────────────────────────────────────────
 # Workflow for server.js generation
 workflow = StateGraph(State)
 workflow.add_node("generate_server_js", generate_server_js)
-
 workflow.add_edge(START, "generate_server_js")
 workflow.add_edge("generate_server_js", END)
 app = workflow.compile()
@@ -119,24 +148,26 @@ app = workflow.compile()
 # Workflow for server.py generation
 workflow_py = StateGraph(State)
 workflow_py.add_node("generate_server_py", generate_server_py)
-
 workflow_py.add_edge(START, "generate_server_py")
 workflow_py.add_edge("generate_server_py", END)
 app_py = workflow_py.compile()
 
-
+# ────────────────────────────────────────────────────────────────────────────────
+# Main Execution
+# ────────────────────────────────────────────────────────────────────────────────
 if __name__ == "__main__":
     save_graph_visualization(
         app,  # type: ignore
         "serverjs_graph.png",
         base_path=r"ai_workspace/agentsv2/code_generator/ver3/graphs",
-    )  #
+    )
     save_graph_visualization(
         app_py,  # type: ignore
         "serverpy_graph.png",
         base_path=r"ai_workspace/agentsv2/code_generator/ver3/graphs",
-    )  #
+    )
 
+    # Example test inputs for server.js and server.py generation
     t_inputs = [
         {
             "question_html": """<pl-question-panel>\n  
@@ -146,10 +177,12 @@ if __name__ == "__main__":
         },
     ]
 
+    # Stream output for server.js generation
     for t in t_inputs:
         for chunk in app.stream(t, stream_mode="updates"):
             print(chunk)
 
+    # Stream output for server.py generation
     for t in t_inputs:
         for chunk in app_py.stream(t, stream_mode="updates"):
             print(chunk)

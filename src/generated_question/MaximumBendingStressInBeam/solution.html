@@ -1,0 +1,47 @@
+<pl-solution-panel>
+    <h2>Problem Statement</h2>
+    <p>A simply supported steel beam with a span of [[params.span]] {{params.unitsSpan}} carries a point load of [[params.force]] {{params.unitsForce}} at its center.</p> 
+    <p>If the beam has a rectangular cross-section of width [[params.width]] {{params.unitsDist}} and height [[params.height]] {{params.unitsDist}}, determine the maximum bending stress ($ \mathbf{\sigma} $) in the beam.</p>
+</pl-solution-panel>
+
+<pl-hint level="1" data-type="text">Given data includes:
+<ul>
+    <li>Span of the beam: [[params.span]] {{params.unitsSpan}}</li>
+    <li>Point load: [[params.force]] {{params.unitsForce}}</li>
+    <li>Width of the beam: [[params.width]] {{params.unitsDist}}</li>
+    <li>Height of the beam: [[params.height]] {{params.unitsDist}}</li>
+</ul>
+</pl-hint>
+
+<pl-hint level="2" data-type="text">The maximum bending stress in a simply supported beam under a central load can be calculated using the formula:
+$$ \sigma = \frac{M}{S} $$
+where:
+<ul>
+    <li>$ M $ is the maximum moment.</li>
+    <li>$ S $ is the section modulus.</li>
+</ul>
+</pl-hint>
+
+<pl-hint level="3" data-type="text">The maximum moment ($ M $) for a simply supported beam with a central load can be calculated as:
+$$ M = \frac{P \cdot L}{4} $$
+where:
+<ul>
+    <li>$ P $ is the load applied at the center ([[params.force]])</li>
+    <li>$ L $ is the length of the span ([[params.span]])</li>
+</ul>
+</pl-hint>
+
+<pl-hint level="4" data-type="text">The section modulus ($ S $) for a rectangular cross-section is given by:
+$$ S = \frac{b \cdot h^2}{6} $$
+where:
+<ul>
+    <li>$ b $ is the width ([[params.width]])</li>
+    <li>$ h $ is the height ([[params.height]])</li>
+</ul>
+</pl-hint>
+
+<pl-hint level="5" data-type="text">Substituting back into the maximum bending stress formula:
+$$ \sigma = \frac{\frac{P \cdot L}{4}}{\frac{b \cdot h^2}{6}} = \frac{3P L}{2b h^2} $$
+Use this equation to calculate the maximum bending stress.</pl-hint>
+
+<pl-hint level="6" data-type="text">Remember to ensure all units are consistent before performing calculations.</pl-hint>

@@ -1,0 +1,48 @@
+<pl-solution-panel>
+<p>To determine the maximum bending stress in a simply supported beam under a central point load, we can use the formula:</p>
+
+<p><strong>Bending Stress Formula:</strong></p>
+<p>
+\[ \sigma_{max} = \frac{M_{max} \cdot c}{I} \]
+</p>
+
+<p>Where:</p>
+<ul>
+    <li><strong>\( M_{max} \)</strong> is the maximum moment at the center of the beam.</li>
+    <li><strong>\( c \)</strong> is the distance from the neutral axis to the outer fiber (half the height of the beam, \( \frac{h}{2} \)).</li>
+    <li><strong>\( I \)</strong> is the moment of inertia of the cross-section.</li>
+</ul>
+
+<pl-hint level="1" data-type="text">
+The maximum moment \( M_{max} \) for a simply supported beam with a point load at the center is given by:
+\[ M_{max} = \frac{P \cdot L}{4} \]
+</pl-hint>
+
+<pl-hint level="2" data-type="text">
+Substituting the values for \( P \) (point load) and \( L \) (span of the beam):
+\[ M_{max} = \frac{{params.load} \cdot {{params.span}}}{4} \]
+</pl-hint>
+
+<pl-hint level="3" data-type="text">
+To find the moment of inertia \( I \) for a rectangular cross-section, use:
+\[ I = \frac{b \cdot h^3}{12} \]
+</pl-hint>
+
+<pl-hint level="4" data-type="text">
+The distance to the outer fiber is:
+\[ c = \frac{h}{2} \]
+</pl-hint>
+
+<pl-hint level="5" data-type="text">
+Now, substituting your values for \( P \), \( L \), \( h \), and \( b \) into the bending stress formula:
+\[ \sigma_{max} = \frac{M_{max} \cdot \frac{h}{2}}{I} \]
+</pl-hint>
+
+<pl-hint level="6" data-type="text">
+Ensure your final answer for bending stress is converted to MPa. Remember that to convert from Pa to MPa, you need to multiply your value by \( 10^{-6} \) (1 Pa = 10^{-6} MPa).
+</pl-hint>
+
+<pl-hint level="7" data-type="text">
+If you are using an optional 'intermediate_values' structure, you can store and reference the calculated maximum moment \( M_{max} \), moment of inertia \( I \), and distance \( c \) to help guide your computations.
+</pl-hint>
+</pl-solution-panel>

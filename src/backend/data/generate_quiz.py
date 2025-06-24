@@ -7,7 +7,7 @@ from backend.data.question_models import get_question_files
 from ..data.helpers import read_file, format_question
 from ..processing.code_runners.code_runner import run_generate
 from typing import Literal
-from ..processing.code_runners.utils import (
+from ..processing.code_runners.response_models import (
     CodeRunResponse,
     QuizData,
     GenerateQuizResponse,
@@ -73,7 +73,7 @@ async def generate_quiz(
             meta = json.load(f)
             isAdaptive = meta.get("isAdaptive")
 
-        # Conver to bool
+        # Convert to bool
         if isinstance(isAdaptive, str):
             try:
                 isAdaptive = str(isAdaptive).strip().lower() == "true"
@@ -92,6 +92,7 @@ async def generate_quiz(
             results: CodeRunResponse = await asyncio.to_thread(
                 run_generate, server_file
             )
+            print("These are the results, ", results)
             # Catch an error
             if not results.success:
                 return results  # This returns an object with the error code
@@ -113,10 +114,15 @@ async def generate_quiz(
         solution_html_path = os.path.join(tmpdir, "solution.html")
         rendered_solution = None
         if os.path.exists(solution_html_path):
-            solution_content = await asyncio.to_thread(read_file, solution_html_path)
-            rendered_solution = await asyncio.to_thread(
-                format_question, html=solution_content, data=data
-            )
+            try:
+                solution_content = await asyncio.to_thread(read_file, solution_html_path)
+                rendered_solution = await asyncio.to_thread(
+                    format_question, html=solution_content, data=data
+                )
+            except Exception as e:
+                rendered_solution = f"<div>Error rendering quiz solution{e}</div>"
+        else:
+            rendered_solution = "<div>Error rendering quiz solution: solution.html not found</div>"
 
         data = GenerateQuizResponse(
             question_html=rendered_question_html,

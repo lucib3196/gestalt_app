@@ -211,7 +211,7 @@ def generate_question_file(state: State):
             "This solution guide outlines the intended approach and logic for solving the question. "
             "You must use the reasoning, steps, and methodology from this guide as the primary reference for how the question should be implemented and transformed into the HTML file. "
             "Expand on the steps where necessary for clarity, but ensure that the structure and logic of the HTML output closely follow the solution guide's approach."
-            f"\n\nSolution Guide:\n{state.solution}\n"
+            f"\n\nSolution Guide:\n{state.solution.replace('{', '{{').replace('}', '}}')}\n"
         )
         solution_msg = SystemMessage(content=solution_prompt)
         insert_idx = (
@@ -226,6 +226,54 @@ def generate_question_file(state: State):
     # Generate the code response
     chain = fast_llm.with_structured_output(CodeResponse, include_raw=True)
     result = chain.invoke(messages)
+    ai_message = result["raw"]
+    structured = parse_structured(CodeResponse, ai_message)
+    return {"qfile": structured.code}
+
+
+clean_file_prompt = ChatPromptTemplate.from_messages(
+    [
+        (
+            "system",
+            (
+                "You are an expert developer specializing in code formatting and "
+                "template processing. Your task is to review, verify, and modify "
+                "the provided code so it complies with our **new placeholder "
+                "standard**."
+            ),
+        ),
+        (
+            "human",
+            """Here is a code snippet that will be processed on our backend. Please apply **all** of the following changes:
+
+1. **Placeholder Migration**  
+   • Every template reference written as `params.value`, `params.correct_answers`, or similar **must** be wrapped in the new double-square-bracket syntax:  
+     • `[[params.value]]`  
+     • `[[params.correct_answers]]`  
+
+2. **LaTeX Delimiters**  
+   • Ensure all LaTeX is correctly enclosed—use `$ ... $` for inline math and `$$ ... $$` for display math.  
+   • Fix any formatting issues so each expression renders cleanly.
+
+3. **Integrity Check**  
+   • After updating, **verify** that no deprecated `{{ … }}` placeholders remain.  
+   • Do **not** alter any other program logic or structure.
+
+Return **only** the cleaned code with these requirements satisfied.
+
+Code to convert:
+{question}""",
+        ),
+    ]
+)
+
+clean_file = clean_file_prompt | fast_llm.with_structured_output(
+    CodeResponse, include_raw=True
+)
+
+
+def clean_up_file(state: State):
+    result = clean_file.invoke({"question": state.qfile})
     ai_message = result["raw"]
     structured = parse_structured(CodeResponse, ai_message)
     return {"qfile": structured.code}
@@ -252,11 +300,14 @@ workflow = StateGraph(State)
 workflow.add_node("generate_search_queries", generate_queries)
 workflow.add_node("retrieve_tag_info", retrieve_tag_info)
 workflow.add_node("generate_solution_file", generate_question_file)
+workflow.add_node("clean_up_file", clean_up_file)
 
 workflow.add_edge(START, "generate_search_queries")
 workflow.add_edge("generate_search_queries", "retrieve_tag_info")
 workflow.add_edge("retrieve_tag_info", "generate_solution_file")
-workflow.add_edge("generate_solution_file", END)
+workflow.add_edge("generate_solution_file", "clean_up_file")
+workflow.add_edge("clean_up_file",END)
+
 app = workflow.compile()
 
 

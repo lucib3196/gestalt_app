@@ -12,7 +12,7 @@ interface ModGeneratorProps {
   title: string;
   subtitle: string;
   examples: ExampleItem[];
-  inputComponent?: React.ReactNode|React.FC
+  inputComponent?: React.ReactNode | React.FC
 }
 
 interface ModInfoProps {
@@ -30,9 +30,14 @@ interface IndividualExample {
 
 // Renders title and subtitle
 const ModInfo: React.FC<ModInfoProps> = ({ title, subtitle }) => (
-  <div className="gen-info-container">
-    <h1 className="gen-title">{title}</h1>
-    <h2 className="gen-subheading">{subtitle}</h2>
+  <div className="flex flex-col items-center mt-6 mb-4 px-4 text-center">
+    <h1 className="text-4xl font-extrabold text-DarkShades mb-2 leading-tight break-words">
+      {title}
+    </h1>
+    <h2 className="text-xl font-semibold text-blue-500 mt-1 max-w-2xl">
+      {subtitle}
+    </h2>
+    <div className="w-16 h-1 bg-blue-200 rounded-full mt-3 mb-1" />
   </div>
 );
 
@@ -42,23 +47,27 @@ const IndividualExampleContainer: React.FC<IndividualExample> = ({
   index,
   name,
 }) => (
-  <div className="ind-ex-container">
-    <span className="fw-bold">
-      Example {index} {name && `- ${name}`}
-    </span>
-    <span className="underline"></span>
-    <p>{example}</p>
+  <div className="flex flex-col mb-4 w-full bg-blue-50 rounded-lg p-4 shadow-sm border border-blue-100">
+    <div className="flex items-center mb-2">
+      <span className="text-blue-700 font-semibold mr-2">
+        Example {index}
+      </span>
+      {name && (
+        <span className="text-gray-500 italic text-sm">- {name}</span>
+      )}
+    </div>
+    <p className="ml-2 leading-relaxed text-base text-DarkShades italic">{example}</p>
   </div>
 );
 
 // Renders the full example list
 const ModExample: React.FC<{ examples: ExampleItem[] }> = ({ examples }) => (
   <>
-    <h3 className="gen-example-text">The following are examples of valid inputs</h3>
-    <div className="example-container">
-      <ul className="mod-example-list">
+    <h3 className="text-lg font-semibold italic text-LightAccent mb-2">The following are examples of valid inputs</h3>
+    <div className="flex justify-center w-full mt-4">
+      <ul className="w-full list-none p-0">
         {examples.map((example, index) => (
-          <li className="mod-example-list" key={index}>
+          <li key={index} className="ind-ex-container">
             <IndividualExampleContainer
               example={example.text}
               name={example.name}
@@ -78,11 +87,13 @@ const ModGenerators: React.FC<ModGeneratorProps> = ({
   examples,
   inputComponent
 }) => (
-  <Container className="mod-container">
+  <div className="flex flex-col items-center my-6 mx-auto border border-gray-200 rounded-2xl max-w-3xl min-w-[350px] p-8 bg-white shadow-lg">
     <ModInfo title={title} subtitle={subtitle} />
-    <ModExample examples={examples} />
-    {inputComponent && <>{inputComponent}</>}
-  </Container>
+    <div className="w-full mt-4 flex flex-col">
+      <ModExample examples={examples} />
+    </div>
+    {inputComponent && <div className="w-full mt-6 flex">{inputComponent}</div>}
+  </div>
 );
 
 

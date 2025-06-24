@@ -107,3 +107,83 @@ class FilesData(BaseModel):
     server_py: str = ""
     solution_html: str = ""
     metadata: dict[str, Any] = {}
+
+
+# Extract Derivations
+class Derivation(BaseModel):
+    """
+    Represents a single derivation extracted from lecture content.
+
+    Attributes:
+        derivation_name (str): The name of the derivation and what it aims to demonstrate.
+        derivation_steps (str): A list of steps involved in the derivation, each step explained and formatted using LaTeX for mathematical symbols or equations.
+        complete_derivation (bool): Indicates if the derivation is complete. Returns True if complete, else False.
+    """
+
+    derivation_name: str = Field(
+        ..., description="The name of the derivation and what it aims to demonstrate."
+    )
+    derivation_steps: str = Field(
+        ...,
+        description=(
+            "A list of steps involved in the derivation, each step explained and formatted using LaTeX "
+            "for mathematical symbols or equations. For any mathematical symbols, use LaTeX and delimit using "
+            "`$` for inline math and `$$` for block-level math."
+        ),
+    )
+    complete_derivation: bool = Field(
+        ..., description="If the derivation is complete, return True; else False."
+    )
+
+
+class Derivations(BaseModel):
+    """
+    Container for multiple derivations extracted from lecture content.
+
+    Attributes:
+        derivations (List[Derivation]): A list of extracted derivations.
+    """
+
+    derivations: List[Derivation] = Field(
+        ..., description="A list of extracted derivations."
+    )
+
+
+class LectureSummary(BaseModel):
+
+    lecture_name: str = Field(
+        ...,
+        title="Title of the lecture",
+        description="A title for the lecture should describe the main ideas that the lecture covers",
+    )
+    summary: str = Field(
+        ...,
+        title="A consise and to the point summary of the lecture and what it convered",
+        description="A summary of the lecture",
+    )
+    key_takeaways: List[Section] = Field(
+        ...,
+        description="Titles and descriptions for a section on the iportant principles, laws, formulas introduced.",
+        title="Title and sections of the key takeaways",
+    )
+    learning_objectives: List[Section] = Field(
+        ...,
+        description="Titles and Section of what the students should understand from the lecture",
+    )
+    technical_concepts: List[Section] = Field(
+        ...,
+        description="Titles and Section of the technical concepts introduced including definitions, laws and principles, fundamental equations etc",
+    )
+
+    @property
+    def as_str(self) -> str:
+        key_takeaways = "\n\n".join(
+            key_takeaway.as_str for key_takeaway in self.learning_objectives
+        )
+        learning_objectives = "\n\n".join(
+            learning_objective.as_str for learning_objective in self.learning_objectives
+        )
+        technical_concepts = "\n\n".join(
+            technical_concept.as_str for technical_concept in self.technical_concepts
+        )
+        return f"# {self.lecture_name}\n {self.summary}  \n\n{key_takeaways}\n\n{learning_objectives}\n\n{technical_concepts}".strip()

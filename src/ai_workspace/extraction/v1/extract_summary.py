@@ -7,14 +7,14 @@ from pydantic import BaseModel
 from langchain_openai import ChatOpenAI
 from langchain import hub
 
-from ...models.questionModels import LectureSummary
-from ...utils.helper import (
+from schemas import Question
+from ai_workspace.utils import (
     extract_token_usage,
     parse_structured,
     pdf_to_image_persistent,
     to_serializable,
 )
-from ...image_processing.ImageLLMProcessor import ImageLLMProcessor
+from ai_workspace.agentsv2.image_processing import ImageLLMProcessor
 
 # ----------------------
 # Constants & LLM Clients

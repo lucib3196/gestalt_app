@@ -1,12 +1,18 @@
 from typing import Optional, Annotated, List, Dict, Literal
 from pydantic import BaseModel, Field
-from ai_workspace.utils import save_graph_visualization, keep_first, merge_files_data,keep_new
+from ai_workspace.utils import (
+    save_graph_visualization,
+    keep_first,
+    merge_files_data,
+    keep_new,
+    to_serializable,
+)
 from langchain_openai import ChatOpenAI
 from langgraph.graph import END, START, StateGraph
 from langgraph.pregel import RetryPolicy  # type: ignore
 from langchain_core.prompts import ChatPromptTemplate
 import operator
-
+from typing import Any
 from schemas import Question, InitialMetadata, FilesData
 from .question_html import app as question_html_chain, State as QHtmlState
 from .server_files import app as js_chain, app_py as py_chain, State as ServerStateInput
@@ -26,7 +32,6 @@ MAX_ITERATIONS = 3
 # ────────────────────────────────────────────────────────────────────────────────
 # Chains
 # ────────────────────────────────────────────────────────────────────────────────
-
 
 
 # Reducers
@@ -67,23 +72,52 @@ code_grader_prompt = ChatPromptTemplate.from_messages(
     [
         (
             "system",
-            """You are a coding assistant with expertise in creating educational content for engineering/physics/science students. Your primary task is to analyze whether the solution guide, the frontend question display, and the server files (in Python or JavaScript) are fully compatible with one another, especially regarding dynamic placeholders delimited as {{params.value}} or {{correct_answers.value}}. These placeholders must be generated dynamically by the server files and referenced correctly in both the question view and the solution.
+            """You are an expert coding assistant focused on educational content for engineering, physics, and science students. Your task is to review and ensure compatibility between the solution guide, frontend question display, and server files (Python or JavaScript), with special attention to dynamic placeholders such as double curly braces params.value or correct_answers.value.
 
-Focus on these aspects:
-- Ensure all dynamic placeholders in the question and solution are defined and populated by the server files.
-- Check that all required imports and variables are present and correctly referenced.
-- Identify and implement any necessary unit conversions for physics/math/engineering problems to ensure the solution is accurate and comprehensible. Provide clear instructions on how to perform these conversions in the solution and server files.
-- Suggest modifications to the solution guide or server files to make the solution as dynamic and instructive as possible, including showing intermediate steps of computation and conversion to aid student understanding.
-- If necessary, recommend changes to the question view, solution, or server files to improve compatibility and educational value.
+Breakdown of requirements:
 
-Your approach should be as specific as possible, detailing what needs to be implemented with clear steps outlining the issues identified and how you plan to address them.
+Server Files (server_js, server_py):
+- Must output a dictionary with the top-level keys: 'params' and 'correct_answers', for example:
+  "params": ...,
+  "correct_answers": ...
+- Place any intermediate values needed for computation or clarity inside 'params' as additional keys.
+- All dynamic placeholders in the question and solution must be defined and populated by the server files using this structure.
+- Ensure all required imports and variables are present and correctly referenced.
+- Identify and implement any necessary unit conversions for physics, math, or engineering problems, and provide clear instructions for these conversions in both the solution and server files.
+- Suggest improvements to make the server files as dynamic and instructive as possible, including intermediate steps and conversions to aid student understanding.
 
-If you need to modify any of the files, return the name of the file you want to modify. Currently, you can modify 'question_html', 'server_js', 'server_py', or 'solution_html'.
+Solution File (solution_html):
+- Must use the parameters generated from the server files, referencing them 
+- Clearly show all intermediate steps and unit conversions using these dynamic placeholders.
+- Provide explanations that help students understand how the parameters and answers are derived from the server files.
+
+General:
+- Recommend changes to the question view, solution, or server files to improve compatibility and educational value.
+
+Example server file output structure:
+"params": 
+    "H": originalHeight,
+    "v": velocity,
+    "unitsDist": selectedUnitSystem.dist,
+    "unitsSpeed": selectedUnitSystem.speed,
+    "intermediate": 
+        "originalHeight": originalHeight,
+        "heightInMeters": heightInMeters
+    ,
+"correct_answers": 
+    "t": timeToGround
+,
+"nDigits": 3,
+"sigfigs": 3
+
+If you need to modify any files, specify which: question_html, server_js, server_py, or solution_html.
 
 Structure your answer as follows:
-1. Description of the code solution and its dynamic aspects.
-2. List of imports and variables required for compatibility.
-3. The functioning code block(s) with any suggested improvements for dynamic content, intermediate steps, and conversions.""",
+1. Brief description of the code solution and its dynamic aspects.
+2. List of required imports and variables for compatibility.
+3. Improved code block(s) for dynamic content, intermediate steps, and conversions, ensuring the server files maintain the 'params' and 'correct_answers' structure and all intermediate values are within 'params'.
+4. For the solution file, ensure it uses the parameters from the server files and demonstrates all steps using dynamic placeholders.
+""",
         ),
         ("human", "{input}"),
     ]
@@ -146,7 +180,7 @@ class CodeGenState(BaseModel):
         Field(default_factory=MetadataState),
         description="Metadata related to the question.",
     )
-    files: Annotated[FilesData | Dict[str, str], merge_files_data] = Field(
+    files: Annotated[FilesData | Dict[str, Any], merge_files_data] = Field(
         default_factory=FilesData, description="The files to be generated."
     )
     is_adaptive: Annotated[bool, keep_first] = Field(
@@ -156,6 +190,15 @@ class CodeGenState(BaseModel):
         default_factory=list, description="Code Review Messages"
     )
     iterations: int = Field(0, description="Number of iterations so far.")
+
+
+class CodeGenOutput(BaseModel):
+    question_payload: Annotated[Question, keep_first]
+    metadata: Annotated[dict, keep_first]
+    files: Annotated[FilesData, merge_files_data]
+    # The other metadata are seperated this needs to be fixed
+    q_metadata: Annotated[MetadataState, keep_new]
+    initial: Annotated[Optional[InitialMetadata], keep_new]
 
 
 # ────────────────────────────────────────────────────────────────────────────────
@@ -257,8 +300,8 @@ def adaptive_code_review(state: CodeGenState) -> CodeGenState:
 
     code_blocks = f"""
     The following is the code to review
-    question.html: {state.files.question_html} \n
-    solution.html: {state.files.solution_html} \n
+    question.html: {state.files.question_html} \n 
+    solution.html: {state.files.solution_html} \n 
     server.js: {state.files.server_js} \n
     server.py {state.files.server_py} \n
     """  # type: ignore
@@ -306,6 +349,29 @@ def modify_code(state: CodeGenState) -> CodeGenState:
     return {"files": all_files}  # type: ignore
 
 
+def finalize_package(state: CodeGenState) -> CodeGenOutput:
+    # Serialize and combine metadata
+    metadata = {}
+    if state.initial_metadata:
+        metadata.update(to_serializable(state.initial_metadata))
+    if state.question_metadata:
+        metadata.update(to_serializable(state.question_metadata))
+
+    # Merge metadata into files
+    files = state.files
+    if isinstance(files, dict):
+        files = FilesData(**files)
+    files.metadata = metadata
+
+    return CodeGenOutput(
+        question_payload=state.question_payload,
+        metadata=metadata,
+        files=files,
+        q_metadata=state.question_metadata,
+        initial=state.initial_metadata,
+    )
+
+
 # ────────────────────────────────────────────────────────────────────────────────
 # Helper Functions
 # ────────────────────────────────────────────────────────────────────────────────
@@ -330,7 +396,7 @@ def extract_question_html(files: Optional[FilesData | Dict[str, str]]) -> str:
 # Graph Construction
 # ────────────────────────────────────────────────────────────────────────────────
 
-graph = StateGraph(CodeGenState, input=CodeGenInput)
+graph = StateGraph(CodeGenOutput, input=CodeGenInput)
 
 # Register nodes
 graph.add_node(
@@ -357,6 +423,8 @@ graph.add_node(
 )
 graph.add_node("modify_code", modify_code, retry=RetryPolicy(max_attempts=1))
 
+graph.add_node("finalize_package", finalize_package, retry=RetryPolicy(max_attempts=1))
+
 # Register edges
 graph.add_edge(START, "extract_question_metadata")
 graph.add_edge("extract_question_metadata", "generate_question_html")
@@ -377,7 +445,7 @@ graph.add_edge("generate_server_py", "adaptive_code_review")
 graph.add_conditional_edges(
     "generate_solution_html",
     route_solution_generation,
-    ["adaptive_code_review", END],
+    ["adaptive_code_review", "finalize_package"],
 )
 
 # Code review can lead to modification or end
@@ -394,7 +462,8 @@ graph.add_conditional_edges(
 
 
 # If code is modified, process ends (can be extended for further iterations)
-graph.add_edge("adaptive_code_review", END)
+graph.add_edge("adaptive_code_review", "finalize_package")
+graph.add_edge("finalize_package", END)
 compiled_graph = graph.compile()
 
 

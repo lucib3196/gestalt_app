@@ -12,11 +12,12 @@ const config = {
   tex: {
     packages: { "[+]": ["html"] },
     inlineMath: [
-      ["$", "$"],
+      ["$", "$"]
     ],
     displayMath: [
       ["$$", "$$"],
-    ]
+    ],
+  
   },
   startup: { typeset: true }
 };

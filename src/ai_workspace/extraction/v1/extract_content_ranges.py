@@ -1,21 +1,21 @@
 import os
 import json
 import asyncio
-from typing import List, Tuple, Annotated,Optional
+from typing import List, Tuple, Annotated, Optional
 
 from pydantic import BaseModel, Field, AfterValidator
 from langchain_openai import ChatOpenAI
 from langchain import hub
 
 
-from ...models.questionModels import Question
-from ...utils.helper import (
+from schemas import Question
+from ai_workspace.utils import (
     extract_token_usage,
     parse_structured,
     pdf_to_image_persistent,
     to_serializable,
 )
-from ...image_processing.ImageLLMProcessor import ImageLLMProcessor
+from ai_workspace.agentsv2.image_processing import ImageLLMProcessor
 
 # ----------------------
 # Constants & LLM Clients
@@ -47,7 +47,11 @@ class PageRangeOutput(BaseModel):
 
 
 async def extract_content_ranges(
-    image_paths: list[str], prompt: str, schema: BaseModel, model: str, step_name:Optional[str]=None
+    image_paths: list[str],
+    prompt: str,
+    schema: BaseModel,
+    model: str,
+    step_name: Optional[str] = None,
 ):
     image_extraction = ImageLLMProcessor(
         prompt=prompt,
@@ -58,7 +62,9 @@ async def extract_content_ranges(
     response = await image_extraction.send_arequest_raw(image_paths)
     ai_message = response.get("raw")
     content_ranges = parse_structured(schema, ai_message)
-    token_usage = extract_token_usage(ai_message, step_name if step_name else "extract_content_ranges" )
+    token_usage = extract_token_usage(
+        ai_message, step_name if step_name else "extract_content_ranges"
+    )
 
     sep_imgpaths = []
     for r in content_ranges.ranges:
@@ -96,8 +102,9 @@ async def extract_derivation_ranges(image_paths: list[str]):
         prompt=prompt,
         schema=PageRangeOutput,
         model=LONG_CONTEXT_MODEL,
-        step_name="extract_derivations_ranges"
+        step_name="extract_derivations_ranges",
     )
+
 
 async def extract_question_ranges(image_paths: list[str]):
     prompt = """
@@ -114,14 +121,14 @@ async def extract_question_ranges(image_paths: list[str]):
     This task is a preliminary analysis to segment the document into individual question blocks for further processing.
         """
     return await extract_content_ranges(
-    image_paths=image_paths,
-    prompt=prompt,
-    schema=PageRangeOutput,
-    model=LONG_CONTEXT_MODEL,
-    step_name="extract_question_ranges",
-)
-    
-    
+        image_paths=image_paths,
+        prompt=prompt,
+        schema=PageRangeOutput,
+        model=LONG_CONTEXT_MODEL,
+        step_name="extract_question_ranges",
+    )
+
+
 async def main():
     base_path = os.path.dirname(os.path.abspath(__file__))
     pdf_path = r"Lectures\Lec11-post.pdf"
@@ -130,12 +137,13 @@ async def main():
     os.makedirs(output_dir, exist_ok=True)
 
     image_paths = await pdf_to_image_persistent(pdf_path, output_dir, annotate=True)
-    
+
     question_response = await extract_question_ranges(image_paths)
     # derivation_response = await extract_derivation_ranges(image_paths)
-    
-    print("Question Ranges:\n\n", question_response,"\n\n")
+
+    print("Question Ranges:\n\n", question_response, "\n\n")
     # print("Derivation Ranges:\n\n", derivation_response,"\n\n")
-    
+
+
 if __name__ == "__main__":
     asyncio.run(main())

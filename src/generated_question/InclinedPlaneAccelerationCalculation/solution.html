@@ -1,0 +1,51 @@
+<pl-solution-panel>
+  <pl-hint level="1" data-type="text">
+    First, we need to determine the forces acting on both blocks in the system.
+    For block {{params.m2}}, the force due to gravity is: $$F_2 = m_2 g =
+    {params.m2_mass} \times 9.81$$
+    <br />Let's calculate this: <br />$$F_2 = {params.m2_mass} \times 9.81$$
+  </pl-hint>
+  <pl-hint level="2" data-type="text">
+    For block {{params.m1}} on the incline, the force due to gravity acting
+    along the incline is: $$F_1 = m_1 g \sin(\theta) = {params.m1} \times 9.81
+    \times \sin({params.theta})$$
+    <br />Calculating F1: <br />$$F_1 = {params.m1} \times 9.81 \times
+    \sin({params.theta} \times \frac{\pi}{180})$$ (Note: We convert \theta from
+    degrees to radians)
+  </pl-hint>
+  <pl-hint level="3" data-type="text">
+    The friction force is given by: $$F_{\text{friction}} = \mu_k \times
+    F_{n_1}$$ where: $$F_{n_1} = m_1 g \cos(\theta)$$
+    <br />Now we can calculate the normal force: <br />$$F_{n_1} = {params.m1}
+    \times 9.81 \times \cos({params.theta} \times \frac{\pi}{180})$$ <br />Thus,
+    the friction force becomes: <br />$$F_{\text{friction}} = \mu_k \times
+    \left({params.m1} \times 9.81 \times \cos({params.theta} \times
+    \frac{\pi}{180})\right)$$
+  </pl-hint>
+  <pl-hint level="4" data-type="text">
+    The net force on the system can be determined from the difference between
+    the gravitational force acting on m2 and the component of gravitational
+    force acting on m1 along the incline: $$F_{\text{net}} = F_2 - F_1 -
+    F_{\text{friction}}$$
+    <br />Substituting in our calculations: <br />$$F_{\text{net}} = F_2 - F_1 -
+    F_{\text{friction}}$$ <br />$$ = {params.m2_mass} \times 9.81 -
+    \left({params.m1} \times 9.81 \times \sin({params.theta} \times
+    \frac{\pi}{180})\right) - F_{\text{friction}}$$
+  </pl-hint>
+  <pl-hint level="5" data-type="text">
+    Now, according to Newton's second law, we can find the acceleration of the
+    system: $$a = \frac{F_{\text{net}}}{m_1 + m_2}$$ where: $$F_{\text{net}} =
+    {params.m2_mass} \times 9.81 - \left({params.m1} \times 9.81 \times
+    \sin({params.theta} \times \frac{\pi}{180})\right) - \left(\mu_k \times
+    \left({params.m1} \times 9.81 \times \cos({params.theta} \times
+    \frac{\pi}{180})\right)\right)$$
+    <br />Finally, substituting in all values gives: <br />$$a =
+    \frac{{params.m2_mass} \times 9.81 - {params.m1} \times 9.81 \times
+    \sin({params.theta} \times \frac{\pi}{180}) - \left(\mu_k \times
+    \left({params.m1} \times 9.81 \times \cos({params.theta} \times
+    \frac{\pi}{180})\right)\right)}{{params.m1} + {params.m2}}$$
+    <br />
+    The resulting acceleration of block {{params.m2}} in m/s² is:
+    <br />$$a = {correct_answers.acceleration}$$
+  </pl-hint>
+</pl-solution-panel>

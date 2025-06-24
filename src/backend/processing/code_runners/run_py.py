@@ -1,7 +1,7 @@
 from typing import Any
 import importlib.util
 
-from .utils import CodeRunResponse, QuizData
+from .response_models import CodeRunResponse, QuizData
 
 
 def import_module_from_path(path: str) -> Any:

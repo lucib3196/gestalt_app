@@ -84,6 +84,8 @@ const QuizContainer: React.FC<QuizContainerProps> = ({ folder_id }) => {
                 { server_type: selectedLanguage }
             );
             setSolutionHTML(response.data);
+            console.log("This is the solution")
+            console.log(response.data)
         } catch {
             setSolutionHTML(null);
             console.log(solutionHtml);

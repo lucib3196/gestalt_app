@@ -16,6 +16,7 @@ from fastapi.security import HTTPBasic, HTTPBasicCredentials
 # )
 from .routes import question_models, generate_quiz
 from .routes.codegen import codegen_v2
+from .routes.codegen import codegen_v3
 from .routes import question_models
 from ai_workspace.agents.simple_chat.simple_chat import graph
 
@@ -29,6 +30,7 @@ app.include_router(generate_quiz.router)
 # app.include_router(image_chain.router)
 # app.include_router(code_generator_chains.router)
 app.include_router(codegen_v2.router)
+app.include_router(codegen_v3.router)
 
 # Allow CORS for your React frontend
 origins = [

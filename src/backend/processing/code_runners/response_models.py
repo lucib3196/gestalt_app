@@ -3,8 +3,9 @@ from typing import Literal, Optional, Union, Any, Dict
 
 
 class QuizData(BaseModel):
-    params: Dict[str, Union[str, int, float]]
-    correct_answers: Dict[str, Union[str, int, float]]
+    params: Dict[str, Any]
+    correct_answers: Dict[str, Any]
+    intermediate: Optional[Dict[str, Any]]=None
     nDigits: Optional[int] = None
     sigfigs: Optional[int] = None
 

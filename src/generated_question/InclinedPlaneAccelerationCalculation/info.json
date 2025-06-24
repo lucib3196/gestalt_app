@@ -1,0 +1,20 @@
+{
+  "question": "A block of mass $m_1$ rests on an incline of angle $\\theta = 20^\\circ$. The coefficients of static and kinetic friction are $\\mu_s = 0.8$ and $\\mu_k = 0.5$. It is connected via a massless string over a massless and frictionless pulley. Block $m_2$ has mass 2 kg. If $m_1 = 1.5$kg, what's the magnitude of the acceleration of the $m_2$ (in $m/s^2$)?",
+  "title": "InclinedPlaneAccelerationCalculation",
+  "topic": [
+    "Newton's Second Law of Motion",
+    "Statics and Mechanics"
+  ],
+  "relevant_courses": [
+    "ME 103"
+  ],
+  "tags": [
+    "Inclined Plane",
+    "Acceleration",
+    "Pulley",
+    "Friction",
+    "Newton's Laws"
+  ],
+  "prereqs": [],
+  "isAdaptive": "True"
+}

@@ -1,0 +1,15 @@
+{
+  "question": "A simply supported steel beam with a span of 4 meters carries a point load of 10 kN at its center. If the beam has a rectangular cross-section of width 100 mm and height 200 mm, what is the maximum bending stress in the beam? (Give your answer in MPa.)",
+  "title": "MaximumBendingStressInSteelBeam",
+  "topic": ["Structural Mechanics", "Young's Modulus"],
+  "relevant_courses": ["ME 110", "ME 174"],
+  "tags": [
+    "bending stress",
+    "steel beam",
+    "mechanics of materials",
+    "simply supported beam",
+    "point load"
+  ],
+  "prereqs": ["Mechanics of Materials"],
+  "isAdaptive": "True"
+}

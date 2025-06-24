@@ -1,5 +1,5 @@
 import os
-from .utils import CodeRunResponse
+from .response_models import CodeRunResponse
 from typing import Callable, Union
 from .run_js import run_js
 from .run_py import run_generate_py

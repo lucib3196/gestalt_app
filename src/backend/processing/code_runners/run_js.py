@@ -1,21 +1,16 @@
 import subprocess
 import json5
-from .utils import CodeRunResponse, QuizData
+from pydantic import ValidationError
+from .response_models import CodeRunResponse, QuizData
+import json
 
 
 def run_js(path: str) -> CodeRunResponse:
     """
-    Runs a Node.js script (with mathjs available) and parses the result as JSON.
-
-    Args:
-        path (str): Path to the JavaScript file.
-
-    Returns:
-        Response: success status, result or error message.
+    Runs a Node.js script and parses the result as a QuizData object.
+    Provides fallback if output is malformed or validation fails.
     """
     try:
-        # You can require mathjs in your JS file, or pass NODE_PATH if needed.
-        # Here, we assume mathjs is installed in the same directory or globally.
         result = subprocess.run(
             ["node", path, "generate"],
             capture_output=True,
@@ -23,57 +18,73 @@ def run_js(path: str) -> CodeRunResponse:
             check=False,
             timeout=5,
         )
-        # Handle subprocess-level error
+
+        stdout = result.stdout.strip()
+        stderr = result.stderr.strip()
+
+        print("This is the stdout")
+        print(stdout)
         if result.returncode != 0:
             return CodeRunResponse(
                 success=False,
-                error=result.stderr.strip() or "JavaScript script returned an error.",
+                error=f"JavaScript script returned an error:\n{stderr}",
                 result=None,
                 http_status_code=500,
             )
 
-        # Handle empty stdout
-        if not result.stdout.strip():
+        if not stdout:
             return CodeRunResponse(
                 success=False,
-                error="No output returned from JavaScript script.",
+                error="No output was returned from the JavaScript script.",
                 result=None,
                 http_status_code=500,
             )
 
-        # Attempt to parse stdout as JSON
         try:
-            parsed = json5.loads(result.stdout)
-        except Exception as parse_err:
+            parsed = json5.loads(stdout)
+            # If parsed is a stringified JSON, parse it again
+            if isinstance(parsed, str):
+                parsed = json5.loads(parsed)
+
+            # Validate structure before model instantiation
+            required_keys = {"params", "correct_answers", "nDigits", "sigfigs"}
+            if not isinstance(parsed, dict) or not required_keys.issubset(parsed):
+                parsed_keys = parsed.keys() if isinstance(parsed, dict) else type(parsed).__name__
+                raise ValueError(f"Missing required keys: expected {required_keys}, got {parsed_keys}")
+
+            quiz_data = QuizData(**parsed)
+
             return CodeRunResponse(
-                success=False,
-                error=f"Failed to parse JSON5: {parse_err}",
-                result=result.stdout.strip(),
-                http_status_code=500,
+                success=True,
+                error=None,
+                result=quiz_data,
+                http_status_code=200,
             )
 
-        return CodeRunResponse(
-            success=True,
-            error=None,
-            result=QuizData(**parsed),
-            http_status_code=200,
-        )
+        except (json.JSONDecodeError, ValidationError, ValueError) as parse_err:
+            return CodeRunResponse(
+                success=False,
+                error=f"Parsing, structure, or validation error:\n{parse_err}",
+                result=stdout if not isinstance(parse_err, ValidationError) else parsed,
+                http_status_code=400 if not isinstance(parse_err, ValidationError) else 422,
+            )
 
     except subprocess.TimeoutExpired:
         return CodeRunResponse(
             success=False,
-            error="JavaScript execution timed out.",
+            error="JavaScript script execution timed out.",
             result=None,
-            http_status_code=500,
+            http_status_code=504,
         )
 
     except Exception as e:
         return CodeRunResponse(
             success=False,
-            error=f"Unexpected error running JS file '{path}': {e}",
+            error=f"Unexpected error running JavaScript file '{path}':\n{e}",
             result=None,
             http_status_code=500,
         )
+
 
 
 def test():

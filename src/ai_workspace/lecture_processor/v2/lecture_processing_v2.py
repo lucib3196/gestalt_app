@@ -7,33 +7,38 @@ from typing import List, Literal, Optional, Annotated
 from datetime import date, datetime
 from pydantic import BaseModel, Field, field_validator
 from langchain_openai import ChatOpenAI
-from langchain import hub
 from langgraph.graph import StateGraph, START, END
 from langgraph.pregel import RetryPolicy
 from typing import Union
-from ...image_processing.ImageLLMProcessor import ImageLLMProcessor
-from ...utils.helper import (
+from ai_workspace.agentsv2.image_processing.ImageLLMProcessor import ImageLLMProcessor
+from ai_workspace.utils import (
     extract_token_usage,
     parse_structured,
     pdf_to_image_persistent,
     to_serializable,
     save_graph_visualization,
 )
-from ...extraction.v1.extract_content_ranges import (
+from ai_workspace.extraction.v1.extract_content_ranges import (
     extract_derivation_ranges,
     extract_question_ranges,
 )
-from ...code_generator.v2.code_generator import compiled_graph as gestalt_generator
-from ...code_generator.v2.code_generator import CodeGenInput, CodeGenState
-from ...extraction.v1.extract_derivations import (
+
+from ai_workspace.agentsv2.code_generator.ver2.code_generator import (
+    compiled_graph as gestalt_generator,
+    CodeGenInput,
+    CodeGenState,
+)
+
+from ai_workspace.extraction.v1.extract_derivations import (
     extract_derivations,
     Derivations,
     Derivation,
 )
-from ...extraction.v1.extract_questions import extract_questions, AllQuestion
-from ...extraction.v1.extract_summary import extract_summary, LectureSummary
-from ...models.tokenCounter import TokenUsage, StepTokenUsage
-from ...utils.reducers import merge_files_data, keep_first, reduce_token_usage
+from ai_workspace.extraction.v1.extract_questions import extract_questions, AllQuestion
+from ai_workspace.extraction.v1.extract_summary import extract_summary
+from ai_workspace.models.tokenCounter import TokenUsage, StepTokenUsage
+from ai_workspace.utils.reducers import reduce_token_usage
+from schemas import LectureSummary
 
 FAST_MODEL = "gpt-4o-mini"
 LONG_CONTEXT_MODEL = "gpt-4.1-2025-04-14"
@@ -96,9 +101,7 @@ class LectureInputState(BaseModel):
         title="Separate Image Flag",
         description="Whether to treat each image separately for processing (True) or as a continuous lecture (False).",
     )
-    web_search: Optional[bool] = Field(
-        False
-    )
+    web_search: Optional[bool] = Field(False)
     lecture_metadata: Optional[LectureMetadata] = Field(
         None,
         title="Lecture Metadata",
@@ -387,7 +390,6 @@ async def finalize_lecture(state: LectureIntermediate):
         parts.append(f"base_questions: {state.lecture_questions.as_str}")
     if state.lecture_metadata:
         parts.append(f"lecture_meta: {state.lecture_metadata.as_str}")
-        
 
     # Join all provided parts into the prompt body
     prompt_body = "\n\n".join(parts)
@@ -468,7 +470,6 @@ async def finalize_lecture(state: LectureIntermediate):
     Ensure
 
     {prompt_body} """
-
 
     structured_llm = long_context_llm.with_structured_output(
         FinalLecture, include_raw=True

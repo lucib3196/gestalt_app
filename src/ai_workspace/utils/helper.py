@@ -1,6 +1,6 @@
 import os
 import tempfile
-from typing import Optional, List
+from typing import Optional, List, Any
 import json
 import fitz  # PyMuPDF
 
@@ -25,7 +25,7 @@ def save_graph_visualization(
         base_path (str, optional): The directory path to save the image. If None, saves in the script's directory.
     """
     try:
-        image_bytes = graph.get_graph().draw_mermaid_png() # type: ignore
+        image_bytes = graph.get_graph().draw_mermaid_png()  # type: ignore
         display(Image(image_bytes))
 
         save_dir = base_path or os.path.dirname(os.path.abspath(__file__))
@@ -145,7 +145,7 @@ async def pdf_to_image_persistent(
     return image_paths
 
 
-def to_serializable(obj):
+def to_serializable(obj) -> dict[str, Any]:
     """
     Recursively convert Pydantic models to serializable Python dicts.
     """
@@ -167,8 +167,10 @@ def parse_structured(model_class, ai_message):
     return model_class(**json.loads(ai_message.content))
 
 
-def validate_column(df:pd.DataFrame, column:str):
+def validate_column(df: pd.DataFrame, column: str):
     return column in df.columns
+
+
 def validate_columns(df: pd.DataFrame, columns: list[str]):
     invalid_columns = [c for c in columns if not validate_column(df, c)]
     if invalid_columns:

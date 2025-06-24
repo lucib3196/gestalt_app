@@ -4,14 +4,14 @@ from pydantic import BaseModel, Field
 from langchain import hub
 
 from .ImageLLMProcessor import ImageLLMProcessor
-from ..agents.engineering_codegen.code_generator import QuestionPayload
+from schemas import Question
 
 
 class QuestionResponse(BaseModel):
     """
     Expected structured output from the image-based question extractor.
     """
-    questions_payload: List[QuestionPayload]
+    questions_payload: List[Question]
     num_extracted: int = Field(description="Number of questions that were identified")
 
 
@@ -27,7 +27,7 @@ def main():
     )
 
     # Define the image path(s) to extract questions from
-    image_paths = [r"backend\ai_workspace\image_processing\Screenshot 2024-08-21 191637.png"]
+    image_paths = [r"..\Images\handwritten\mass_block.png"]
 
     # Run the async request and print results
     results = asyncio.run(extractor.send_arequest(image_paths))

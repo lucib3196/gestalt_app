@@ -173,6 +173,7 @@ from io import BytesIO
 from typing import List, Tuple, Dict, Any, Optional, Union, Sequence
 from pydantic import BaseModel
 from sqlalchemy import or_
+from schemas import FilesData
 
 # ─────────────────────────────────────────────────────────────
 # Third-Party Imports
@@ -186,7 +187,7 @@ from ast import literal_eval
 # Internal App Imports
 # ─────────────────────────────────────────────────────────────
 from backend.model.question_models import QuestionFolder, File, Package, PackageContents
-from ai_workspace.code_generator.v2.code_generator import CodeGenState
+from ai_workspace.agentsv2.code_generator.ver2.code_generator import CodeGenState
 
 
 # Mapping of file names to defaults for downloads.
@@ -411,7 +412,9 @@ def create_file(file: File, session: Session) -> File:
 
 
 def create_question_folder(
-    question_folder: QuestionFolder, data: Dict[str, Any], session: Session
+    question_folder: QuestionFolder,
+    data: Union[FilesData, Dict[str, Any]],
+    session: Session,
 ) -> QuestionFolder:
     """
     Create a new QuestionFolder and its associated File records.

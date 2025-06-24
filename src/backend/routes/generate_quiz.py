@@ -27,28 +27,69 @@ async def get_adaptive_quiz(
     data: QuizArg,
     session: Session = Depends(get_session),
 ):
-    response: CodeRunResponse = await quiz_service.generate_quiz(
+    # Always generate a fresh quiz and store in session
+    quiz_response: CodeRunResponse = await quiz_service.generate_quiz(
         question_folder_id, server_type=data.server_type, session=session
     )
-    if response.success and isinstance(response.result, GenerateQuizResponse):
-        quiz_data = response.result.quiz_data
-        
-        if isinstance(quiz_data, BaseModel):
-            request.session["quiz_data"] = quiz_data.model_dump()
-        else:
-            request.session["quiz_data"] = quiz_data
-        
-        request.session["solution_html"] = response.result.solution_html
-        return JSONResponse(
-            status_code=status.HTTP_200_OK,
-            content={"html": response.result.question_html},
-        )
-    else:
-        # Return JSON with an explicit “detail” field and proper HTTP status
+    if not quiz_response.success or not isinstance(
+        quiz_response.result, GenerateQuizResponse
+    ):
         return JSONResponse(
             status_code=status.HTTP_400_BAD_REQUEST,
-            content={"detail": response.error},
+            content={"detail": quiz_response.error},
         )
+
+    quiz_data = quiz_response.result.quiz_data
+    if isinstance(quiz_data, BaseModel):
+        request.session["quiz_data"] = quiz_data.model_dump()
+    else:
+        request.session["quiz_data"] = quiz_data
+
+    # Always update the server type and clear any cached solution
+    request.session["server_type"] = data.server_type
+    request.session["solution_html"] = quiz_response.result.solution_html
+
+    return JSONResponse(
+        status_code=status.HTTP_200_OK,
+        content={"html": quiz_response.result.question_html},
+    )
+
+
+# @router.post(
+#     "/adaptive_quiz/get_solution/{question_folder_id}", response_class=HTMLResponse
+# )
+# async def get_solution_html(
+#     request: Request,
+#     question_folder_id: int,
+#     data: QuizArg,
+#     session: Session = Depends(get_session),
+# ):
+#     # Always regenerate the solution to avoid stale cache issues
+#     quiz_data = request.session.get("quiz_data")
+#     server_type = request.session.get("server_type")
+
+#     # Only use cached solution if quiz_data and server_type match
+#     cached_solution = request.session.get("solution_html")
+#     if quiz_data and cached_solution and server_type == data.server_type:
+#         return HTMLResponse(content=cached_solution)
+
+#     # Generate solution using the latest quiz_data and server_type
+#     response: CodeRunResponse = await quiz_service.generate_quiz(
+#         question_folder_id, server_type=data.server_type, session=session
+#     )
+
+#     if response.success:
+#         # Cache the new solution and update server_type
+#         request.session["solution_html"] = response.result.solution_html
+#         request.session["server_type"] = data.server_type
+#         # Optionally update quiz_data if needed
+#         if isinstance(response.result.quiz_data, BaseModel):
+#             request.session["quiz_data"] = response.result.quiz_data.model_dump()
+#         else:
+#             request.session["quiz_data"] = response.result.quiz_data
+#         return HTMLResponse(content=response.result.solution_html)
+#     else:
+#         return HTMLResponse(content=response.error, status_code=405)
 
 
 @router.post(

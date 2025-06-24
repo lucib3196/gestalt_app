@@ -3,18 +3,18 @@ import json
 import asyncio
 from typing import List
 
-from pydantic import BaseModel,Field
+from pydantic import BaseModel, Field
 from langchain_openai import ChatOpenAI
 from langchain import hub
 
-from ...models.questionModels import Question
-from ...utils.helper import (
+from schemas import Question
+from ai_workspace.utils import (
     extract_token_usage,
     parse_structured,
     pdf_to_image_persistent,
     to_serializable,
 )
-from ...image_processing.ImageLLMProcessor import ImageLLMProcessor
+from ai_workspace.agentsv2.image_processing import ImageLLMProcessor
 
 # ----------------------
 # Constants & LLM Clients
@@ -31,9 +31,9 @@ long_context_llm = ChatOpenAI(model=LONG_CONTEXT_MODEL)
 # ----------------------
 class AllQuestion(BaseModel):
     questions: List[Question] = Field(..., description="A list of complete question")
-    
+
     @property
-    def as_str(self)->str:
+    def as_str(self) -> str:
         return "\n\n".join(q.as_str for q in self.questions)
 
 
@@ -85,7 +85,9 @@ async def extract_questions(image_paths: List[str], max_retries: int = 3):
 # ----------------------
 async def main():
     base_path = os.path.dirname(os.path.abspath(__file__))
-    pdf_path = r"C:\Users\lberm\OneDrive\Documents\Github\gestalt_app\Lectures\Lec11-post.pdf"
+    pdf_path = (
+        r"C:\Users\lberm\OneDrive\Documents\Github\gestalt_app\Lectures\Lec11-post.pdf"
+    )
     pdf_directory = os.path.dirname(pdf_path)
     output_dir = os.path.join(pdf_directory, "lecture_images")
     os.makedirs(output_dir, exist_ok=True)
@@ -103,7 +105,7 @@ async def main():
     # Save JSON
     with open(os.path.join(base_path, "questions.json"), "w") as f:
         json.dump(to_serializable(response), f, indent=4)
-        
+
     print(token_usage)
 
 

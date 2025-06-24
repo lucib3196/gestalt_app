@@ -25,11 +25,12 @@ from backend.data.module import get_session
 from ai_workspace.models.questionModels import InitialMetadata, Question
 
 # Code Generator Input
-from ai_workspace.code_generator.v2.code_generator import (
+from ai_workspace.agentsv2.code_generator.ver2.code_generator import (
     CodeGenInput,
     CodeGenState,
     compiled_graph as codegen_graph,
 )
+
 from ai_workspace.lecture_processor.v2.lecture_processing_v2 import (
     LectureInputState,
     LectureOutputState,
@@ -77,13 +78,13 @@ async def gen_question_text_v2(
     tasks = [
         codegen_graph.ainvoke(
             CodeGenInput(
-                question_payload=Question(question=q),
-                question_metadata=initial_metadata,
+                question_payload=Question(question=q),  # type: ignore
+                question_metadata=initial_metadata,  # type: ignore
             )
         )
         for q in data.questions
     ]
-    question_packages: List[CodeGenState] = await asyncio.gather(*tasks)
+    question_packages: List[CodeGenState] = await asyncio.gather(*tasks)  # type: ignore
 
     # 2) Create top-level package
     package = Package(name=data.package_name)
@@ -156,7 +157,9 @@ async def process_lecture(
                                 pix = page.get_pixmap()
                                 pix.save(pdf_page_path)
                                 temp_filepaths.append(pdf_page_path)
-                                print(f"[INFO] Saved page {page_number + 1} as image: {pdf_page_path}")
+                                print(
+                                    f"[INFO] Saved page {page_number + 1} as image: {pdf_page_path}"
+                                )
                     case _:
                         print("[ERROR] Unsupported file type.")
                         return "Error"

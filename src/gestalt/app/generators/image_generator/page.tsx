@@ -42,7 +42,7 @@ const FileUploadForm: React.FC = () => {
     if (!fileList) return;
 
     const formData = new FormData();
-    formData.append("folder_name", folderName);
+    formData.append("package_name", folderName);
 
     for (let i = 0; i < fileList.length; i++) {
       formData.append("files", fileList[i]);
@@ -50,10 +50,9 @@ const FileUploadForm: React.FC = () => {
 
     setLoading(true);
 
-
     try {
       const response = await api.post(
-        "/code_generator_chains/v1/image_upload",
+        "/codegen_v3/image",
         formData,
         {
           headers: {
@@ -70,35 +69,34 @@ const FileUploadForm: React.FC = () => {
   };
 
   return (
-    <div className="text-gen-form">
-    <form onSubmit={handleSubmit} encType="multipart/form-data">
-      <input
-        type="text"
-        name="folder_name"
-        className="form-control mb-2"
-        value={folderName}
-        onChange={handleFolderChange}
-        placeholder="Folder Name"
-        required
-      />
+    <div className="w-full max-w-md mx-auto bg-white rounded-lg shadow-md p-6">
+      <form onSubmit={handleSubmit} encType="multipart/form-data" className="space-y-4">
+        <input
+          type="text"
+          name="folder_name"
+          className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          value={folderName}
+          onChange={handleFolderChange}
+          placeholder="Folder Name"
+          required
+        />
 
-      <input
-        type="file"
-        name="files"
-        multiple
-        
-        onChange={handleFileChange}
-        className="form-control mb-3"
-      />
+        <input
+          type="file"
+          name="files"
+          multiple
+          onChange={handleFileChange}
+          className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
 
-      <button
-        type="submit"
-        className="btn btn-primary "
-        disabled={loading}
-      >
-        {loading ? "Uploading..." : "Upload Files"}
-      </button>
-    </form>
+        <button
+          type="submit"
+          className={`w-full py-2 px-4 rounded bg-blue-600 text-white font-semibold hover:bg-blue-700 transition-colors duration-200 ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
+          disabled={loading}
+        >
+          {loading ? "Uploading..." : "Upload Files"}
+        </button>
+      </form>
     </div>
   );
 };

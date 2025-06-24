@@ -5,6 +5,12 @@ tag_replacer_configs = {
         "attributes": {"class": "pl-question-panel"},
         "mapping": {},
     },
+    "pl_question_panel": {
+        "target_tag": "pl-question-panel",
+        "replacement_tag": "div",
+        "attributes": {"class": "pl-question-panel"},
+        "mapping": {},
+    },
     "pl_checkbox": {
         "target_tag": "pl-checkbox",
         "replacement_tag": "fieldset",

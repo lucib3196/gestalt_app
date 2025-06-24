@@ -71,9 +71,9 @@
   margin-bottom: 1rem;
 }
 
-.underline{
-    border-bottom: 1.5px solid var(--light-accent);
-    display: inline-block;
+.underline {
+  border-bottom: 1.5px solid var(--light-accent);
+  display: inline-block;
 }
 
 .ind-ex-container p {
@@ -89,14 +89,12 @@
   margin-bottom: 1rem;
 }
 
-
-.mod-example-list{
-    list-style: none;
+.mod-example-list {
+  list-style: none;
 }
 
-
 /*  Generator Input  */
-.text-gen-form{
+.text-gen-form {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -104,23 +102,23 @@
   width: 100%;
 }
 
-.text-gen-form form{
+.text-gen-form form {
   display: flex;
   flex-direction: column;
   width: 100%;
   justify-content: space-between;
   align-items: center;
-  padding:2rem;
+  padding: 2rem;
 }
 
-.text-gen-form form *{
+.text-gen-form form * {
   margin: 0.5rem;
 }
 
-.text-gen-form form input{
+.text-gen-form form input {
   width: 50%;
 }
 
-.form-floating{
+.form-floating {
   width: 100%;
 }

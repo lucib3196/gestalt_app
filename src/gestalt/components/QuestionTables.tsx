@@ -344,9 +344,6 @@ export const PackageContents: React.FC = () => {
   const questions = contents.questions;
   const files = contents.files;
 
-  console.log(contents)
-
-
 
   // Declare variables outside the blocks
   let fileHeaders: TableHeader[] | undefined;
@@ -368,7 +365,7 @@ export const PackageContents: React.FC = () => {
       questionColumns,
       questions,
       (key, q) => {
-        if (key === "title") router.push(`/packages/folder/${q.id}`);
+        if (key === "title") router.push(`/problem/${q.title}_${q.id}`);
       }
     );
     questionHeaders = result.headers;
