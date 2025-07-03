@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Rendered Question</title>
+
+  <!-- External CSS for question styling -->
+  <link rel="stylesheet" href="QuestionStyles.css">
+
+  <!-- MathJax v3 configuration -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$']],      // $ … $
+        displayMath: [['$$', '$$']]    // $$ … $$
+      }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+          id="MathJax-script" async></script>
+
+  <style>
+    body { margin: 2rem auto; max-width: 800px; font-family: sans-serif; }
+  </style>
+</head>
+<body>
+<div class="solution-panel"><p>The maximum bending stress in a beam subjected to a point load can be calculated using the formula:</p><ul>
+<li>$$ \sigma_{max} = \frac{M \cdot c}{I} $$</li>
+</ul><p>Where:</p><ul>
+<li>$$ M $$ is the moment at the beam's center due to the load.</li>
+<li>$$ c $$ is the distance from the neutral axis to the outermost fiber (half the height of the beam).</li>
+<li>$$ I $$ is the moment of inertia of the beam's cross-section.</li>
+</ul></div>
+<div class="solution-step hidden-step" data-level="1" data-type="text">Given that the load is applied at the center, we can calculate the moment $$ M $$ as follows:</div>
+<div class="solution-step hidden-step" data-level="2" data-type="text">$$ M = \frac{P \cdot L}{4} $$</div>
+<div class="solution-step hidden-step" data-level="3" data-type="text">Now plug in the values for load $$ P $$ and span $$ L $$. Here, $$ P = 10200.0 $$ and $$ L = 5.92 $$.</div>
+<div class="solution-step hidden-step" data-level="4" data-type="text">Next, the distance to the outermost fiber is given by:</div>
+<div class="solution-step hidden-step" data-level="5" data-type="text">$$ c = \frac{h}{2} = \frac{0.355}{2} $$</div>
+<div class="solution-step hidden-step" data-level="6" data-type="text">The moment of inertia $$ I $$ for a rectangular cross-section is calculated as follows:</div>
+<div class="solution-step hidden-step" data-level="7" data-type="text">$$ I = \frac{b \cdot h^3}{12} = \frac{0.308 \cdot 0.355^3}{12} $$</div>
+<div class="solution-step hidden-step" data-level="8" data-type="text">Finally, substitute $$ M $$, $$ c $$, and $$ I $$ into the bending stress formula to find $$ \sigma_{max} $$:</div>
+<div class="solution-step hidden-step" data-level="9" data-type="text">$$ \sigma_{max} = \frac{(\frac{P \cdot L}{4}) \cdot (\frac{h}{2})}{I} $$</div>
+<div class="solution-step hidden-step" data-level="10" data-type="text">Substituting these values gives the maximum bending stress in MPa.</div>
+</body>
+</html>

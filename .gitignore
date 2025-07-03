@@ -9,4 +9,3 @@ Lectures
 .vscode
 Lectures
 src/ai_workspace/agents/engineering_codegen/module_vectorstore/"src/**/data_level0.bin" 
-src/ai_workspace/vectorstores

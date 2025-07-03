@@ -2,67 +2,66 @@ const math = require('mathjs');
 
 const generate = (usePredefinedValues = 0) => {
     const unitSystems = ['si', 'uscs'];
-
     const units = { 
         "si": { 
-            "dist": "m",
+            "length": "m",
             "force": "N",
+            "width": "m",
+            "height": "m"
         },
         "uscs": {
-            "dist": "ft",
+            "length": "ft",
             "force": "lb",
+            "width": "in",
+            "height": "in"
         }
     };
-
-    // Predefined values for testing
-    const predefinedValues = [
-        { span: 6, force: 2000, width: 0.1, height: 0.2 }, // SI
-        { span: 20, force: 4500, width: 4, height: 6 },  // USCS
-    ];
-
-    // Select unit system and generate values
     const unitSel = math.randomInt(0, 2);
-    const unitsDist = units[unitSystems[unitSel]].dist;
+    const unitsLength = units[unitSystems[unitSel]].length;
     const unitsForce = units[unitSystems[unitSel]].force;
-    
-    let span, force, width, height;
+    const unitsWidth = units[unitSystems[unitSel]].width;
+    const unitsHeight = units[unitSystems[unitSel]].height;
 
+    let span, load, width, height;
     if (usePredefinedValues) {
-        // Use predefined values for testing
-        ({ span, force, width, height } = predefinedValues[unitSel]);
+        // Predefined values for quick testing 
+        span = 5;  // example span (in m or ft)
+        load = 10000;  // example load (in N or lb)
+        width = 0.3;  // example width (in m or in)
+        height = 0.5;  // example height (in m or in)
     } else {
-        // Generate random values if not using predefined values
-        span = math.randomInt(5, 20);  // span in meters or feet
-        force = math.randomInt(1000, 5000); // load in N or lb
-        width = math.random(0.05, 0.15); // width in meters or feet
-        height = math.random(0.1, 0.3); // height in meters or feet
+        // Generate random values 
+        span = math.random(4, 6);  // 4 to 6 meters or ft
+        load = math.random(8000, 12000);  // Load between 8000 and 12000 N or lb
+        width = math.random(0.2, 0.4);  // width between 0.2 and 0.4 meters or in
+        height = math.random(0.3, 0.7);  // height between 0.3 and 0.7 meters or in
     }
 
-    // Calculate moment of inertia (I) for rectangular cross-section
-    const I = (width * math.pow(height, 3)) / 12;
-    // Maximum bending moment for a point load at center
-    const moment = force * (span / 4);
-    // Maximum bending stress (sigma)
-    const sigma = moment * (height / 2) / I;
+    // Calculating the moment of inertia, I = (b*h^3)/12 for rectangular cross-section
+    const momentOfInertia = (width * math.pow(height, 3)) / 12;
+    // Maximum bending moment for a point load at center: M = (P*L)/4
+    const bendingMoment = (load * span) / 4;
+    // Maximum bending stress: sigma_max = (M*c)/I where c is distance from neutral axis, c = h/2
+    const c = height / 2;
+    const sigmaMax = (bendingMoment * c) / momentOfInertia;  // Result will be in N/m^2 or lb/in^2 based on units
 
-    const data = {
+    return {
         params: {
-            span,
-            force,
-            width,
-            height,
-            unitsForce,
-            unitsDist,
+            span: span,
+            load: load,
+            width: width,
+            height: height,
+            unitsLength: unitsLength,
+            unitsForce: unitsForce,
+            unitsWidth: unitsWidth,
+            unitsHeight: unitsHeight,
         },
         correct_answers: {
-            maxBendingStress: math.round(sigma, 3),
+            bendingStress: math.round(sigmaMax / (unitSel === 0 ? 1e6 : 1), 3)  // Convert to MPa
         },
         nDigits: 3,
         sigfigs: 3
     };
-
-    console.log(data);
-    return data;
 };
-
+console.log(generate())
 module.exports = { generate };

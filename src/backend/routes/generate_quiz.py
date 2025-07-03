@@ -1,17 +1,15 @@
-from ..data import generate_quiz as quiz_service
-from ..data.generate_quiz import QuizData, GenerateQuizResponse, CodeRunResponse
-from fastapi import APIRouter, HTTPException, Query
-from ..data.database import get_session
-from sqlmodel import Session
-from fastapi.responses import HTMLResponse
-from fastapi import APIRouter, Depends, status
-from fastapi import Request
+from fastapi import APIRouter, Depends, HTTPException, Request, status
+from fastapi.responses import HTMLResponse, JSONResponse
 from pydantic import BaseModel
-from fastapi.responses import JSONResponse
+from sqlmodel import Session
+from typing import Any, Dict, Literal, Union, Optional
+from ..data import generate_quiz as quiz_service
+from ..data.generate_quiz import CodeRunResponse, QuizData
+from ..data.database import get_session
+from question_rendering import RenderedQuestion
+from ai_workspace.utils import to_serializable
 
 router = APIRouter(prefix="/quiz")
-from typing import Dict, Any, Literal
-import ast
 
 
 class QuizArg(BaseModel):
@@ -26,70 +24,42 @@ async def get_adaptive_quiz(
     question_folder_id: int,
     data: QuizArg,
     session: Session = Depends(get_session),
-):
-    # Always generate a fresh quiz and store in session
-    quiz_response: CodeRunResponse = await quiz_service.generate_quiz(
-        question_folder_id, server_type=data.server_type, session=session
+) -> JSONResponse:
+    """
+    Generate a fresh adaptive quiz and store relevant data in the session.
+    Returns the rendered quiz HTML or an error message.
+    """
+    quiz_response: Union[CodeRunResponse, RenderedQuestion] = (
+        await quiz_service.generate_quiz(
+            question_folder_id, server_type=data.server_type, session=session
+        )
     )
-    if not quiz_response.success or not isinstance(
-        quiz_response.result, GenerateQuizResponse
-    ):
+
+    if isinstance(quiz_response, CodeRunResponse):
         return JSONResponse(
             status_code=status.HTTP_400_BAD_REQUEST,
             content={"detail": quiz_response.error},
         )
 
-    quiz_data = quiz_response.result.quiz_data
-    if isinstance(quiz_data, BaseModel):
-        request.session["quiz_data"] = quiz_data.model_dump()
-    else:
-        request.session["quiz_data"] = quiz_data
+    if isinstance(quiz_response, RenderedQuestion) and quiz_response.quiz_data:
+        # Ensure session is available and mutable
+        if not hasattr(request, "session"):
+            raise HTTPException(status_code=500, detail="Session middleware not configured.")
+        # Store quiz data as a dict to avoid serialization issues
+        request.session["quiz_data"] = quiz_response.quiz_data.model_dump()
+        request.session["server_type"] = data.server_type
+        request.session["solution_html"] = quiz_response.solution_html
+        request.session["question_id"] = question_folder_id
 
-    # Always update the server type and clear any cached solution
-    request.session["server_type"] = data.server_type
-    request.session["solution_html"] = quiz_response.result.solution_html
+        return JSONResponse(
+            status_code=status.HTTP_200_OK,
+            content={"html": quiz_response.question_html},
+        )
 
     return JSONResponse(
-        status_code=status.HTTP_200_OK,
-        content={"html": quiz_response.result.question_html},
+        status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+        content={"detail": "Failed to generate quiz."},
     )
-
-
-# @router.post(
-#     "/adaptive_quiz/get_solution/{question_folder_id}", response_class=HTMLResponse
-# )
-# async def get_solution_html(
-#     request: Request,
-#     question_folder_id: int,
-#     data: QuizArg,
-#     session: Session = Depends(get_session),
-# ):
-#     # Always regenerate the solution to avoid stale cache issues
-#     quiz_data = request.session.get("quiz_data")
-#     server_type = request.session.get("server_type")
-
-#     # Only use cached solution if quiz_data and server_type match
-#     cached_solution = request.session.get("solution_html")
-#     if quiz_data and cached_solution and server_type == data.server_type:
-#         return HTMLResponse(content=cached_solution)
-
-#     # Generate solution using the latest quiz_data and server_type
-#     response: CodeRunResponse = await quiz_service.generate_quiz(
-#         question_folder_id, server_type=data.server_type, session=session
-#     )
-
-#     if response.success:
-#         # Cache the new solution and update server_type
-#         request.session["solution_html"] = response.result.solution_html
-#         request.session["server_type"] = data.server_type
-#         # Optionally update quiz_data if needed
-#         if isinstance(response.result.quiz_data, BaseModel):
-#             request.session["quiz_data"] = response.result.quiz_data.model_dump()
-#         else:
-#             request.session["quiz_data"] = response.result.quiz_data
-#         return HTMLResponse(content=response.result.solution_html)
-#     else:
-#         return HTMLResponse(content=response.error, status_code=405)
 
 
 @router.post(
@@ -101,35 +71,45 @@ async def get_solution_html(
     data: QuizArg,
     session: Session = Depends(get_session),
 ):
-    # Try to get pre-generated content from session
-    cached_quiz_data = request.session.get("quiz_data")
-    cached_solution = request.session.get("solution_html")
-    cached_server_type = request.session.get("server_type")
-
-    # When cachine ensure that the solution html is based on the most recent server type if it changes well deal with it
-    if (
-        cached_quiz_data
-        and cached_solution
-        and cached_server_type == data.server_type  # <-- ensure match
-    ):
-        return HTMLResponse(content=cached_solution)
-
-    # Generate quiz if not in session
-    response: CodeRunResponse = await quiz_service.generate_quiz(
-        question_folder_id, server_type=data.server_type, session=session
+    cached_solution_html = request.session.get("solution_html")
+    cached_server_type: Optional[Literal["javascript", "python"]] = request.session.get(
+        "server_type"
     )
+    if (
+        cached_solution_html
+        and request.session.get("question_id") == question_folder_id
+    ):
+        return HTMLResponse(content=cached_solution_html)
 
-    if response.success:
-        # Cache quiz and solution
-        request.session["quiz_data"] = response.result.quiz_data.model_dump()
-        request.session["solution_html"] = response.result.solution_html
-        return HTMLResponse(content=response.result.solution_html)
-    else:
-        return HTMLResponse(content=response.error, status_code=405)
+    if cached_server_type is None:
+        return JSONResponse(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            content={"detail": "No server_type found in session."},
+        )
+
+    quiz_response: Union[CodeRunResponse, RenderedQuestion] = (
+        await quiz_service.generate_quiz(
+            question_folder_id, server_type=cached_server_type, session=session
+        )
+    )
+    if isinstance(quiz_response, CodeRunResponse):
+        return JSONResponse(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            content={"detail": getattr(quiz_response, "error", "Unknown error")},
+        )
+    if isinstance(quiz_response, RenderedQuestion) and quiz_response.quiz_data:
+        # Update session with latest quiz data and solution
+        request.session["quiz_data"] = quiz_response.quiz_data.model_dump()
+        request.session["solution_html"] = quiz_response.solution_html
+        request.session["question_id"] = question_folder_id
+        return HTMLResponse(content=quiz_response.solution_html)
 
 
 @router.post("/adaptive_quiz/grade_quiz")
-async def submit_quiz(request: Request, data: Dict[str, Any]):
+async def submit_quiz(
+    request: Request,
+    session: Session = Depends(get_session),
+):
     quiz_data = request.session.get("quiz_data")
     if not quiz_data:
         raise HTTPException(status_code=400, detail="No quiz data found in session.")

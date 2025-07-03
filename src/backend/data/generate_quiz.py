@@ -4,129 +4,56 @@ import tempfile
 import asyncio
 import aiofiles
 from backend.data.question_models import get_question_files
-from ..data.helpers import read_file, format_question
+from backend.data.helpers import read_file, format_question
+from question_rendering import RenderedQuestion, render_question, CodeRunResponse
 from ..processing.code_runners.code_runner import run_generate
-from typing import Literal
+from typing import Literal, Union
+from pathlib import Path
 from ..processing.code_runners.response_models import (
-    CodeRunResponse,
     QuizData,
     GenerateQuizResponse,
 )
 import json
-
-# Mapping from file type keys to file names.
-# question_name_map = {
-#     "question_txt": "question.txt",
-#     "question_html": "question.html",
-#     "server_js": "server.js",
-#     "server_py": "server.py",
-#     "solution_html": "solution.html",
-#     "metadata": "info.json",
-# } should be fixed
+import shutil
 
 
 async def generate_quiz(
     question_folder_id: int,
     session,
     server_type: Literal["javascript", "python"] = "javascript",
-) -> CodeRunResponse:
+) -> Union[CodeRunResponse, RenderedQuestion]:
     """
-    Asynchronously generates a quiz for a given module.
+    Download all files for a question bundle, run `render_question`, and
+    clean up the temporary directory automatically.
 
-    This function retrieves file records for a module, writes them to a temporary
-    directory asynchronously, runs the generator file in a thread (since it is blocking),
-    and then formats the HTML question.
-
-    Args:
-        module_id (int): Module identifier.
-        session: The database session.
-
-    Returns:
-        str: The rendered HTML for the quiz question.
-
-    Raises:
-        ValueError: If the required question file is missing.
+    Heavy blocking I/O (disk + CPU-bound render) is off-loaded to threads so
+    the event loop stays responsive.
     """
+    files = await asyncio.to_thread(get_question_files, question_folder_id, session)
 
-    # Retrieve files associated with the module in a thread to avoid blocking.
-    files = await asyncio.to_thread(
-        get_question_files, question_folder_id, session=session
-    )
+    with tempfile.TemporaryDirectory() as tmp:
+        tmp_path = Path(tmp)  # convenience
 
-    # Create a temporary directory for file operations.
-    with tempfile.TemporaryDirectory() as tmpdir:
-        # Write file contents to the temporary directory asynchronously.
-        for f in files:
-            # save_name = question_name_map.get(f.filename)
-            save_name = f.filename
-            filepath = os.path.join(tmpdir, save_name)
+        async def _write_file(file_obj) -> None:
+            dest = tmp_path / file_obj.filename
+            data = file_obj.content
+            if isinstance(data, bytes):
+                try:
+                    data = data.decode("utf-8")
+                except UnicodeDecodeError:
+                    async with aiofiles.open(dest, "w") as fh:
+                        await fh.write(file_obj.content)
+                    return
 
-            if isinstance(f.content, bytes):
-                f.content = f.content.decode("utf-8")
+            async with aiofiles.open(dest, "w") as fh:
+                await fh.write(data)
 
-            async with aiofiles.open(filepath, "w", encoding="utf-8") as file:
-                await file.write(f.content)
+        await asyncio.gather(*[_write_file(f) for f in files])
 
-        # Check the question to see if it is adaptive
-        metadata_file = os.path.join(tmpdir, "info.json")
-        with open(metadata_file, "r") as f:
-            meta = json.load(f)
-            isAdaptive = meta.get("isAdaptive")
+        result = await asyncio.to_thread(render_question, tmp_path, server_type)
 
-        # Convert to bool
-        if isinstance(isAdaptive, str):
-            try:
-                isAdaptive = str(isAdaptive).strip().lower() == "true"
-            except Exception:
-                raise ValueError(f"Invalid literal: {isAdaptive}")
+        if isinstance(result, (CodeRunResponse, RenderedQuestion)):
+            return result
+        raise ValueError("render_question returned an unexpected type")
 
-        # Define data
-        data = {}
-        generated_data = {}  # type: ignore
-        if isAdaptive == True:
-            if server_type == "javascript":
-                server_file = os.path.join(tmpdir, "server.js")
-            else:
-                server_file = os.path.join(tmpdir, "server.py")
 
-            results: CodeRunResponse = await asyncio.to_thread(
-                run_generate, server_file
-            )
-            print("These are the results, ", results)
-            # Catch an error
-            if not results.success:
-                return results  # This returns an object with the error code
-
-            generated_data: QuizData = results.result  # type: ignore
-            params = generated_data.params
-            correct_answers = generated_data.correct_answers
-            data = {"params": params, "correct_answers": correct_answers}
-
-        # Read the question HTML file asynchronously via a thread.
-        question_html_path = os.path.join(tmpdir, "question.html")
-        html_content = await asyncio.to_thread(read_file, question_html_path)
-        # Format the question asynchronously in a thread.
-        rendered_question_html = await asyncio.to_thread(
-            format_question, html=html_content, data=data
-        )
-
-        # Render the solution html
-        solution_html_path = os.path.join(tmpdir, "solution.html")
-        rendered_solution = None
-        if os.path.exists(solution_html_path):
-            try:
-                solution_content = await asyncio.to_thread(read_file, solution_html_path)
-                rendered_solution = await asyncio.to_thread(
-                    format_question, html=solution_content, data=data
-                )
-            except Exception as e:
-                rendered_solution = f"<div>Error rendering quiz solution{e}</div>"
-        else:
-            rendered_solution = "<div>Error rendering quiz solution: solution.html not found</div>"
-
-        data = GenerateQuizResponse(
-            question_html=rendered_question_html,
-            quiz_data=generated_data,
-            solution_html=rendered_solution,
-        )
-        return CodeRunResponse(success=True, error=None, result=data)

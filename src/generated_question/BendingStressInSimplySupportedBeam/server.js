@@ -80,4 +80,6 @@ const generate = (usePredefinedValues = 0) => {
     };
 };
 
+console.log(generate())
+
 module.exports = { generate };

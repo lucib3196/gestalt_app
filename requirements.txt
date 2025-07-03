@@ -1,0 +1,32 @@
+# Core Web Framework
+pip install fastapi[all]
+
+
+# Database
+pip install sqlmodel
+
+# Data validation
+pip install pydantic
+
+# LangChain ecosystem
+pip install langchain
+pip install langchain-openai
+pip install "langchain-chroma>=0.1.2"
+pip install langchain-community
+
+# OpenAI and orchestration tools
+pip install openai
+pip install langgraph
+pip install langsmith
+
+# Vector database support
+pip install faiss-cpu
+
+# PDF parsing
+pip install --upgrade pymupdf
+
+# Generic 
+pip install numpy
+pip install pandas
+pip install python-dotenv
+

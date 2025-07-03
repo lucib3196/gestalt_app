@@ -1,14 +1,32 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "name": "Python Debugger: Module",
-            "type": "debugpy",
-            "request": "launch",
-            "module": "src.ai_workspace.agentsv2.topic_creator.topic_creator_agent"
-        }
-    ]
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Python Debugger: Module",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "src.ai_workspace.agentsv2.topic_creator.topic_creator_agent"
+    },
+    {
+      "name": "Tag Replacer",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "src.backend.processing.pl_utils.TagReplacer",
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}/src"
+      }
+    },
+    {
+      "name": "Topic Classification",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "ai_workspace.agentsv2.question_topic_classification_agent.question_topic_classification_agent",
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}/src"
+      }
+    }
+  ]
 }

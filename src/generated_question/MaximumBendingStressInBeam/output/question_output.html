@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Rendered Question</title>
+
+    <!-- External CSS for question styling -->
+    <link rel="stylesheet" href="QuestionStyles.css" />
+
+    <!-- MathJax v3 configuration -->
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [["$", "$"]], // $ … $
+          displayMath: [["$$", "$$"]], // $$ … $$
+        },
+      };
+    </script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+      id="MathJax-script"
+      async
+    ></script>
+
+    <style>
+      body {
+        margin: 2rem auto;
+        max-width: 800px;
+        font-family: sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="pl-question-panel">
+      <p>
+        A simply supported steel beam with a span of 5.92 ft carries a point
+        load of 10200.0 lb at its center.
+      </p>
+      <p>
+        The beam has a rectangular cross-section of width 0.308 in and height
+        0.355 in.
+      </p>
+    </div>
+    <p>
+      What is the maximum bending stress in the beam? (Give your answer in MPa.)
+    </p>
+    <label class="pl-number-input-label"
+      >$ \mathbf{\sigma_{max}} $ =<input
+        class="pl-number-input"
+        comparison="sigfig"
+        digits="3"
+        label="$ \mathbf{\sigma_{max}} $ ="
+        name="bendingStress"
+        size="50"
+        step="any"
+        type="number"
+        value=""
+    /></label>
+  </body>
+</html>

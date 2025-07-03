@@ -77,5 +77,5 @@ const generate = (usePredefinedValues = 0) => {
 
     return data;
 }
-
+console.log(generate())
 module.exports = { generate };
